@@ -1,0 +1,50 @@
+<div class="p-5 h-screen flex align-items-center">
+  <div class="flex surface-section border-round shadow-2 w-full">
+  <div class="flex-1 flex-column p-6 md:p-8">
+    <div class="mb-5">
+    <!-- <img src="assets/images/blocks/logos/hyper.svg" alt="Image" height="50" class="mb-3"> -->
+    <div class="text-900 text-3xl font-medium mb-3">Bienvenue dans la Maison re-connectée</div>
+    </div>
+    <form [formGroup]="signupForm" (submit)="save()">
+    <div class="formgrid grid">
+        <div class="field col-12 md:col-6">
+          <label for="firstname" class="block text-900 font-medium mb-2">Prénom</label>
+          <input id="firstname" type="text" placeholder="Prénom" pInputText formControlName="firstName" class="w-full p-3">
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="lastname" class="block text-900 font-medium mb-2">Nom</label>
+          <input id="lastname" type="text" placeholder="Nom" pInputText formControlName="lastName" class="w-full p-3">
+        </div>
+        <div class="field col-12 md:col-6">
+        </div>
+        <div class="field col-12">
+          <label for="email" class="block text-900 font-medium mb-2">Email</label>
+          <input id="email" type="text" placeholder="Adresse email" pInputText formControlName="email" class="w-full p-3">
+        </div>
+        <div class="field col-12">
+          <label for="password1" class="block text-900 font-medium mb-2">Mot de passe</label>
+          <input id="password1" type="password" placeholder="Mot de passe" pInputText formControlName="password1" class="w-full p-3">
+          <small id="password1-help" class="p-error block" *ngIf="errors['password1']">{{errors['password1']}}</small>
+        </div>
+        <div class="field col-12">
+          <label for="password2" class="block text-900 font-medium mb-2">Confirmation du mot de passe</label>
+          <input id="password2" type="password" placeholder="Confirmation du mot de passe" formControlName="password2" pInputText class="w-full mb-3 p-3">
+        </div>
+        <button type="submit" pButton pRipple label="Inscription" icon="pi pi-user" class="w-full p-3" [disabled]="!signupForm.valid"></button>
+      </div>
+    </form>
+  </div>
+  <div class="hidden md:flex md:flex-1 w-6 bg-no-repeat bg-cover" style="background-image: url('assets/img/signin/signin.jpg')"></div>
+  </div>
+</div>
+<p-toast key="messageToast" [style]="{width: '30rem'}" [preventOpenDuplicates]="true">
+  <ng-template let-message pTemplate="message">
+      <div class="flex align-items-start flex-1">
+          <i class="pi pi-envelope text-blue-500 text-2xl mr-3"></i>
+          <div>
+              <span class="text-xl font-medium text-900">{{message.summary}}</span>
+              <p class="text-700 mt-3">{{message.detail}}</p>
+          </div>
+      </div>
+  </ng-template>
+</p-toast>

@@ -1,0 +1,33 @@
+<div class="p-5 h-screen flex align-items-center">
+  <div class="flex surface-section border-round shadow-2 w-full">
+    <div class="flex-1 flex-column p-6 md:p-8">
+        <div class="mb-3">
+            <div class="text-900 text-3xl font-medium mb-3">Mot de passe oublié.</div>
+        </div>
+        <div>
+          <form [formGroup]="resetPwdForm" (submit)="resetPwd()" *ngIf="!success">
+            <div class="formgrid grid">
+              <div class="field col-12">
+                <label for="newPassword1" class="block text-900 font-medium mb-2">Mot de passe</label>
+                <input id="newPassword1" type="password" placeholder="Mot de passe" pInputText class="w-full p-3" formControlName="newPassword1">
+                <small id="newPassword1-help" class="p-error block" *ngIf="errors['newPassword1']">{{errors['newPassword1']}}</small>
+              </div>
+              <div class="field col-12">
+                <label for="newPassword2" class="block text-900 font-medium mb-2">Confirmation de mot de passe</label>
+                <input id="newPassword2" type="password" placeholder="Confirmation de mot de passe" pInputText class="w-full p-3" formControlName="newPassword2">
+
+                <small id="newPassword2-help" class="p-error block" *ngIf="errors['newPassword2']">{{errors['newPassword2']}}</small>
+              </div>
+            </div>
+            <div *ngIf="errors['nonFieldErrors']" class="mb-3">
+              <small id="password-help" class="p-error block" *ngFor="let err of errors['nonFieldErrors']">{{err}}</small>
+            </div>
+            <button type="submit" pButton pRipple label="Enregistrer" icon="pi pi-user" class="w-full p-3" ></button>
+
+          </form>
+          <p *ngIf="success">Votre mot de passe a été ré-initialisé avec succès. Vous allez être redirigé vers le formulaire de connexion dans {{redirectTimer}} s</p>
+        </div>
+    </div>
+    <div class="hidden md:flex md:flex-1 w-6 bg-no-repeat bg-cover" style="background-image: url('assets/img/signin/signin.jpg')"></div>
+  </div>
+</div>

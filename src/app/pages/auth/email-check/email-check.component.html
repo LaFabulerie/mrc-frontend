@@ -1,0 +1,26 @@
+<div class="p-5 h-screen flex align-items-center">
+  <div class="flex surface-section border-round shadow-2 w-full">
+    <div class="flex-1 flex-column p-6 md:p-8">
+        <div class="mb-3">
+            <div class="text-900 text-3xl font-medium mb-3" *ngIf="checking">Confirmation de l'adresse email en cours ...</div>
+            <div class="text-900 text-3xl font-medium mb-3" *ngIf="!checking && emailValid">Adresse email valide.</div>
+            <div class="text-900 text-3xl font-medium mb-1" *ngIf="!checking && !emailValid">
+              <span *ngIf="!manualCheck">Une erreur est survenue lors de la confirmation de votre email.</span>
+              <span *ngIf="manualCheck">Confirmation de votre email.</span>
+            </div>
+        </div>
+        <div *ngIf="!checking && !emailValid && !resent">
+          <p>Veuillez saisir votre adresse email afin que l'on vous renvoie un email de confirmation.</p>
+            <input id="email" type="text" placeholder="Adresse email" pInputText [(ngModel)]="email" class="w-full mb-3 p-3">
+            <button type="submit" pButton pRipple label="Renvoyer l'email de confirmation" icon="pi pi-envelope" class="w-full p-3" [disabled]="email ===''" (click)="resend()"></button>
+        </div>
+        <div *ngIf="!checking && emailValid">
+          <p>Votre adresse email a été vérifié avec succès. Vous allez être redirigé vers le formulaire de connexion dans {{redirectTimer}} s</p>
+        </div>
+        <div *ngIf="!checking && !emailValid && resent">
+          <p>Un email de confirmation a été renvoyé à l'adresse {{email}}.</p>
+        </div>
+    </div>
+    <div class="hidden md:flex md:flex-1 w-6 bg-no-repeat bg-cover" style="background-image: url('assets/img/signin/signin.jpg')"></div>
+  </div>
+</div>

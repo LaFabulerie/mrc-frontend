@@ -1,0 +1,16 @@
+<div class="p-5 h-screen flex align-items-center">
+  <div class="flex surface-section border-round shadow-2 w-full">
+    <div class="flex-1 flex-column p-6 md:p-8">
+        <div class="mb-3">
+            <div class="text-900 text-3xl font-medium mb-3">Mot de passe oublié.</div>
+        </div>
+        <div *ngIf="!emailSent">
+          <p >Veuillez saisir votre adresse email afin que l'on vous envoie un lien de ré-initialisation.</p>
+            <input id="email" type="text" placeholder="Adresse email" pInputText [(ngModel)]="email" class="w-full mb-3 p-3">
+            <button type="submit" pButton pRipple label="Ré-initialiser le mot de passe" icon="pi pi-envelope" class="w-full p-3" [disabled]="email ===''" (click)="resetPwd()"></button>
+        </div>
+        <p *ngIf="emailSent">Un email vous a été envoyé</p>
+    </div>
+    <div class="hidden md:flex md:flex-1 w-6 bg-no-repeat bg-cover" style="background-image: url('assets/img/signin/signin.jpg')"></div>
+  </div>
+</div>

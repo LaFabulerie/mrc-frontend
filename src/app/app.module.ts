@@ -12,17 +12,20 @@ import {StyleClassModule} from 'primeng/styleclass';
 
 import { appInitializer } from './common/app.initializer';
 import { AuthService } from './services/auth.service';
-import { HomeComponent } from './pages/home/home/home.component';
 import { JwtInterceptor } from './common/jwt.interceptor';
 import { ErrorInterceptor } from './common/error.interceptor';
-
-import {TreeModule} from 'primeng/tree';
-
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { SettingsComponent } from './pages/settings/settings.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ComponentsModule } from './components/components.module';
+import { TreeModule } from 'primeng/tree';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    DashboardComponent,
+    SettingsComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,9 @@ import {TreeModule} from 'primeng/tree';
     ReactiveFormsModule,
     StyleClassModule,
     AuthModule,
+    ComponentsModule,
     TreeModule,
+
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService] },

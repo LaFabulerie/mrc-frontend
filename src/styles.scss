@@ -1,2 +1,18 @@
 @import "primeflex/primeflex.css";
 @import "assets/css/layout.scss";
+
+
+:root {
+  body,
+  body .p-component
+  {
+    font-family: 'Noto Serif', serif!important;
+  }
+
+  --blue-mrc: #1c3d9f;
+  --orange-mrc: #ff5738;
+  --green-mrc: #90c5ab;
+  --blue-light-mrc: #8da6ff;
+
+
+}

@@ -1,20 +1,43 @@
 <div class="grid">
   <div class="col-6">
-    <p-tree [value]="data">
+    <div class="p-input w-full">
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">
+          <i class="pi pi-search"></i>
+        </span>
+        <p-autoComplete
+          field="title"
+          [suggestions]="suggestions"
+          placeholder="Rechercher un usage"
+          (completeMethod)="search($event)"
+          (onSelect)="onSuggestionSelect($event)"
+          >
+        </p-autoComplete>
+      </div>
+    </div>
+    <p-tree [value]="data" selectionMode="single" (onNodeSelect)="onNodeSelect($event)">
       <ng-template let-node pTemplate="room">
-        <span class="cursor-pointer">{{node.label}} <span class="text-600 text-sm">({{node.children.length}} objets)</span></span>
+        <span class="cursor-pointer text-xl">{{node.label}} <span class="text-600 text-sm">({{node.children.length}} objets)</span></span>
       </ng-template>
       <ng-template let-node pTemplate="item">
-        <span class="cursor-pointer">{{node.label}} <span class="text-600 text-sm">({{node.children.length}} usages)</span></span>
+        <span class="cursor-pointer text-xl">{{node.label}} <span class="text-600 text-sm">({{node.children.length}} usages)</span></span>
       </ng-template>
       <ng-template let-node pTemplate="use">
-        <span class="cursor-pointer" (click)="showUse(node)">{{node.label}}</span>
+        <div class="cursor-pointer text-xl flex align-items-center justify-content-between p-2" [ngClass]="{'border-bottom-2 border-orange-300' : node.data === selectedNode.data}">
+          <div>
+            {{node.label}}
+          </div>
+          <!-- <div>
+            <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-outlined p-button-info p-button-sm mr-2"></p-button>
+            <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-outlined p-button-danger p-button-sm"></p-button>
+          </div> -->
+        </div>
       </ng-template>
     </p-tree>
   </div>
   <div class="col-6">
-    <div *ngIf="currentUse">
-      <app-edit-digital-use [useId]="currentUse.data"></app-edit-digital-use>
+    <div *ngIf="selectedNode">
+      <app-edit-digital-use [useId]="selectedNode.data"></app-edit-digital-use>
     </div>
   </div>
 </div>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { PrimeNGConfig } from 'primeng/api';
 import { User } from 'src/models/user';
 import { AuthService } from './services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +13,15 @@ export class AppComponent implements OnInit {
 
   constructor(
     private primengConfig: PrimeNGConfig,
-    private authService: AuthService
+    private authService: AuthService,
+    private translateService: TranslateService
   ) {
     this.authService.user.subscribe((x) => (this.user = x));
   }
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    this.translateService.setDefaultLang('fr');
   }
 
   logout() {

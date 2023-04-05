@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { CoreService } from 'src/app/services/core.service';
 
 @Component({
@@ -21,10 +22,24 @@ export class EditDigitalUseComponent implements OnInit {
   use:any = null;
 
   constructor(
-    private coreService: CoreService
+    private coreService: CoreService,
+    private confirmationService: ConfirmationService,
   ) { }
 
   ngOnInit(): void {
+  }
+
+  removeTag(event: Event, tag: string) {
+    event.stopPropagation();
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: `Êtes-vous sûr de vouloir supprimer le tag "${tag}"?`,
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.use.tags.splice(this.use.tags.indexOf(tag), 1);
+      },
+      reject: () => {}
+    });
   }
 
 }

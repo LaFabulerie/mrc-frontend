@@ -1,1 +1,22 @@
-<p>{{use.title}}</p>
+<div class="shadow-1 p-2" *ngIf="use">
+  <h2 class="text-center m-0">{{use.title}}</h2>
+  <ul class="list-none pl-0 ">
+    <li *ngFor="let item of use.items" class="flex align-items-center"><i class="pi pi-folder-open mr-2"></i> {{item.room.name}} <i class="pi pi-angle-right mr-2" style="font-size: 1.5rem"></i> <i class="pi pi-folder-open mr-2"></i>{{item.name}}</li>
+  </ul>
+  <div>
+    <p-chip *ngFor="let tag of use.tags" styleClass="mr-2">
+      <div class="p-1 flex align-items-center">
+        #{{tag}}
+        <i class="pi pi-times ml-2 cursor-pointer" (click)="removeTag($event, tag)"></i>
+      </div>
+    </p-chip>
+  </div>
+  <p>{{use.description}}</p>
+  <h4>Services</h4>
+  <div class="border-1" *ngFor="let service of use.services">
+    <p>{{service.title}}</p>
+    <p>{{service.description}}</p>
+    <a>{{service.url}}</a>
+  </div>
+</div>
+<p-confirmPopup></p-confirmPopup>

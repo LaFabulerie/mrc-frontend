@@ -16,7 +16,10 @@ export class DashboardComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.coreService.getRooms().subscribe((rooms: any) => {
+    this.coreService.getRooms({
+      expand: ['items', 'items.uses'],
+      omit : ['video', 'description', 'items.room','items.image', 'items.uses.items', 'items.uses.description']
+    }).subscribe((rooms: any) => {
       rooms.forEach((room: any) => {
         this.data.push({
           label: room.name,

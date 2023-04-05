@@ -10,7 +10,10 @@ export class EditDigitalUseComponent implements OnInit {
   @Input()
   get useId(): number { return this.use.id; }
   set useId(id: number) {
-    this.coreService.getDigitalUse(id).subscribe((use: any) => {
+    this.coreService.getDigitalUse(id, {
+      expand: ['items', 'items.room', 'services', 'services.zone'],
+      omit : ['items.room.video', 'items.room.description', 'items.room.items', 'services.uses']
+    }).subscribe((use: any) => {
       this.use = use;
     });
   }

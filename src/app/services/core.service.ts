@@ -12,11 +12,13 @@ export class CoreService {
   ) { }
 
 
-  getRooms() {
-    return this.http.get(`${environment.apiHost}/api/rooms`);
+  getRooms(params?: any) {
+    const queryParams = new URLSearchParams(params);
+    return this.http.get(`${environment.apiHost}/api/rooms/?${queryParams.toString()}`);
   }
 
-  getDigitalUse(useId: number) {
-    return this.http.get(`${environment.apiHost}/api/digital-uses/${useId}`);
+  getDigitalUse(useId: number, params?: any) {
+    const queryParams = new URLSearchParams(params);
+    return this.http.get(`${environment.apiHost}/api/digital-uses/${useId}/?${queryParams.toString()}`);
   }
 }

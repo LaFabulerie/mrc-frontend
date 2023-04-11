@@ -6,25 +6,45 @@ import { ConfirmationService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { InplaceModule } from 'primeng/inplace';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+import { EditorModule } from 'primeng/editor';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { TagPickerDialogComponent } from './tag-picker-dialog/tag-picker-dialog.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { WelcomeImageComponent } from './welcome-image/welcome-image.component';
+import { DigitalServiceFormDialogComponent } from './digital-service-form-dialog/digital-service-form-dialog.component';
+import { SharedModule } from '../common/shared.module';
+import { SafeHtmlPipe } from '../common/safe-html.pipe';
 @NgModule({
   declarations: [
-    EditDigitalUseComponent
+    EditDigitalUseComponent,
+    TagPickerDialogComponent,
+    WelcomeImageComponent,
+    DigitalServiceFormDialogComponent,
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     ChipModule,
     ConfirmPopupModule,
     InplaceModule,
     InputTextModule,
     FormsModule,
+    DropdownModule,
+    EditorModule,
+    DynamicDialogModule,
+    AutoCompleteModule,
+    ScrollPanelModule,
+    ReactiveFormsModule,
   ],
   exports: [
-    EditDigitalUseComponent
+    EditDigitalUseComponent,
+    WelcomeImageComponent,
   ],
   providers: [
-    ConfirmationService
+    ConfirmationService,
+    DialogService,
   ]
 })
 export class ComponentsModule { }

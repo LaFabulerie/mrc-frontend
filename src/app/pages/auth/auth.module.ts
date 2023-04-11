@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 import { EmailCheckComponent } from './email-check/email-check.component';
 import { ForgotPwdComponent } from './forgot-pwd/forgot-pwd.component';
 import { ResetPwdComponent } from './reset-pwd/reset-pwd.component';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ResetPwdComponent } from './reset-pwd/reset-pwd.component';
   imports: [
     SharedModule,
     AuthRoutingModule,
+    ComponentsModule
 
   ],
   providers: [

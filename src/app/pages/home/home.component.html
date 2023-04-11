@@ -20,8 +20,9 @@
           </li>
       </ul>
   </div>
-  <div class="flex w-2 justify-content-end text-gray-100">
+  <div class="flex w-2 justify-content-end  align-items-center text-gray-100">
     {{user?.firstName}} {{user?.lastName}}
+    <i class="pi pi-sign-out cursor-pointer ml-2" (click)="signout()"></i>
   </div>
 </div>
 <div class="surface-section">

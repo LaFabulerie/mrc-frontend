@@ -5,6 +5,7 @@ import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from 'src/models/user';
 import  *  as CryptoJS from  'crypto-js';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -41,15 +42,27 @@ export class AuthService {
     return undefined;
   }
 
+  private storeToken(tokenName: string, tokenValue: string) {
+    localStorage.setItem(tokenName, this.encrypt(JSON.stringify(tokenValue)));
+  }
+
+  private getToken(tokenName: string) {
+    if(localStorage.getItem(tokenName)) {
+      return this.decrypt(localStorage.getItem(tokenName)!);
+    }
+    return "";
+  }
+
   signin(data: any): Observable<any> {
-    return this.http.post<any>(`${environment.apiHost}/api/auth/login/`, data, { withCredentials: true })
+    return this.http.post<any>(`${environment.apiHost}/api/auth/login/`, data)
     .pipe(
       map(resp => {
         const user = resp.user;
-        user.jwtToken = resp.accessToken;
         localStorage.setItem('user', this.encrypt(JSON.stringify(user)));
+        this.storeToken('refreshToken', resp.refreshToken);
+        this.storeToken('accessToken', resp.accessToken);
         this.userSubject.next(user);
-        this.startRefreshTokenTimer();
+        this.startRefreshTokenTimer(resp.accessToken);
         return user;
       })
     );
@@ -58,26 +71,20 @@ export class AuthService {
   logout() {
     this.stopRefreshTokenTimer();
     localStorage.removeItem('user');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('accessToken');
     this.userSubject.next(undefined);
     this.router.navigate(['/auth/signin']);
   }
 
   refreshToken() {
-    return this.http.post<any>(`${environment.apiHost}/api/auth/token/refresh/`, {}, { withCredentials: true })
+    const refresh = this.getToken('refreshToken');
+    return this.http.post<any>(`${environment.apiHost}/api/auth/token/refresh/`, {refresh: refresh})
     .pipe(
       map((resp) => {
-        const user = {
-          id: this.userValue!.id,
-          email: this.userValue!.email,
-          username: this.userValue!.username,
-          firstName: this.userValue!.firstName,
-          lastName: this.userValue!.lastName,
-          jwtToken: resp.accessToken,
-        };
-        localStorage.setItem('user', this.encrypt(JSON.stringify(user)));
-        this.userSubject.next(user);
-        this.startRefreshTokenTimer();
-        return user;
+        this.storeToken('accessToken', resp.accessToken);
+        this.startRefreshTokenTimer(resp.accessToken);
+        return this.userValue;
       })
     );
 }
@@ -116,18 +123,18 @@ export class AuthService {
 
   private refreshTokenTimeout: any;
 
-  private startRefreshTokenTimer() {
-    // parse json object from base64 encoded jwt token
-    const jwtBase64 = this.userValue!.jwtToken!.split('.')[1];
-    const jwtToken = JSON.parse(atob(jwtBase64));
+  private startRefreshTokenTimer(token: string) {
+    this.stopRefreshTokenTimer();
 
-    // set a timeout to refresh the token a minute before it expires
-    const expires = new Date(jwtToken.exp * 1000);
+    const decodedToken: any = jwt_decode(token);
+    const expires = new Date(decodedToken.exp * 1000);
     const timeout = expires.getTime() - Date.now() - (60 * 1000);
     this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
   }
 
   private stopRefreshTokenTimer() {
-    clearTimeout(this.refreshTokenTimeout);
+    if(this.refreshTokenTimeout) {
+      clearTimeout(this.refreshTokenTimeout);
+    }
   }
 }

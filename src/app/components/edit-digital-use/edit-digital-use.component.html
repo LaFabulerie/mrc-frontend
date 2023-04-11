@@ -1,22 +1,61 @@
-<div class="shadow-1 p-2" *ngIf="use">
-  <h2 class="text-center m-0">{{use.title}}</h2>
-  <ul class="list-none pl-0 ">
-    <li *ngFor="let item of use.items" class="flex align-items-center"><i class="pi pi-folder-open mr-2"></i> {{item.room.name}} <i class="pi pi-angle-right mr-2" style="font-size: 1.5rem"></i> <i class="pi pi-folder-open mr-2"></i>{{item.name}}</li>
-  </ul>
-  <div>
-    <p-chip *ngFor="let tag of use.tags" styleClass="mr-2">
+<div *ngIf="use">
+  <input type="text" pInputText [(ngModel)]="use.title" class="mb-2 w-full" (ngModelChange)="saveTitle()"/>
+  <div class="flex justify-content-start align-items-center my-3 ">
+    <span><i class="pi pi-folder-open mr-2" style="font-size: 1.5rem"></i></span>
+    <span>{{use.items[0].room.name}}</span>
+    <span
+      ><i class="pi pi-angle-right mx-2" style="font-size: 2rem"></i
+    ></span>
+    <span>
+      <p-dropdown [options]="allItems" [(ngModel)]="use.items[0]" optionLabel="name" [group]="true" (onChange)="saveItem()">
+        <ng-template let-group pTemplate="group">
+          <i class="pi pi-folder-open mr-2" style="font-size: 1.5rem"></i> {{group.name}}
+      </ng-template>
+      </p-dropdown>
+    </span>
+  </div>
+  <div class="flex flex-wrap my-3">
+    <p-chip *ngFor="let tag of use.tags" styleClass="mr-2 mb-2">
       <div class="p-1 flex align-items-center">
-        #{{tag}}
-        <i class="pi pi-times ml-2 cursor-pointer" (click)="removeTag($event, tag)"></i>
+        #{{ tag }}
+        <i
+          class="pi pi-times ml-2 cursor-pointer"
+          (click)="removeTag($event, tag)"
+        ></i>
       </div>
     </p-chip>
+    <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-small" (click)="showTagDialog()"></p-button>
   </div>
-  <p>{{use.description}}</p>
-  <h4>Services</h4>
-  <div class="border-1" *ngFor="let service of use.services">
-    <p>{{service.title}}</p>
-    <p>{{service.description}}</p>
-    <a>{{service.url}}</a>
+
+  <div class="card">
+    <p-editor [(ngModel)]="use.description" [style]="{ height: '90px' }" (ngModelChange)="saveDescription()">
+        <ng-template pTemplate="header">
+            <span class="ql-formats">
+                <button type="button" class="ql-bold" aria-label="Bold"></button>
+                <button type="button" class="ql-italic" aria-label="Italic"></button>
+                <button type="button" class="ql-underline" aria-label="Underline"></button>
+            </span>
+        </ng-template>
+    </p-editor>
+  </div>
+
+  <div class="flex justify-content-start align-items-center">
+    <h3>Services</h3>
+    <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-small ml-2" (click)="addService()"></p-button>
+  </div>
+
+  <div class="border-1 border-round-md mb-3 surface-border" *ngFor="let service of use.services">
+    <div class="flex justify-content-between p-2 border-bottom-1 surface-border" style="background-color: #f8f9fa;">
+      <h4 class="my-1">{{ service.title }} <span *ngIf="service.zone"><i class="pi pi-map-marker mx-1"></i>{{service.zone}}</span></h4>
+      <div>
+        <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-small mr-1" (click)="editService(service)"></p-button>
+        <p-button icon="pi pi-trash" styleClass="p-button-rounded  p-button-danger p-button-small" (click)="removeService($event, service)"></p-button>
+      </div>
+    </div>
+    <div class="p-2">
+      <span class="text-600"><i class="pi pi-globe mr-2"></i><a href="{{service.url}}" target="_blank" class="text-700">{{ service.url }}</a></span>
+      <p [innerHtml]="service.description | safeHtml"></p>
+    </div>
   </div>
 </div>
 <p-confirmPopup></p-confirmPopup>

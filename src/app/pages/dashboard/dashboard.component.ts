@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TreeNode } from 'primeng/api';
+import { ConfirmationService, TreeNode } from 'primeng/api';
+import { Observable } from 'rxjs';
+import { DigitalUse, Item } from 'src/app/models/use';
 import { CoreService } from 'src/app/services/core.service';
 
 @Component({
@@ -12,57 +14,73 @@ export class DashboardComponent implements OnInit{
   data: TreeNode[] = [];
   selectedNode!: TreeNode;
   suggestions: any[] = [];
-  digitalUses: any[] = [];
+
+  saving: boolean = false;
+  saved: boolean = false;
 
   constructor(
-    private coreService: CoreService
+    private coreService: CoreService,
+    private confirmationService: ConfirmationService,
   ) {
   }
 
   ngOnInit(): void {
-    this.coreService.getRooms({
-      expand: ['items', 'items.uses'],
-      omit : ['video', 'description', 'items.room','items.image', 'items.uses.items', 'items.uses.description']
-    }).subscribe((rooms: any) => {
-      rooms.forEach((room: any) => {
-        this.data.push({
-          label: room.name,
-          data: room.id,
-          type: 'room',
-          expandedIcon: 'pi pi-folder-open',
-          collapsedIcon: 'pi pi-folder',
-          children: room.items.map((item: any) => {
-            return {
-              label: item.name,
-              data: item.id,
-              type: 'item',
+    this.coreService.digitalUses$.subscribe((uses: DigitalUse[]) => {
+      this.data = [];
+      uses.forEach((use: DigitalUse) => {
+        const newUse = {
+          label: use.title,
+          data: use.id,
+          type: 'use',
+          icon: 'pi pi-file',
+          leaf: true
+        }
+        use.items.forEach((item: Item) => {
+          let room = this.data.find((node: TreeNode) => node.type === 'room' && node.data === item.room.id)
+          if(!room) {
+            this.data.push({
+              label: item.room.name,
+              data: item.room.id,
+              type: 'room',
               expandedIcon: 'pi pi-folder-open',
               collapsedIcon: 'pi pi-folder',
-              children: item.uses.map((use: any) => {
-                this.digitalUses.push(use);
-                return {
-                  label: use.title,
-                  data: use.id,
-                  type: 'use',
-                  icon: 'pi pi-file',
-                  leaf: true
-                };
-              })
-            };
-          })
+              children: [{
+                label: item.name,
+                data: item.id,
+                type: 'item',
+                expandedIcon: 'pi pi-folder-open',
+                collapsedIcon: 'pi pi-folder',
+                children: [newUse]
+              }]
+            });
+          } else {
+            let _item = room.children!.find((node: TreeNode) => node.type === 'item' && node.data === item.id);
+            if(!_item) {
+              room.children!.push({
+                label: item.name,
+                data: item.id,
+                type: 'item',
+                expandedIcon: 'pi pi-folder-open',
+                collapsedIcon: 'pi pi-folder',
+                children: [newUse]
+              });
+            } else {
+              _item.children!.push(newUse);
+            }
+          }
         });
       });
       this._selectFirstUseNode(this.data);
-    });
+    })
   }
 
-  private _selectFirstUseNode(nodes: any[]) {
+  private _selectFirstUseNode(nodes: TreeNode[]) {
     for(let i = 0; i < nodes.length; i++) {
       if(nodes[i].type === 'use') {
         this.selectedNode = nodes[i];
         return true;
       } else if(nodes[i].children) {
-        const res = this._selectFirstUseNode(nodes[i].children);
+        const res = this._selectFirstUseNode(nodes[i].children!);
         if(res) {
           nodes[i].expanded = true;
           return true;
@@ -72,13 +90,13 @@ export class DashboardComponent implements OnInit{
     return false;
   }
 
-  private _selectNodeById(nodes: any[], id: number) {
+  private _selectNodeById(nodes: TreeNode[], id: number) {
     for(let i = 0; i < nodes.length; i++) {
       if(nodes[i].type === 'use' && nodes[i].data === id) {
         this.selectedNode = nodes[i];
         return true;
       } else if(nodes[i].children) {
-        const res = this._selectNodeById(nodes[i].children, id);
+        const res = this._selectNodeById(nodes[i].children!, id);
         if(res) {
           nodes[i].expanded = true;
           return true;
@@ -88,7 +106,7 @@ export class DashboardComponent implements OnInit{
     return false;
   }
 
-  private _selectNode(node: any){
+  private _selectNode(node: TreeNode){
     if(node.type === 'use') {
       this.selectedNode = node;
     } else {
@@ -102,7 +120,7 @@ export class DashboardComponent implements OnInit{
 
   search(event: any){
     if(event.query.length > 2) {
-      this.suggestions = this.digitalUses.filter((use: any) => {
+      this.suggestions = this.coreService.digitalUses.filter((use: DigitalUse) => {
         const titleTest = use.title.toLowerCase().indexOf(event.query.toLowerCase()) > -1
         const tagTest = use.tags.filter((tag: any) => tag.toLowerCase().indexOf(event.query.toLowerCase()) > -1).length > 0;
         return titleTest || tagTest;
@@ -110,7 +128,37 @@ export class DashboardComponent implements OnInit{
     }
   }
 
-  onSuggestionSelect(use: any){
+  onSuggestionSelect(use: DigitalUse){
     this._selectNodeById(this.data, use.id);
+  }
+
+
+  useSaved() {
+    this.saving = true;
+    this.saved = false;
+    setTimeout(() => {
+      this.saving = false;
+      this.saved = true;
+      setTimeout(() => {
+        this.saved = false;
+      }, 1000);
+    }, 2000);
+  }
+
+
+  removeDigitalUse(event: Event, useId?: DigitalUse) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: `Êtes-vous sûr de vouloir supprimer cette fiche usage ?`,
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Oui',
+      acceptIcon: 'pi pi-check',
+      rejectLabel: 'Non',
+      rejectIcon: 'pi pi-times',
+      accept: () => {
+        this.coreService.deleteDigitalUse(useId || this.selectedNode.data);
+      },
+      reject: () => {}
+    });
   }
 }

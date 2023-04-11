@@ -1,3 +1,8 @@
+export type Area = {
+  id: number;
+  name: string;
+}
+
 export type Room = {
   id: number;
   name: string;
@@ -32,5 +37,5 @@ export type DigitalService = {
   description: string;
   slug: string;
   url: string;
-  zone: string
+  area: Area;
 };

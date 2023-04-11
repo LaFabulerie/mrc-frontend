@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { CoreService } from 'src/app/services/core.service';
 
 @Component({
   selector: 'app-digital-service-form-dialog',
@@ -11,11 +10,6 @@ import { CoreService } from 'src/app/services/core.service';
 export class DigitalServiceFormDialogComponent implements OnInit {
 
   serviceForm!: FormGroup;
-
-  zones = [
-    {label: 'National', value: 'National'},
-    {label: 'Local', value: 'Local'},
-  ];
 
   constructor(
     public ref: DynamicDialogRef,
@@ -32,7 +26,7 @@ export class DigitalServiceFormDialogComponent implements OnInit {
     this.serviceForm = this.fb.group({
       title: [service ? service.title : '' , [Validators.required]],
       description: [service ? service.description : '', [Validators.required]],
-      zone: [service ? service.zone : '', [Validators.required]],
+      areaId: [service ? service.area.id : null, [Validators.required]],
       url: [service ? service.url : '', [Validators.required, Validators.pattern(urlRegex)]],
     });
 

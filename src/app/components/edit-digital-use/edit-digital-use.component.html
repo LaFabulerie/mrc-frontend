@@ -46,7 +46,7 @@
 
   <div class="border-1 border-round-md mb-3 surface-border" *ngFor="let service of use.services">
     <div class="flex justify-content-between p-2 border-bottom-1 surface-border" style="background-color: #f8f9fa;">
-      <h4 class="my-1">{{ service.title }} <span *ngIf="service.zone"><i class="pi pi-map-marker mx-1"></i>{{service.zone}}</span></h4>
+      <h4 class="my-1">{{ service.title }} <span *ngIf="service.area"><i class="pi pi-map-marker mx-1"></i>{{service.area.name}}</span></h4>
       <div>
         <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-small mr-1" (click)="editService(service)"></p-button>
         <p-button icon="pi pi-trash" styleClass="p-button-rounded  p-button-danger p-button-small" (click)="removeService($event, service)"></p-button>

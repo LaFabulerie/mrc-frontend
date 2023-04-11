@@ -23,8 +23,4 @@ export class AppComponent implements OnInit {
     this.primengConfig.ripple = true;
     this.translateService.setDefaultLang('fr');
   }
-
-  logout() {
-    this.authService.logout();
-  }
 }

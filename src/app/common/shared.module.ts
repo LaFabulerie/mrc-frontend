@@ -4,11 +4,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
+import { SafeHtmlPipe } from './safe-html.pipe';
 
 @NgModule({
   imports:      [
   ],
-  declarations: [],
+  declarations: [
+    SafeHtmlPipe,
+  ],
   exports: [
     CommonModule,
     FormsModule,
@@ -16,6 +19,7 @@ import { ToastModule } from 'primeng/toast';
     ButtonModule,
     InputTextModule,
     ToastModule,
+    SafeHtmlPipe,
   ]
 })
 export class SharedModule { }

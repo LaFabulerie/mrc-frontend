@@ -5,8 +5,7 @@ export function appInitializer(authService: AuthService) {
     return () => authService.refreshToken()
         .pipe(
 
-            catchError(() => {
-              authService.logout();
+            catchError((err) => {
               return of()
             })
         );

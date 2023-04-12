@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DigitalService, DigitalUse } from 'src/app/models/use';
 import { CoreService } from 'src/app/services/core.service';
@@ -18,8 +18,8 @@ export class EditDigitalUseComponent implements OnInit {
   get useId(): number { return this.use.id; }
   set useId(id: number) {
     this.coreService.getDigitalUse(id, {
-      expand: ['items', 'items.room', 'services'],
-      omit : ['items.room.video', 'items.room.description', 'items.room.items', 'services.uses']
+      expand: ['items', 'items.room', 'services', 'services.area'],
+      omit : ['items.room.video', 'items.room.description', 'items.room.items', 'services.use']
     }).subscribe((use: any) => {
       this.use = use;
     });
@@ -36,7 +36,6 @@ export class EditDigitalUseComponent implements OnInit {
     private coreService: CoreService,
     private confirmationService: ConfirmationService,
     private dialogService: DialogService,
-    private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
@@ -128,7 +127,7 @@ export class EditDigitalUseComponent implements OnInit {
     });
 
     this.ref.onClose.subscribe((data: any) => {
-      this.coreService.updateDigitalService(service.id, data).subscribe((serv) => {
+      this.coreService.updateDigitalService(service.id, data, {expand: ['area'], omit: ['use']}).subscribe((serv) => {
         const idx  = this.use.services.findIndex((s: DigitalService) => s.id === service.id);
         this.use.services[idx] = serv
       });
@@ -150,7 +149,7 @@ export class EditDigitalUseComponent implements OnInit {
 
     this.ref.onClose.subscribe((data: any) => {
       data['useId'] = this.use.id;
-      this.coreService.createDigitalService(data).subscribe((serv) => {
+      this.coreService.createDigitalService(data, {expand: ['area'], omit: ['use']}).subscribe((serv) => {
         this.use.services.push(serv)
       });
     });

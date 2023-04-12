@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { DigitalService, DigitalUse } from '../models/use';
+import { Area, DigitalService, DigitalUse } from '../models/use';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +59,10 @@ export class CoreService {
 
   getTags(): Observable<string[]> {
     return this.http.get<string[]>(`${environment.apiHost}/api/tags/`);
+  }
+
+  getAreas() : Observable<Area[]> {
+    return this.http.get<Area[]>(`${environment.apiHost}/api/areas/`);
   }
 
   deleteDigitalService(serviceId: number) {

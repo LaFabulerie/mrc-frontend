@@ -10,12 +10,14 @@
   </div>
   <div class="field">
     <label for="zone" class="w-full">Zone</label>
-    <!-- <p-dropdown
-      id="zone"
-      [options]="zones"
-      formControlName="zone"
+    <p-dropdown
+      id="area"
+      [options]="areas"
+      formControlName="areaId"
       appendTo="body"
-    ></p-dropdown> -->
+      optionLabel="name"
+      optionValue="id"
+    ></p-dropdown>
   </div>
   <div class="field">
     <label for="url">Lien</label>

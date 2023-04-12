@@ -43,12 +43,12 @@ export class AuthService {
   }
 
   private storeToken(tokenName: string, tokenValue: string) {
-    localStorage.setItem(tokenName, this.encrypt(JSON.stringify(tokenValue)));
+    localStorage.setItem(tokenName, this.encrypt(tokenValue));
   }
 
   getToken(tokenName: string) {
     if(localStorage.getItem(tokenName)) {
-      return JSON.parse(this.decrypt(localStorage.getItem(tokenName)!));
+      return this.decrypt(localStorage.getItem(tokenName)!);
     }
     return "";
   }
@@ -81,8 +81,8 @@ export class AuthService {
     return this.http.post<any>(`${environment.apiHost}/api/auth/token/refresh/`, {refresh: refresh})
     .pipe(
       map((resp) => {
-        this.storeToken('accessToken', resp.accessToken);
-        this.startRefreshTokenTimer(resp.accessToken);
+        this.storeToken('accessToken', resp.access);
+        this.startRefreshTokenTimer(resp.access);
         return this.userValue;
       })
     );

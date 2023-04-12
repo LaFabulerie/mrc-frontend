@@ -72,7 +72,6 @@ export class EditDigitalUseComponent implements OnInit {
   }
 
   saveItem() {
-    console.log("Saving use item")
     this.coreService.updateDigitalUse(this.use.id, {
       itemIds: [this.use.items[0].id],
     }).subscribe(() => {
@@ -81,7 +80,6 @@ export class EditDigitalUseComponent implements OnInit {
   }
 
   saveTitle() {
-    console.log("Saving title")
     this.coreService.updateDigitalUse(this.use.id, {
       title: this.use.title,
     }).subscribe(() => {
@@ -90,7 +88,6 @@ export class EditDigitalUseComponent implements OnInit {
   }
 
   saveDescription() {
-    console.log("Saving description")
     this.coreService.updateDigitalUse(this.use.id, {
       description: this.use.description,
     }).subscribe(() => {

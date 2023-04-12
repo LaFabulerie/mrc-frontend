@@ -20,7 +20,6 @@ export class DigitalServiceFormDialogComponent implements OnInit {
 
   ngOnInit(): void {
     const service = this.config.data.service;
-    console.log(service)
     const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
 
     this.serviceForm = this.fb.group({

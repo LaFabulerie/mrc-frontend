@@ -46,9 +46,9 @@ export class AuthService {
     localStorage.setItem(tokenName, this.encrypt(JSON.stringify(tokenValue)));
   }
 
-  private getToken(tokenName: string) {
+  getToken(tokenName: string) {
     if(localStorage.getItem(tokenName)) {
-      return this.decrypt(localStorage.getItem(tokenName)!);
+      return JSON.parse(this.decrypt(localStorage.getItem(tokenName)!));
     }
     return "";
   }
@@ -74,7 +74,6 @@ export class AuthService {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('accessToken');
     this.userSubject.next(undefined);
-    this.router.navigate(['/auth/signin']);
   }
 
   refreshToken() {

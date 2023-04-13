@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, TreeNode } from 'primeng/api';
 import { DigitalUse, Item } from 'src/app/models/use';
+import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { CoreService } from 'src/app/services/core.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-catalog',
+  templateUrl: './catalog.component.html',
+  styleUrls: ['./catalog.component.scss']
 })
-export class DashboardComponent implements OnInit{
+export class CatalogComponent implements OnInit{
+
+  user?: User | null;
 
   data: TreeNode[] = [];
   selectedNode!: TreeNode | null;
@@ -25,7 +29,9 @@ export class DashboardComponent implements OnInit{
   constructor(
     private coreService: CoreService,
     private confirmationService: ConfirmationService,
+    private authService: AuthService,
   ) {
+    this.authService.user$.subscribe((x) => (this.user = x));
   }
 
   ngOnInit(): void {
@@ -74,7 +80,7 @@ export class DashboardComponent implements OnInit{
           }
         });
       });
-      console.log("Building tree", this.firstLoad, this.newCreatedUse, this.updatedUse)
+
       if(this.firstLoad && this.data.length > 0){
         this._selectFirstUseNode(this.data);
         this.firstLoad = false;
@@ -129,6 +135,7 @@ export class DashboardComponent implements OnInit{
   }
 
   onNodeSelect(event: any){
+    this.digitalUseCreation = false;
     this._selectNode(event.node);
   }
 

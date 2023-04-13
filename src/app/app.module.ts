@@ -14,7 +14,7 @@ import { AuthService } from './services/auth.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './pages/auth/auth.module';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { CatalogComponent } from './pages/catalog/catalog.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ComponentsModule } from './components/components.module';
@@ -32,7 +32,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
+    CatalogComponent,
     SettingsComponent,
     HomeComponent,
   ],

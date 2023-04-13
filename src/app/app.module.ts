@@ -24,6 +24,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TreeModule } from 'primeng/tree';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,7 @@ import { ButtonModule } from 'primeng/button';
     TreeModule,
     AutoCompleteModule,
     ButtonModule,
-
+    FontAwesomeModule,
     TranslateModule.forRoot(),
   ],
   providers: [
@@ -55,4 +59,8 @@ import { ButtonModule } from 'primeng/button';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas, far);
+  }
+}

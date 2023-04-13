@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DigitalService, DigitalUse } from 'src/app/models/use';
+import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { CoreService } from 'src/app/services/core.service';
 import { DigitalServiceFormDialogComponent } from '../digital-service-form-dialog/digital-service-form-dialog.component';
 import { TagPickerDialogComponent } from '../tag-picker-dialog/tag-picker-dialog.component';
@@ -33,6 +35,7 @@ export class EditDigitalUseComponent implements OnInit {
         this.use = use;
       });
   }
+  user?: User | null;
 
   allItems: any[] = [];
   currentItem: any = null;
@@ -44,8 +47,11 @@ export class EditDigitalUseComponent implements OnInit {
   constructor(
     private coreService: CoreService,
     private confirmationService: ConfirmationService,
-    private dialogService: DialogService
-  ) {}
+    private dialogService: DialogService,
+    private authService: AuthService,
+  ) {
+    this.authService.user$.subscribe((x) => (this.user = x));
+  }
 
   ngOnInit(): void {
     this.coreService

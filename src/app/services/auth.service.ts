@@ -3,16 +3,16 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from 'src/models/user';
 import  *  as CryptoJS from  'crypto-js';
 import jwt_decode from 'jwt-decode';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private userSubject: BehaviorSubject<User | undefined>;
-  public user: Observable<User | undefined>;
+  public user$: Observable<User | undefined>;
 
   constructor(
     private http: HttpClient,
@@ -20,7 +20,7 @@ export class AuthService {
 
   ) {
     this.userSubject = new BehaviorSubject<User | undefined>(undefined);
-    this.user = this.userSubject.asObservable();
+    this.user$ = this.userSubject.asObservable();
   }
 
   private encrypt(txt: string): string {

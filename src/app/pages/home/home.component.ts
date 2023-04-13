@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TreeNode } from 'primeng/api';
+import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +20,7 @@ export class HomeComponent{
     private authService: AuthService,
     private router: Router,
   ) {
-    this.user = this.authService.userValue;
+    this.authService.user$.subscribe((x) => (this.user = x));
 
   }
 

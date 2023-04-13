@@ -7,14 +7,14 @@
   <div class="hidden lg:flex absolute lg:static left-0 top-100 z-1 shadow-2 lg:shadow-none w-full">
       <ul class="list-none p-0 m-0 flex">
           <li>
-              <a routerLink="/dashboard"  pRipple class="text-gray-100 flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150">
-                  <i class="pi pi-home mr-2"></i>
-                  <span>Dashboard</span>
+              <a routerLink="/catalogue"  pRipple class="text-gray-100 flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150">
+                  <fa-icon [icon]="['fas', 'rectangle-list']" class="mr-2"></fa-icon>
+                  <span>La catalogue</span>
               </a>
           </li>
           <li class="lg:relative">
-            <a routerLink="/settings"  pRipple class="text-gray-100 flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150">
-              <i class="pi pi-cog mr-2"></i>
+            <a routerLink="/configuration"  pRipple class="text-gray-100 flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150">
+              <fa-icon [icon]="['fas', 'gears']" class="mr-2"></fa-icon>
               <span>Configuration</span>
             </a>
           </li>

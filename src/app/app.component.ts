@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
-import { User } from 'src/models/user';
 import { AuthService } from './services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
+import { User } from './models/user';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private translateService: TranslateService
   ) {
-    this.authService.user.subscribe((x) => (this.user = x));
+    this.authService.user$.subscribe((x) => (this.user = x));
   }
 
   ngOnInit() {

@@ -34,23 +34,23 @@ export class CoreService {
     return this.http.get(`${environment.apiHost}/api/digital-uses/${useId}/?${queryParams.toString()}`);
   }
 
-  private loadDigitalUses(params?: any) {
+  loadDigitalUses(params?: any) {
     const queryParams = new URLSearchParams(params ? params : this.defaultFlexFields);
     this.http.get<DigitalUse[]>(`${environment.apiHost}/api/digital-uses/?${queryParams.toString()}`).subscribe((uses: DigitalUse[]) => {
       this.digitalUsesSubject.next(uses);
     });
   }
 
-  updateDigitalUse(useId: number, data: any) {
-    return this.http.patch(`${environment.apiHost}/api/digital-uses/${useId}/`, data).pipe(
-      tap(() => this.loadDigitalUses())
-    );
+  createDigitalUse(data: any): Observable<DigitalUse> {
+    return this.http.post<DigitalUse>(`${environment.apiHost}/api/digital-uses/`, data);
+  }
+
+  updateDigitalUse(useId: number, data: any): Observable<DigitalUse> {
+    return this.http.patch<DigitalUse>(`${environment.apiHost}/api/digital-uses/${useId}/`, data);
   }
 
   deleteDigitalUse(useId: number) {
-    return this.http.delete(`${environment.apiHost}/api/digital-uses/${useId}/`).pipe(
-      tap(() => this.loadDigitalUses())
-    );
+    return this.http.delete(`${environment.apiHost}/api/digital-uses/${useId}/`);
   }
 
   get digitalUses(): DigitalUse[] {

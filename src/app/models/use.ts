@@ -29,6 +29,7 @@ export type DigitalUse = {
   tags: string[];
   items: Item[];
   services: DigitalService[];
+  itemIds: number[];
 };
 
 export type DigitalService = {

@@ -4,7 +4,7 @@
       <div>
         <span class="mr-3 header">Catalogue des fiches usages</span>
       </div>
-      <p-button icon="pi pi-plus" label="Ajouter un usage" styleClass="p-button-outlined p-button-primary p-button-sm"></p-button>
+      <p-button icon="pi pi-plus" label="Ajouter un usage" styleClass="p-button-outlined p-button-primary p-button-sm" (click)="newDigitalUse()"></p-button>
     </div>
     <div class="p-input w-full">
       <div class="p-inputgroup">
@@ -29,7 +29,7 @@
         <span class="cursor-pointer text-xl">{{node.label}} <span class="text-600 text-sm">({{node.children.length}} usages)</span></span>
       </ng-template>
       <ng-template let-node pTemplate="use">
-        <div class="cursor-pointer text-xl flex align-items-center justify-content-between p-2" [ngClass]="{'border-bottom-2 border-orange-300' : node.data === selectedNode.data}">
+        <div class="cursor-pointer text-xl flex align-items-center justify-content-between p-2" [ngClass]="{'border-bottom-2 border-orange-300' : selectedNode && node.data === selectedNode!.data}">
           <div>
             {{node.label}}
           </div>
@@ -40,7 +40,7 @@
       </ng-template>
     </p-tree>
   </div>
-  <div class="col-6">
+  <div class="col-6" *ngIf="selectedNode">
     <div class="w-full my-3 flex justify-content-between align-items-center">
       <div>
         <span class="mr-3 header ">Fiche usage</span>
@@ -49,8 +49,18 @@
       </div>
       <p-button icon="pi pi-trash" label="Supprimer" styleClass="p-button-outlined p-button-danger p-button-sm" (click)="removeDigitalUse($event)"></p-button>
     </div>
-    <div *ngIf="selectedNode">
-      <app-edit-digital-use [useId]="selectedNode.data" (onSave)="useSaved()"></app-edit-digital-use>
+    <div>
+      <app-edit-digital-use [useId]="selectedNode.data" (onSave)="useSaved($event)"></app-edit-digital-use>
+    </div>
+  </div>
+  <div class="col-6" *ngIf="digitalUseCreation">
+    <div class="w-full my-3 flex justify-content-between align-items-center">
+      <div>
+        <span class="mr-3 header ">Nouvel usage</span>
+      </div>
+    </div>
+    <div>
+      <app-new-digital-use (onSave)="createDigitalUse($event)"></app-new-digital-use>
     </div>
   </div>
 </div>

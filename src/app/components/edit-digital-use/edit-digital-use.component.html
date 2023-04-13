@@ -7,7 +7,7 @@
       ><i class="pi pi-angle-right mx-2" style="font-size: 2rem"></i
     ></span>
     <span>
-      <p-dropdown [options]="allItems" [(ngModel)]="use.items[0]" optionLabel="name" [group]="true" (onChange)="saveItem()">
+      <p-dropdown [options]="allItems" [(ngModel)]="use.itemIds[0]" optionLabel="name" optionValue="id" [group]="true" (onChange)="saveItem()">
         <ng-template let-group pTemplate="group">
           <i class="pi pi-folder-open mr-2" style="font-size: 1.5rem"></i> {{group.name}}
       </ng-template>
@@ -57,5 +57,6 @@
       <p [innerHtml]="service.description | safeHtml"></p>
     </div>
   </div>
+  <p *ngIf="use.services.length === 0" class="m-0">Aucun service n'a été lié à cet usage</p>
 </div>
 <p-confirmPopup></p-confirmPopup>

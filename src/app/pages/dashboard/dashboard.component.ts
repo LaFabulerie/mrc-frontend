@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, TreeNode } from 'primeng/api';
-import { Observable } from 'rxjs';
 import { DigitalUse, Item } from 'src/app/models/use';
 import { CoreService } from 'src/app/services/core.service';
 
@@ -12,11 +11,16 @@ import { CoreService } from 'src/app/services/core.service';
 export class DashboardComponent implements OnInit{
 
   data: TreeNode[] = [];
-  selectedNode!: TreeNode;
+  selectedNode!: TreeNode | null;
   suggestions: any[] = [];
 
+  firstLoad: boolean = true;
   saving: boolean = false;
   saved: boolean = false;
+
+  digitalUseCreation: boolean = false;
+  newCreatedUse: DigitalUse | null = null;
+  updatedUse: DigitalUse | null = null;
 
   constructor(
     private coreService: CoreService,
@@ -70,7 +74,17 @@ export class DashboardComponent implements OnInit{
           }
         });
       });
-      this._selectFirstUseNode(this.data);
+      console.log("Building tree", this.firstLoad, this.newCreatedUse, this.updatedUse)
+      if(this.firstLoad && this.data.length > 0){
+        this._selectFirstUseNode(this.data);
+        this.firstLoad = false;
+      } else if(this.newCreatedUse) {
+        this._selectNodeById(this.data, this.newCreatedUse.id);
+        this.newCreatedUse = null;
+      } else if(this.updatedUse) {
+        this._selectNodeById(this.data, this.updatedUse.id);
+        this.updatedUse = null;
+      }
     })
   }
 
@@ -133,7 +147,9 @@ export class DashboardComponent implements OnInit{
   }
 
 
-  useSaved() {
+  useSaved(use: DigitalUse) {
+    this.updatedUse = use;
+    this.coreService.loadDigitalUses();
     this.saving = true;
     this.saved = false;
     setTimeout(() => {
@@ -156,9 +172,25 @@ export class DashboardComponent implements OnInit{
       rejectLabel: 'Non',
       rejectIcon: 'pi pi-times',
       accept: () => {
-        this.coreService.deleteDigitalUse(useId || this.selectedNode.data);
+        this.coreService.deleteDigitalUse(useId || this.selectedNode!.data).subscribe(_ => {
+          this.coreService.loadDigitalUses();
+        });
       },
       reject: () => {}
     });
   }
+
+  newDigitalUse() {
+    this.selectedNode = null;
+    this.digitalUseCreation = true;
+  }
+
+  createDigitalUse(data: any) {
+    this.coreService.createDigitalUse(data).subscribe((use: DigitalUse) => {
+      this.digitalUseCreation = false;
+      this.newCreatedUse = use;
+      this.coreService.loadDigitalUses();
+    });
+  }
+
 }

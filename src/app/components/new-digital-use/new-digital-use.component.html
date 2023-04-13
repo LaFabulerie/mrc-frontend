@@ -1,0 +1,60 @@
+<form [formGroup]="useForm" (submit)="save()">
+  <div class="field">
+    <label for="title">Titre</label>
+    <input id="title" type="text" pInputText formControlName="title" class="mb-2 w-full"/>
+  </div>
+  <div class="field">
+    <label for="item" class="w-full">Objet associé</label>
+    <div class="flex justify-content-start align-items-center mb-3 ">
+      <span><i class="pi pi-folder-open mr-2" style="font-size: 1.5rem"></i></span>
+      <span *ngIf="currentRoom">{{currentRoom.name}}</span>
+      <span
+        ><i class="pi pi-angle-right mx-2" style="font-size: 2rem"></i
+      ></span>
+      <span>
+        <p-dropdown id="item" [options]="allItems" formControlName="itemId" optionLabel="name" optionValue="id" [group]="true">
+          <ng-template let-group pTemplate="group">
+            <i class="pi pi-folder-open mr-2" style="font-size: 1.5rem"></i> {{group.name}}
+        </ng-template>
+        </p-dropdown>
+      </span>
+    </div>
+  </div>
+  <div class="field">
+    <div class="flex align-items-center mb-2">
+      <label for="tags" class="mr-2">
+        Tags
+      </label>
+      <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-small" (click)="showTagDialog()"></p-button>
+    </div>
+    <div class="flex flex-wrap mb-3">
+      <p-chip *ngFor="let tag of useTags" styleClass="mr-2 mb-2">
+        <div class="p-1 flex align-items-center">
+          #{{ tag }}
+          <i
+            class="pi pi-times ml-2 cursor-pointer"
+            (click)="removeTag($event, tag)"
+          ></i>
+        </div>
+      </p-chip>
+    </div>
+  </div>
+  <div class="field">
+    <label for="description">Description</label>
+    <p-editor formControlName="description" [style]="{ height: '90px' }">
+        <ng-template pTemplate="header">
+            <span class="ql-formats">
+                <button type="button" class="ql-bold" aria-label="Bold"></button>
+                <button type="button" class="ql-italic" aria-label="Italic"></button>
+                <button type="button" class="ql-underline" aria-label="Underline"></button>
+            </span>
+        </ng-template>
+    </p-editor>
+  </div>
+  <p class="font-italic">L'ajout de service en lien avec cette usage se fait une fois l'usage enregistré.</p>
+  <div class="flex justify-content-end">
+    <button type="submit" pButton icon="pi pi-check" label="Enregistrer" [disabled]="!useForm.valid" class="p-button-primary p-button-sm"></button>
+  </div>
+</form>
+
+

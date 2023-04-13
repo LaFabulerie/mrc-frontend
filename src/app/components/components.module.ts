@@ -17,12 +17,14 @@ import { WelcomeImageComponent } from './welcome-image/welcome-image.component';
 import { DigitalServiceFormDialogComponent } from './digital-service-form-dialog/digital-service-form-dialog.component';
 import { SharedModule } from '../common/shared.module';
 import { SafeHtmlPipe } from '../common/safe-html.pipe';
+import { NewDigitalUseComponent } from './new-digital-use/new-digital-use.component';
 @NgModule({
   declarations: [
     EditDigitalUseComponent,
     TagPickerDialogComponent,
     WelcomeImageComponent,
     DigitalServiceFormDialogComponent,
+    NewDigitalUseComponent,
   ],
   imports: [
     SharedModule,
@@ -41,6 +43,7 @@ import { SafeHtmlPipe } from '../common/safe-html.pipe';
   exports: [
     EditDigitalUseComponent,
     WelcomeImageComponent,
+    NewDigitalUseComponent,
   ],
   providers: [
     ConfirmationService,

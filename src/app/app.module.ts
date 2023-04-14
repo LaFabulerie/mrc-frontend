@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import {StyleClassModule} from 'primeng/styleclass';
 import { appInitializer } from './common/app.initializer';
 import { JwtInterceptor } from './common/jwt.interceptor';
 import { ErrorInterceptor } from './common/error.interceptor';
@@ -24,8 +23,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TreeModule } from 'primeng/tree';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
-import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
+import {StyleClassModule} from 'primeng/styleclass';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
 
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 
@@ -46,9 +50,15 @@ import { far } from '@fortawesome/free-regular-svg-icons';
     StyleClassModule,
     AuthModule,
     ComponentsModule,
+
     TreeModule,
     AutoCompleteModule,
     ButtonModule,
+    DropdownModule,
+    DialogModule,
+    InputTextModule,
+    TableModule,
+
     FontAwesomeModule,
     TranslateModule.forRoot(),
   ],

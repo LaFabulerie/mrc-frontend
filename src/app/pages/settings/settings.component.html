@@ -1,3 +1,97 @@
-<div class="flex">
+<div class="grid">
+  <div class="col-6">
+    <div class="border-1 surface-border shadow-2 ml-2 border-round p-3">
+      <ng-container  *ngIf="!currentUser.org">
+        <p>Il semble que vous n'apparteniez à aucune structure.</p>
+        <div class="flex align-items-center mb-3">
+          <label for="firstname4" class="w-4">Rejoindre une structure existante</label>
+          <p-dropdown class="org-dropdown" [options]="orgs" [(ngModel)]="selectedOrgId" optionLabel="name" optionValue="id" styleClass="w-full" emptyMessage="Aucune structure existante" placeholder="Rechercher un structure"></p-dropdown>
+          <button type="button" pButton label="Rejoindre" class="p-button-sm p-button-primary w-3" (click)="saveOrg()" [disabled]="selectedOrgId === -1"></button>
+        </div>
+        <button type="button" pButton label="ou créer une nouvelle structure" class="p-button-sm p-button-primary p-2" (click)="showNewOrgDialog()"></button>
+      </ng-container>
+      <ng-container  *ngIf="currentUser.org">
+        <div class="flex align-items-center justify-content-between">
+          <p class="inline">Vous faites partie de la structure : <span>{{currentUser.org.name}}</span></p>
+          <button type="button" pButton label="Quitter la structure" class="p-button-sm p-button-primary p-2 ml-2" (click)="leaveOrg()"></button>
+        </div>
+        Membres de la structure :
+        <ul *ngIf="currentOrg">
+          <li *ngFor="let member of currentOrg!.members">{{member.firstName}} {{member.lastName}} <span  class="text-sm font-medium font-italic" *ngIf="member.id === currentUser.id">(vous)</span></li>
+        </ul>
+      </ng-container>
+    </div>
+  </div>
+  <div class="col-6" *ngIf="currentOrg">
+    <div class="border-1 surface-border shadow-2 mr-2 border-round p-3">
+      <h3>Clés d'API de votre structure</h3>
+      <p-table [value]="currentOrg!.apiKeys">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nom</th>
+            <th>Identifiant</th>
+            <th>Créée le</th>
+            <th>Créée par</th>
+            <th>Valide</th>
+            <th>
+              <button type="button" pButton icon="pi pi-plus" class="p-button-sm p-button-success" (click)="showNewApiKeyDialog()"></button>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-apiKey>
+          <tr>
+            <td>{{apiKey.name}}</td>
+            <td>{{apiKey.prefix}}</td>
+            <td>{{apiKey.createdAt}}</td>
+            <td>{{apiKey.createdBy}}</td>
+            <td *ngIf="!apiKey.revoked"><fa-icon [icon]="['fas', 'circle-check']" style="color:green" size="xl"></fa-icon></td>
+            <td *ngIf="apiKey.revoked"><fa-icon [icon]="['fas', 'circle-xmark']" style="color:red" size="xl"></fa-icon></td>
+            <td>
+              <button [disabled]="apiKey.revoked" type="button" pButton icon="pi pi-trash" class="p-button-sm p-button-danger" (click)="revokeApiKey(apiKey)"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
 
 </div>
+
+<p-dialog header="Nouvelle structure" [(visible)]="newOrgDialogVisible" position="top" [resizable]="false" [draggable]="false">
+  <form [formGroup]="newOrgForm" (submit)="createOrg()">
+    <div class="field">
+      <label for="name">Nom de la structure</label>
+      <input id="name" formControlName="name" pInputText placeholder="Nom de la structure" type="text" class="w-full">
+    </div>
+    <div class="grid">
+      <div class="col-6">
+        <div class="field">
+          <label for="area">Zone d'activité exitante</label>
+          <p-dropdown formControlName="areaId" appendTo="body" [options]="areas" optionLabel="name" optionValue="id" styleClass="w-full" emptyMessage="Aucune zone existante" placeholder="Rechercher un structure"></p-dropdown>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="field">
+          <label for="areaName">ou nouvel zone d'activité</label>
+          <input formControlName="newAreaName" id="areaName" pInputText placeholder="Nom de la structure" type="text" class="w-full" (keydown)="resetAreaId()">
+        </div>
+      </div>
+    </div>
+    <button type="submit" pButton label="Créer" class="p-button-sm p-button-primary"></button>
+  </form>
+</p-dialog>
+
+
+<p-dialog [style]="{width: '500px'}" header="Nouvelle clé d'API" [(visible)]="newApiKeyDialogVisible" position="top" [resizable]="false" [draggable]="false"  (onHide)="closeNewApiKeyDialog()">
+    <div class="field" *ngIf="newApiKeyValue === ''">
+      <label for="name">Désignation de la clé</label>
+      <input id="name" [(ngModel)]="newApiKeyName" pInputText type="text" class="w-full">
+    </div>
+    <div *ngIf="newApiKeyValue !== ''">
+      <p>La clé d'API '{{newApiKeyName}}' est : </p>
+      <p>{{newApiKeyValue}}</p>
+      <p>Veuillez le conserver dans un endroit sûr. Vous ne pourrez plus le revoir.</p>
+    </div>
+    <button *ngIf="newApiKeyValue === ''" type="button" pButton label="Créer" class="p-button-sm p-button-primary" [disabled]="newApiKeyName === ''" (click)="saveApiKey()"></button>
+    <button *ngIf="newApiKeyValue !== ''" type="button" pButton label="Fermer" class="p-button-sm p-button-primary" (click)="closeNewApiKeyDialog()"></button>
+</p-dialog>

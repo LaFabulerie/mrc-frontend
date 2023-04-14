@@ -11,6 +11,7 @@ import { User } from '../models/user';
   providedIn: 'root',
 })
 export class AuthService {
+
   private userSubject: BehaviorSubject<User | undefined>;
   public user$: Observable<User | undefined>;
 
@@ -37,9 +38,21 @@ export class AuthService {
     } else if (localStorage.getItem('user')) {
       const user = JSON.parse(this.decrypt(localStorage.getItem('user')!));
       this.userSubject.next(user);
+      console.log(user);
       return user;
     }
     return undefined;
+  }
+
+  updateCurrentUser(data: any) {
+    return this.http.patch<User>(`${environment.apiHost}/api/user/${this.userValue.id}/`, data)
+    .pipe(
+      map(user => {
+        localStorage.setItem('user', this.encrypt(JSON.stringify(user)));
+        this.userSubject.next(user);
+        return user;
+      })
+    );
   }
 
   private storeToken(tokenName: string, tokenValue: string) {

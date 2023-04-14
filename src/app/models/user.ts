@@ -1,8 +1,4 @@
-export type Organization = {
-  id: number;
-  name: string;
-};
-
+import { Organization } from "./org";
 
 export type User = {
   id: number;
@@ -11,5 +7,6 @@ export type User = {
   firstName: string;
   lastName: string;
   isSuperuser: boolean;
-  organization: Organization;
+  org: Organization;
+  orgId: number;
 }

@@ -9,6 +9,7 @@ import { Area, DigitalService, DigitalUse } from '../models/use';
 })
 export class CoreService {
 
+
   private digitalUsesSubject = new BehaviorSubject<DigitalUse[]>([]);
   public digitalUses$ = this.digitalUsesSubject.asObservable();
 
@@ -63,6 +64,10 @@ export class CoreService {
 
   getAreas() : Observable<Area[]> {
     return this.http.get<Area[]>(`${environment.apiHost}/api/areas/`);
+  }
+
+  createArea(data: any): Observable<Area> {
+    return this.http.post<Area>(`${environment.apiHost}/api/areas/`, data);
   }
 
   deleteDigitalService(serviceId: number) {

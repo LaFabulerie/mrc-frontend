@@ -2,7 +2,7 @@
   <div class="flex surface-section border-round shadow-2 w-full">
     <div class="flex-1 flex-column p-6 md:p-8">
          <div class="mb-5">
-             <div class="text-900 text-3xl font-medium mb-3">Bienvenue dans la Maison re-connectée</div>
+             <div class="text-900 text-3xl font-medium mb-3">Bienvenue <span [innerText]="clientMode ? 'dans votre' : 'à la'"></span> Maison Re-Connectée</div>
              <span class="text-600 font-medium mr-2">Vous n'avez pas de compte ?</span>
              <a [routerLink]="['/auth/signup']" class="font-medium no-underline text-blue-500 cursor-pointer">Créez-en un maintenant !</a>
          </div>
@@ -24,7 +24,7 @@
               <small id="password-help" class="p-error block" *ngFor="let err of errors['nonFieldErrors']">{{err}}</small>
             </div>
             <div class="flex align-items-center justify-content-start mb-3">
-                <a [routerLink]="['/auth/verify-email/manual']" class="font-medium no-underline text-blue-500 text-right cursor-pointer mr-2">Email non confirmé ?</a>
+                <a [routerLink]="['/auth/verify-email/manual']" class="font-medium no-underline text-blue-500 text-right cursor-pointer mr-2" *ngIf="!clientMode">Email non confirmé ?</a>
                 <a [routerLink]="['/auth/forgot-password']" class="font-medium no-underline text-blue-500 text-right cursor-pointer">Mot de passe oublié ?</a>
             </div>
             <button type="submit" pButton pRipple label="Connexion" icon="pi pi-user" class="w-full p-3" ></button>

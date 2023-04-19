@@ -4,7 +4,7 @@
       <div>
         <span class="mr-3 header">Catalogue des fiches usages</span>
       </div>
-      <p-button icon="pi pi-plus" label="Ajouter un usage" styleClass="p-button-outlined p-button-primary p-button-sm" (click)="newDigitalUse()" *ngIf="user!.isSuperuser"></p-button>
+      <p-button icon="pi pi-plus" label="Ajouter un usage" styleClass="p-button-outlined p-button-primary p-button-sm" (click)="newDigitalUse()" *ngIf="user!.canEdit()"></p-button>
     </div>
     <div class="p-input w-full">
       <div class="p-inputgroup">
@@ -33,34 +33,28 @@
           <div>
             {{node.label}}
           </div>
-          <div  *ngIf="user!.isSuperuser">
+          <div  *ngIf="user!.canEdit()">
             <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-outlined p-button-danger p-button-small" (click)="removeDigitalUse($event, node.data)"></p-button>
           </div>
         </div>
       </ng-template>
     </p-tree>
   </div>
-  <div class="flex-1 px-2" *ngIf="selectedNode">
+  <div class="flex-1 px-2">
     <div class="w-full my-3 flex justify-content-between align-items-center">
-      <div>
+      <div *ngIf="selectedNode">
         <span class="mr-3 header ">Fiche usage</span>
         <span class="text-xs  text-red-600" *ngIf="saving">( <i class="pi pi-save mr-2"></i>sauvegarde en cours ...)</span>
         <span class="text-xs  text-green-600" *ngIf="saved">( <i class="pi pi-save mr-2"></i>sauvegardé)</span>
       </div>
-      <p-button icon="pi pi-trash" label="Supprimer" styleClass="p-button-outlined p-button-danger p-button-sm" (click)="removeDigitalUse($event)"  *ngIf="user!.isSuperuser"></p-button>
-    </div>
-    <div>
-      <app-edit-digital-use [useId]="selectedNode.data" (onSave)="useSaved($event)"></app-edit-digital-use>
-    </div>
-  </div>
-  <div class="flex-1 px-2" *ngIf="digitalUseCreation">
-    <div class="w-full my-3 flex justify-content-between align-items-center">
-      <div>
+      <div *ngIf="digitalUseCreation">
         <span class="mr-3 header ">Nouvel usage</span>
       </div>
+      <p-button icon="pi pi-trash" label="Supprimer" styleClass="p-button-outlined p-button-danger p-button-sm" (click)="removeDigitalUse($event)"  *ngIf="user!.canEdit() && selectedNode"></p-button>
     </div>
     <div>
-      <app-new-digital-use (onSave)="createDigitalUse($event)"></app-new-digital-use>
+      <app-edit-digital-use [useId]="selectedNode.data" (onSave)="useSaved($event)" *ngIf="selectedNode"></app-edit-digital-use>
+      <app-new-digital-use (onSave)="createDigitalUse($event)" *ngIf="digitalUseCreation"></app-new-digital-use>
     </div>
   </div>
 </div>

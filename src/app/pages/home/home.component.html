@@ -9,7 +9,7 @@
           <li>
               <a routerLink="/catalogue"  pRipple class="text-gray-100 flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150">
                   <fa-icon [icon]="['fas', 'rectangle-list']" class="mr-2"></fa-icon>
-                  <span>La catalogue</span>
+                  <span>Le catalogue</span>
               </a>
           </li>
           <li class="lg:relative">
@@ -20,8 +20,8 @@
           </li>
       </ul>
   </div>
-  <div class="flex w-2 justify-content-end  align-items-center text-gray-100">
-    {{user?.firstName}} {{user?.lastName}}
+  <div class="flex w-2 justify-content-end  align-items-center text-gray-100" *ngIf="user">
+    {{user.firstName}} {{user.lastName}}
     <i class="pi pi-sign-out cursor-pointer ml-2" (click)="signout()"></i>
   </div>
 </div>

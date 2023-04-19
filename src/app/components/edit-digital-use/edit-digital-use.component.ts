@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CoreService } from 'src/app/services/core.service';
 import { DigitalServiceFormDialogComponent } from '../digital-service-form-dialog/digital-service-form-dialog.component';
 import { TagPickerDialogComponent } from '../tag-picker-dialog/tag-picker-dialog.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-edit-digital-use',
@@ -52,7 +53,6 @@ export class EditDigitalUseComponent implements OnInit {
   ) {
     this.authService.user$.subscribe((x) => (this.user = x));
   }
-
   ngOnInit(): void {
     this.coreService
       .getRooms({

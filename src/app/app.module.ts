@@ -14,7 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './pages/auth/auth.module';
 import { CatalogComponent } from './pages/catalog/catalog.component';
-import { SettingsComponent } from './pages/settings/settings.component';
+import { AdminSettingsComponent } from './pages/admin-settings/admin-settings.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ComponentsModule } from './components/components.module';
 
@@ -32,13 +32,15 @@ import { TableModule } from 'primeng/table';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
+import { ClientSettingsComponent } from './pages/client-settings/client-settings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CatalogComponent,
-    SettingsComponent,
+    AdminSettingsComponent,
     HomeComponent,
+    ClientSettingsComponent,
   ],
   imports: [
     BrowserModule,

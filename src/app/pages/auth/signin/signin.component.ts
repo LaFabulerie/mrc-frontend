@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-signin',
@@ -12,6 +13,7 @@ export class SigninComponent implements OnInit{
 
   signinForm: any;
   errors: any;
+  clientMode = environment.mode === 'client';
 
 
   constructor(

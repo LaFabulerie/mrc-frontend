@@ -1,7 +1,7 @@
 <div class="grid">
   <div class="col-6">
     <div class="border-1 surface-border shadow-2 ml-2 border-round p-3">
-      <ng-container  *ngIf="!currentUser.org">
+      <ng-container  *ngIf="!currentOrg">
         <p>Il semble que vous n'apparteniez à aucune structure.</p>
         <div class="flex align-items-center mb-3">
           <label for="firstname4" class="w-4">Rejoindre une structure existante</label>
@@ -10,7 +10,7 @@
         </div>
         <button type="button" pButton label="ou créer une nouvelle structure" class="p-button-sm p-button-primary p-2" (click)="showNewOrgDialog()"></button>
       </ng-container>
-      <ng-container  *ngIf="currentUser.org">
+      <ng-container  *ngIf="currentOrg">
         <div class="flex align-items-center justify-content-between">
           <p class="inline">Vous faites partie de la structure : <span>{{currentUser.org.name}}</span></p>
           <button type="button" pButton label="Quitter la structure" class="p-button-sm p-button-primary p-2 ml-2" (click)="leaveOrg()"></button>

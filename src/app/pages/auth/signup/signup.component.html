@@ -2,8 +2,7 @@
   <div class="flex surface-section border-round shadow-2 w-full">
   <div class="flex-1 flex-column p-6 md:p-8">
     <div class="mb-5">
-    <!-- <img src="assets/images/blocks/logos/hyper.svg" alt="Image" height="50" class="mb-3"> -->
-    <div class="text-900 text-3xl font-medium mb-3">Bienvenue dans la Maison re-connectée</div>
+    <div class="text-900 text-3xl font-medium mb-3">Bienvenue <span [innerText]="clientMode ? 'dans votre' : 'à la'"></span> Maison Re-Connectée</div>
     </div>
     <form [formGroup]="signupForm" (submit)="save()">
     <div class="formgrid grid">

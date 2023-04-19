@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-signup',
@@ -12,6 +13,7 @@ export class SignupComponent implements OnInit {
 
   signupForm: any;
   errors: any;
+  clientMode = environment.mode === 'client';
 
 
   constructor(
@@ -41,12 +43,17 @@ export class SignupComponent implements OnInit {
   save(){
     this.authService.signup(this.signupForm.value).subscribe({
       next: (resp: any) => {
-        this.messageService.add({
-          key: 'messageToast',
-          summary:'Information',
-          detail: resp.detail
-        });
-        this.signupForm.reset();
+        if(!this.clientMode) {
+          this.messageService.add({
+            key: 'messageToast',
+            summary:'Information',
+            detail: resp.detail
+          });
+          this.signupForm.reset();
+        }
+        else {
+          this.router.navigate(['/']);
+        }
       },
       error: (errorResp) => {
         for(let key in errorResp.error){

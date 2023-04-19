@@ -5,13 +5,14 @@ import { Area } from 'src/app/models/use';
 import { AuthService } from 'src/app/services/auth.service';
 import { CoreService } from 'src/app/services/core.service';
 import { OrgService } from 'src/app/services/org.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  selector: 'app-admin-settings',
+  templateUrl: './admin-settings.component.html',
+  styleUrls: ['./admin-settings.component.scss']
 })
-export class SettingsComponent implements OnInit {
+export class AdminSettingsComponent implements OnInit {
 
   currentUser: any;
   currentOrg: Organization | null = null;
@@ -26,12 +27,16 @@ export class SettingsComponent implements OnInit {
   newApiKeyValue: string = '';
   newOrgForm!: FormGroup;
 
+  isClientMode: boolean = false;
+
   constructor(
     private authService: AuthService,
     private orgService: OrgService,
     private coreService: CoreService,
     private fb: FormBuilder,
-  ) { }
+  ) {
+    this.isClientMode = environment.mode === 'client';
+  }
 
   ngOnInit() {
     this.authService.user$.subscribe(user => {
@@ -55,7 +60,7 @@ export class SettingsComponent implements OnInit {
   }
 
   fetchCurrentOrg() {
-    if (this.currentUser.orgId) {
+    if (this.currentUser && this.currentUser.orgId) {
       this.orgService.getOrg(this.currentUser.orgId).subscribe(org => {
         this.currentOrg = org;
       })

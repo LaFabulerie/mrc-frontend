@@ -14,6 +14,7 @@ export class AuthService {
 
   private userSubject: BehaviorSubject<User | undefined>;
   public user$: Observable<User | undefined>;
+  clientMode = environment.mode === 'client';
 
   constructor(
     private http: HttpClient,
@@ -36,19 +37,20 @@ export class AuthService {
     if (this.userSubject.value) {
       return this.userSubject.value;
     } else if (localStorage.getItem('user')) {
-      const user = JSON.parse(this.decrypt(localStorage.getItem('user')!));
+      const userData = JSON.parse(this.decrypt(localStorage.getItem('user')!));
+      const user = new User(userData);
       this.userSubject.next(user);
-      console.log(user);
       return user;
     }
     return undefined;
   }
 
   updateCurrentUser(data: any) {
-    return this.http.patch<User>(`${environment.apiHost}/api/user/${this.userValue.id}/`, data)
+    return this.http.patch<User>(`${environment.apiHost}/api/user/${this.userValue!.id}/`, data)
     .pipe(
-      map(user => {
-        localStorage.setItem('user', this.encrypt(JSON.stringify(user)));
+      map(userData => {
+        localStorage.setItem('user', this.encrypt(JSON.stringify(userData)));
+        const user = new User(userData);
         this.userSubject.next(user);
         return user;
       })
@@ -66,18 +68,22 @@ export class AuthService {
     return "";
   }
 
+  private _processLogin(response: any) {
+    console.log("Process Login")
+    const userData = response.user;
+    localStorage.setItem('user', this.encrypt(JSON.stringify(userData)));
+    this.storeToken('refreshToken', response.refreshToken);
+    this.storeToken('accessToken', response.accessToken);
+    const user = new User(userData);
+    this.userSubject.next(user);
+    this.startRefreshTokenTimer(response.accessToken);
+    return user;
+  }
+
   signin(data: any): Observable<any> {
     return this.http.post<any>(`${environment.apiHost}/api/auth/login/`, data)
     .pipe(
-      map(resp => {
-        const user = resp.user;
-        localStorage.setItem('user', this.encrypt(JSON.stringify(user)));
-        this.storeToken('refreshToken', resp.refreshToken);
-        this.storeToken('accessToken', resp.accessToken);
-        this.userSubject.next(user);
-        this.startRefreshTokenTimer(resp.accessToken);
-        return user;
-      })
+      map(resp => this._processLogin(resp))
     );
   }
 
@@ -102,7 +108,13 @@ export class AuthService {
 }
 
   signup(data: any): Observable<any> {
-    return this.http.post(`${environment.apiHost}/api/auth/signup/`, data);
+    let resp =  this.http.post(`${environment.apiHost}/api/auth/signup/`, data);
+    if(this.clientMode) {
+      resp = resp.pipe(
+        map(resp => this._processLogin(resp))
+      );
+    }
+    return resp
   }
 
   verifyEmail(key: string): Observable<any> {

@@ -1,20 +1,20 @@
 <div *ngIf="use">
-  <input type="text" pInputText [(ngModel)]="use.title" class="mb-2 w-full" (ngModelChange)="saveTitle()" *ngIf="user?.isSuperuser"/>
-  <h2 *ngIf="!user?.isSuperuser">{{use.title}}</h2>
+  <input type="text" pInputText [(ngModel)]="use.title" class="mb-2 w-full" (ngModelChange)="saveTitle()" *ngIf="user!.canEdit()"/>
+  <h2 *ngIf="!user!.canEdit()">{{use.title}}</h2>
   <div class="flex justify-content-start align-items-center my-3 ">
     <span><i class="pi pi-folder-open mr-2" style="font-size: 1.5rem"></i></span>
     <span>{{use.items[0].room.name}}</span>
     <span
       ><i class="pi pi-angle-right mx-2" style="font-size: 2rem"></i
     ></span>
-    <span *ngIf="user?.isSuperuser">
+    <span *ngIf="user!.canEdit()">
       <p-dropdown [options]="allItems" [(ngModel)]="use.itemIds[0]" optionLabel="name" optionValue="id" [group]="true" (onChange)="saveItem()">
         <ng-template let-group pTemplate="group">
           <i class="pi pi-folder-open mr-2" style="font-size: 1.5rem"></i> {{group.name}}
       </ng-template>
       </p-dropdown>
     </span>
-    <span *ngIf="!user?.isSuperuser">{{use.items[0].name}}</span>
+    <span *ngIf="!user!.canEdit()">{{use.items[0].name}}</span>
   </div>
   <div class="flex flex-wrap my-3">
     <p-chip *ngFor="let tag of use.tags" styleClass="mr-2 mb-2">
@@ -23,14 +23,14 @@
         <i
           class="pi pi-times ml-2 cursor-pointer"
           (click)="removeTag($event, tag)"
-          *ngIf="user?.isSuperuser"
+          *ngIf="user!.canEdit()"
         ></i>
       </div>
     </p-chip>
-    <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-small" (click)="showTagDialog()" *ngIf="user?.isSuperuser"></p-button>
+    <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-small" (click)="showTagDialog()" *ngIf="user!.canEdit()"></p-button>
   </div>
 
-  <p-editor [(ngModel)]="use.description" [style]="{ height: '90px' }" (ngModelChange)="saveDescription()" *ngIf="user?.isSuperuser">
+  <p-editor [(ngModel)]="use.description" [style]="{ height: '90px' }" (ngModelChange)="saveDescription()" *ngIf="user!.canEdit()">
       <ng-template pTemplate="header">
           <span class="ql-formats">
               <button type="button" class="ql-bold" aria-label="Bold"></button>
@@ -39,17 +39,17 @@
           </span>
       </ng-template>
   </p-editor>
-  <p *ngIf="!user?.isSuperuser" [innerHtml]="use.description | safeHtml"></p>
+  <p *ngIf="!user!.canEdit()" [innerHtml]="use.description | safeHtml"></p>
 
   <div class="flex justify-content-start align-items-center">
     <h3>Services</h3>
-    <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-small ml-2" (click)="addService()" *ngIf="user?.isSuperuser"></p-button>
+    <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-small ml-2" (click)="addService()" *ngIf="user!.canEdit()"></p-button>
   </div>
 
   <div class="border-1 border-round-md mb-3 surface-border" *ngFor="let service of use.services">
     <div class="flex justify-content-between p-2 border-bottom-1 surface-border" style="background-color: #f8f9fa;">
       <h4 class="my-1">{{ service.title }} <span *ngIf="service.area"><i class="pi pi-map-marker mx-1"></i>{{service.area.name}}</span></h4>
-      <div *ngIf="user?.isSuperuser">
+      <div *ngIf="user!.canEdit()">
         <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-small mr-1" (click)="editService(service)"></p-button>
         <p-button icon="pi pi-trash" styleClass="p-button-rounded  p-button-danger p-button-small" (click)="removeService($event, service)"></p-button>
       </div>

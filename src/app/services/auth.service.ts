@@ -18,8 +18,6 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router,
-
   ) {
     this.userSubject = new BehaviorSubject<User | undefined>(undefined);
     this.user$ = this.userSubject.asObservable();

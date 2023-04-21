@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './pages/auth/auth.module';
 import { CatalogComponent } from './pages/catalog/catalog.component';
 import { AdminSettingsComponent } from './pages/admin-settings/admin-settings.component';
+import { ClientSettingsComponent } from './pages/client-settings/client-settings.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ComponentsModule } from './components/components.module';
 
@@ -28,11 +29,15 @@ import { DialogModule } from 'primeng/dialog';
 import {StyleClassModule} from 'primeng/styleclass';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { BadgeModule } from 'primeng/badge';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
-import { ClientSettingsComponent } from './pages/client-settings/client-settings.component';
+
+
 
 @NgModule({
   declarations: [
@@ -60,6 +65,9 @@ import { ClientSettingsComponent } from './pages/client-settings/client-settings
     DialogModule,
     InputTextModule,
     TableModule,
+    ToastModule,
+    BadgeModule,
+    ConfirmPopupModule,
 
     FontAwesomeModule,
     TranslateModule.forRoot(),

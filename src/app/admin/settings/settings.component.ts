@@ -8,11 +8,11 @@ import { ClientService } from 'src/app/services/client.service';
 import { CoreService } from 'src/app/services/core.service';
 
 @Component({
-  selector: 'app-client-settings',
-  templateUrl: './client-settings.component.html',
-  styleUrls: ['./client-settings.component.scss']
+  selector: 'app-settings',
+  templateUrl: './settings.component.html',
+  styleUrls: ['./settings.component.scss']
 })
-export class ClientSettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit {
 
   user?: User | null;
 

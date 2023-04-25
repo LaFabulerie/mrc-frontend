@@ -12,40 +12,19 @@ import { AuthService } from './services/auth.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthModule } from './pages/auth/auth.module';
-import { CatalogComponent } from './pages/catalog/catalog.component';
-import { AdminSettingsComponent } from './pages/admin-settings/admin-settings.component';
-import { ClientSettingsComponent } from './pages/client-settings/client-settings.component';
-import { HomeComponent } from './pages/home/home.component';
+import { AuthModule } from './auth/auth.module';
 import { ComponentsModule } from './components/components.module';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { TreeModule } from 'primeng/tree';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
-import { DialogModule } from 'primeng/dialog';
-import {StyleClassModule} from 'primeng/styleclass';
-import { InputTextModule } from 'primeng/inputtext';
-import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
-import { BadgeModule } from 'primeng/badge';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
-
-import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
+import { AdminModule } from './admin/admin.module';
+import { ClientModule } from './client/client.module';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CatalogComponent,
-    AdminSettingsComponent,
-    HomeComponent,
-    ClientSettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,22 +33,13 @@ import { far } from '@fortawesome/free-regular-svg-icons';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    StyleClassModule,
+
     AuthModule,
     ComponentsModule,
+    AdminModule,
+    ClientModule,
 
-    TreeModule,
-    AutoCompleteModule,
-    ButtonModule,
-    DropdownModule,
-    DialogModule,
-    InputTextModule,
-    TableModule,
-    ToastModule,
-    BadgeModule,
-    ConfirmPopupModule,
 
-    FontAwesomeModule,
     TranslateModule.forRoot(),
   ],
   providers: [
@@ -80,7 +50,5 @@ import { far } from '@fortawesome/free-regular-svg-icons';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(library: FaIconLibrary) {
-    library.addIconPacks(fas, far);
-  }
+
 }

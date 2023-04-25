@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Area, DigitalService, DigitalUse } from '../models/use';
+import { Area, DigitalService, DigitalUse, Room } from '../models/use';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +24,9 @@ export class CoreService {
     this.loadDigitalUses(); // Load all digital uses
   }
 
-
-  getRooms(params?: any) {
+  getRooms(params?: any): Observable<Room[]> {
     const queryParams = new URLSearchParams(params);
-    return this.http.get(`${environment.apiHost}/api/rooms/?${queryParams.toString()}`);
+    return this.http.get<Room[]>(`${environment.apiHost}/api/rooms/?${queryParams.toString()}`);
   }
 
   getDigitalUse(useId: number, params?: any) {

@@ -21,21 +21,31 @@ export class DigitalServiceFormDialogComponent implements OnInit {
     private fb: FormBuilder,
     private coreService: CoreService,
   ) {
-  }
-
-  ngOnInit(): void {
     const service = this.config.data.service;
-    const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+    let useId = 0;
+    let areaId = 0;
+    if(service) {
+      useId = service.useId;
+      areaId = service.areaId;
+    } else {
+      useId = this.config.data.useId;
+      areaId = this.config.data.areaId;
+    }
 
     this.coreService.getAreas().subscribe((areas: Area[]) => this.areas = areas);
 
     this.serviceForm = this.fb.group({
       title: [service ? service.title : '' , [Validators.required]],
       description: [service ? service.description : '', [Validators.required]],
-      areaId: [service ? service.areaId : null, [Validators.required]],
-      url: [service ? service.url : '', [Validators.required, Validators.pattern(urlRegex)]],
-      useId: [service ? service.useId : null, [Validators.required]],
+      url: [service ? service.url : '', [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]],
+      areaId: [areaId, [Validators.required]],
+      useId: [useId, [Validators.required]],
     });
+
+    console.log(this.serviceForm.value)
+  }
+
+  ngOnInit(): void {
 
   }
 

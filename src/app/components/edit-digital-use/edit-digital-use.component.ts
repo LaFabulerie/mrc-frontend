@@ -138,6 +138,7 @@ export class EditDigitalUseComponent implements OnInit {
     });
 
     this.ref.onClose.subscribe((data: any) => {
+      if(!data) return;
       this.coreService
         .updateDigitalService(service.id, data, {
           expand: ['area'],
@@ -161,11 +162,14 @@ export class EditDigitalUseComponent implements OnInit {
       draggable: false,
       closable: true,
       data: {
+        useId: this.use.id,
+        areaId: this.user?.org?.area.id,
         service: null,
       },
     });
 
     this.ref.onClose.subscribe((data: any) => {
+      if(!data) return;
       data['useId'] = this.use.id;
       this.coreService
         .createDigitalService(data, { expand: ['area'], omit: ['use'] })

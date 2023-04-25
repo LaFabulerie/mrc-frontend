@@ -1,0 +1,20 @@
+
+<div class="surface-ground p-8">
+    <h1 class="text-center text-5xl">{{item.room.name}} > {{item.name}}</h1>
+    <ul class="list-none p-0 m-8">
+      <li class="surface-card p-3 mb-3 shadow-2 border-round" *ngFor="let use of item.uses">
+          <div class="border-2 surface-border border-round surface-0 p-2">
+            <div class="flex align-items-center">
+              <div class="flex-1">
+                <h2 class="text-900 text-2xl font-medium mb-2">{{use.title}}</h2>
+                <p-chip *ngFor="let tag of use.tags" styleClass="mr-2 mb-2" [label]="'#'+tag"></p-chip>
+              </div>
+              <div class="ml-auto">
+                <button pButton pRipple icon="pi pi-eye" label="Voir" class="p-button-text p-button-plain p-button-rounded" (click)="goToDigitalUse(use)"></button>
+              </div>
+            </div>
+          </div>
+      </li>
+    </ul>
+</div>
+

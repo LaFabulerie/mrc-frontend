@@ -13,7 +13,6 @@ export class SignupComponent implements OnInit {
 
   signupForm: any;
   errors: any;
-  clientMode = environment.mode === 'client';
 
 
   constructor(
@@ -43,17 +42,12 @@ export class SignupComponent implements OnInit {
   save(){
     this.authService.signup(this.signupForm.value).subscribe({
       next: (resp: any) => {
-        if(!this.clientMode) {
           this.messageService.add({
             key: 'messageToast',
             summary:'Information',
             detail: resp.detail
           });
           this.signupForm.reset();
-        }
-        else {
-          this.router.navigate(['/']);
-        }
       },
       error: (errorResp) => {
         for(let key in errorResp.error){

@@ -4,7 +4,7 @@
       <div>
         <span class="mr-3 header">Catalogue des fiches usages</span>
       </div>
-      <p-button icon="pi pi-plus" label="Ajouter un usage" styleClass="p-button-outlined p-button-primary p-button-sm" (click)="newDigitalUse()" *ngIf="user!.canEdit()"></p-button>
+      <p-button icon="pi pi-plus" label="Ajouter un usage" styleClass="p-button-outlined p-button-primary p-button-sm" (click)="newDigitalUse()"></p-button>
     </div>
     <div class="p-input w-full">
       <div class="p-inputgroup">
@@ -33,7 +33,7 @@
           <div>
             {{node.label}}
           </div>
-          <div  *ngIf="user!.canEdit()">
+          <div>
             <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-outlined p-button-danger p-button-small" (click)="removeDigitalUse($event, node.data)"></p-button>
           </div>
         </div>
@@ -50,7 +50,7 @@
       <div *ngIf="digitalUseCreation">
         <span class="mr-3 header ">Nouvel usage</span>
       </div>
-      <p-button icon="pi pi-trash" label="Supprimer" styleClass="p-button-outlined p-button-danger p-button-sm" (click)="removeDigitalUse($event)"  *ngIf="user!.canEdit() && selectedNode"></p-button>
+      <p-button icon="pi pi-trash" label="Supprimer" styleClass="p-button-outlined p-button-danger p-button-sm" (click)="removeDigitalUse($event)"  *ngIf="selectedNode"></p-button>
     </div>
     <div>
       <app-edit-digital-use [useId]="selectedNode.data" (onSave)="useSaved($event)" *ngIf="selectedNode"></app-edit-digital-use>

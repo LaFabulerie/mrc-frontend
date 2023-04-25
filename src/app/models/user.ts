@@ -15,8 +15,4 @@ export class User {
     Object.assign(this, data);
   }
 
-  canEdit(): boolean {
-    return this.isSuperuser || environment.mode === 'client';
-  }
-
 }

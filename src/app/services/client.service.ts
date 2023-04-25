@@ -12,7 +12,6 @@ export class ClientService {
 
   private remoteAccessesSubject: BehaviorSubject<RemoteAccess[]>;
   public remoteAccesses$: Observable<RemoteAccess[] | undefined>;
-  clientMode = environment.mode === 'client';
 
   constructor(
     private http: HttpClient,
@@ -21,9 +20,7 @@ export class ClientService {
     this.remoteAccessesSubject = new BehaviorSubject<RemoteAccess[]>([]);
     this.remoteAccesses$ = this.remoteAccessesSubject.asObservable();
 
-    if(this.clientMode) {
-      this.fetchRemoteAccesses()
-    }
+    this.fetchRemoteAccesses()
   }
 
   public get remoteAccesses() {

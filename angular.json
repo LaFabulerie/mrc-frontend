@@ -70,20 +70,6 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
-            },
-            "client": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.client.ts"
-                }
-              ]
             }
           },
           "defaultConfiguration": "production"
@@ -96,9 +82,6 @@
             },
             "development": {
               "browserTarget": "admin:build:development"
-            },
-            "client": {
-              "browserTarget": "admin:build:client"
             }
           },
           "defaultConfiguration": "development"

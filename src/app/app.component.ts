@@ -23,11 +23,6 @@ export class AppComponent implements OnInit {
     private title: Title,
   ) {
     this.authService.user$.subscribe((x) => (this.user = x));
-    if(environment.mode === 'client') {
-      this.title.setTitle('Client');
-    } else {
-      this.title.setTitle('Admin');
-    }
   }
 
   ngOnInit() {

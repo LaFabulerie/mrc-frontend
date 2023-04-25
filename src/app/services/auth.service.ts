@@ -14,7 +14,6 @@ export class AuthService {
 
   private userSubject: BehaviorSubject<User | undefined>;
   public user$: Observable<User | undefined>;
-  clientMode = environment.mode === 'client';
 
   constructor(
     private http: HttpClient,
@@ -106,13 +105,9 @@ export class AuthService {
 }
 
   signup(data: any): Observable<any> {
-    let resp =  this.http.post(`${environment.apiHost}/api/auth/signup/`, data);
-    if(this.clientMode) {
-      resp = resp.pipe(
+    return this.http.post(`${environment.apiHost}/api/auth/signup/`, data).pipe(
         map(resp => this._processLogin(resp))
       );
-    }
-    return resp
   }
 
   verifyEmail(key: string): Observable<any> {

@@ -20,7 +20,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AdminModule } from './admin/admin.module';
 import { ClientModule } from './client/client.module';
 
+import {
+  MqttModule,
+  IMqttServiceOptions
+} from 'ngx-mqtt';
 
+export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+  hostname: 'mrc.local',
+  port: 9001,
+  path: '/mqtt',
+};
 
 @NgModule({
   declarations: [
@@ -39,8 +48,9 @@ import { ClientModule } from './client/client.module';
     AdminModule,
     ClientModule,
 
-
     TranslateModule.forRoot(),
+
+    MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService] },

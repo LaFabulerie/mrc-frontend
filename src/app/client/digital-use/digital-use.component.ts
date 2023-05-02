@@ -12,7 +12,6 @@ export class DigitalUseComponent {
   use: DigitalUse = {} as DigitalUse;
   constructor(
     private location:Location,
-    private router: Router
   ) { }
 
   ngOnInit(): void {

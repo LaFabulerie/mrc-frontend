@@ -7,15 +7,21 @@
   <div class="hidden lg:flex absolute lg:static left-0 top-100 z-1 shadow-2 lg:shadow-none w-full">
       <ul class="list-none p-0 m-0 flex">
           <li>
-              <a routerLink="/admin/catalogue"  pRipple class="text-gray-100 flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150">
+              <a routerLink="/admin/catalogue"  pRipple class="text-gray-100 flex px-6 p-3 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150">
                   <fa-icon [icon]="['fas', 'rectangle-list']" class="mr-2"></fa-icon>
                   <span>Le catalogue</span>
               </a>
           </li>
           <li class="lg:relative">
-            <a routerLink="/admin/configuration"  pRipple class="text-gray-100 flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150">
+            <a routerLink="/admin/configuration"  pRipple class="text-gray-100 flex px-6 p-3 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150">
               <fa-icon [icon]="['fas', 'gears']" class="mr-2"></fa-icon>
               <span>Configuration</span>
+            </a>
+          </li>
+          <li class="lg:relative">
+            <a routerLink="/" pRipple class="text-gray-100 flex px-6 p-3 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150">
+              <fa-icon [icon]="['fas', 'gamepad']" class="mr-2"></fa-icon>
+              <span>Mode Médiateur</span>
             </a>
           </li>
       </ul>

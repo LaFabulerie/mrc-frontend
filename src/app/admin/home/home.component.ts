@@ -5,7 +5,7 @@ import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-door',
   templateUrl: './home.component.html',
 })
 export class HomeComponent{

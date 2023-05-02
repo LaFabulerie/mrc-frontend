@@ -9,7 +9,7 @@
                 <h2 class="text-900 text-2xl font-medium mb-2">{{use.title}}</h2>
                 <p-chip *ngFor="let tag of use.tags" styleClass="mr-2 mb-2" [label]="'#'+tag"></p-chip>
               </div>
-              <div class="ml-auto">
+              <div class="ml-auto" >
                 <button pButton pRipple icon="pi pi-eye" label="Voir" class="p-button-text p-button-plain p-button-rounded" (click)="goToDigitalUse(use)"></button>
               </div>
             </div>

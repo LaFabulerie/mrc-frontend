@@ -9,7 +9,6 @@ const routes: Routes = [
     { path: 'catalogue', component: CatalogComponent },
     { path: 'configuration', component: SettingsComponent },
   ]},
-  { path: '**', redirectTo: 'catalogue' },
   { path: '', redirectTo: 'catalogue', pathMatch: 'full'}
 ];
 

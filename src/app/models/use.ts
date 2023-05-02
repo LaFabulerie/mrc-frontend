@@ -15,6 +15,7 @@ export type Room = {
 
 export type Item = {
   id: number;
+  uuid: string;
   name: string;
   description: string;
   slug: string;
@@ -25,6 +26,7 @@ export type Item = {
 
 export type DigitalUse = {
   id: number;
+  uuid: string;
   title: string;
   description: string;
   slug: string;
@@ -36,6 +38,7 @@ export type DigitalUse = {
 
 export type DigitalService = {
   id: number;
+  uuid: string;
   title: string;
   description: string;
   slug: string;

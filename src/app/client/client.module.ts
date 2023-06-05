@@ -7,6 +7,8 @@ import { RoomComponent } from './room/room.component';
 import { ItemComponent } from './item/item.component';
 import { DigitalUseComponent } from './digital-use/digital-use.component';
 import { HomeComponent } from './home/home.component';
+import { WelcomeVideoDialogComponent } from './components/welcome-video-dialog/welcome-video-dialog.component';
+import { DisclaimerDialogComponent } from './components/disclaimer-dialog/disclaimer-dialog.component';
 
 
 @NgModule({
@@ -17,6 +19,8 @@ import { HomeComponent } from './home/home.component';
     ItemComponent,
     DigitalUseComponent,
     HomeComponent,
+    WelcomeVideoDialogComponent,
+    DisclaimerDialogComponent,
   ],
   imports: [
     SharedModule,

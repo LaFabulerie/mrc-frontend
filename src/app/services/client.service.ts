@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { RemoteAccess } from '../models/client';
 import { AuthService } from './auth.service';
+import { Item } from '../models/use';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +50,6 @@ export class ClientService {
   synchronizeRemoteAccess(id: number) {
     return this.http.get<any>(`${environment.apiHost}/api/client/remote-accesses/${id}/synchronize/`);
   }
+
 
 }

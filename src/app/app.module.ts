@@ -20,16 +20,24 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AdminModule } from './admin/admin.module';
 import { ClientModule } from './client/client.module';
 
-import {
-  MqttModule,
-  IMqttServiceOptions
-} from 'ngx-mqtt';
+import { MqttModule } from 'ngx-mqtt';
 
-export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
-  hostname: 'mrc.local',
-  port: 9001,
-  path: '/mqtt',
-};
+import { environment } from 'src/environments/environment';
+
+
+let clientExtraModules = [];
+
+if(environment.mqttBrokenHost) {
+  clientExtraModules.push(
+    MqttModule.forRoot({
+      hostname: environment.mqttBrokenHost,
+      port: 9001,
+      path: '/mqtt',
+    })
+  );
+}
+
+
 
 @NgModule({
   declarations: [
@@ -50,7 +58,7 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
 
     TranslateModule.forRoot(),
 
-    MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
+    ...clientExtraModules,
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService] },

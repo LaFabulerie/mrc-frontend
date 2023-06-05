@@ -1,9 +1,26 @@
-<div class="flex p-4 justify-content-between" *ngIf="user">
-  <div>
-    <button pButton label="Accueuil" icon="pi pi-home" (click)="goToDoor()" class="mr-2"></button>
-    <button pButton label="Retour" icon="pi pi-arrow-left"></button>
+<div class="relative">
+  <div class="flex p-4 fixed w-full" [ngClass]="{'bg-blue-mrc': !transparentControls, 'justify-content-between' : showControls, 'justify-content-center' : !showControls}">
+    <div *ngIf="showControls">
+      <button pButton (click)="goToMap()" class="p-button-orange-mrc mr-3">
+        <fa-icon [icon]="['fas', 'door-open']" size="3x"></fa-icon>
+      </button>
+      <button pButton (click)="1+1" class="p-button-orange-mrc mr-3">
+        <fa-icon [icon]="['fas', 'arrow-turn-up']" size="3x" [rotate]="270"></fa-icon>
+      </button>
+    </div>
+    <img src="assets/img/logo.png" *ngIf="showLogo">
+    <div *ngIf="showControls">
+      <button pButton (click)="1+1" class="p-button-orange-mrc mr-3">
+        <fa-icon [icon]="['fas', 'lock']" size="3x"></fa-icon>
+      </button>
+      <button pButton (click)="1+1" class="p-button-orange-mrc mr-3">
+        <fa-icon [icon]="['fas', 'rectangle-list']" size="3x"></fa-icon>
+      </button>
+      <button pButton (click)="1+1" class="p-button-orange-mrc mr-3">
+        <fa-icon [icon]="['fas', 'arrow-right-from-bracket']" size="3x"></fa-icon>
+      </button>
+    </div>
   </div>
-  <p-selectButton *ngIf="user" (onChange)="switchNavigationMode()" [options]="navigationModes" [(ngModel)]="navigationMode" optionLabel="label" optionValue="value"></p-selectButton>
-</div>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+</div>

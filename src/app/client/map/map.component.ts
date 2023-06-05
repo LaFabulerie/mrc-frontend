@@ -7,10 +7,11 @@ import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
 
 @Component({
-  selector: 'app-plan',
-  templateUrl: './plan.component.html',
+  selector: 'app-map',
+  templateUrl: './plan.component.svg',
+  styleUrls: ['./map.component.scss']
 })
-export class PlanComponent  implements OnInit{
+export class MapComponent  implements OnInit{
 
   rooms: Room[] = [];
   navigationMode: string|undefined = undefined;
@@ -25,6 +26,9 @@ export class PlanComponent  implements OnInit{
   ) {
     this.user = this.auth.userValue;
 
+    this.control.enableNavigation();
+    this.control.transparentNavigation = false;
+
     this.control.navitationMode$.subscribe((v) => {
       if(v) {
         this.navigationMode = v
@@ -33,25 +37,15 @@ export class PlanComponent  implements OnInit{
   }
 
   ngOnInit(): void {
-    this.coreService.getRooms({
-      expand: ['items','items.room', 'items.uses', 'items.uses.services', 'items.uses.services.area'],
-      omit: ['items.room.items', 'items.uses.items' ]
-    }).subscribe((rooms: Room[]) => {
-      this.rooms = rooms;
-    });
+    this.coreService.fetchFullRooms()
 
-    this.control.navigateToRoom$.subscribe(uuid => {
-      if(!uuid) return;
-      const room = this.rooms.find(r => r.uuid == uuid);
-      this.router.navigateByUrl('/room', { state: room });
+    this.control.navigateToRoom$.subscribe(roomName => {
+      if(!roomName) return;
+      this.goToRoom(roomName)
     })
   }
 
-  goToRoom(room: Room){
-    if(this.navigationMode == "master"){
-      this.control.navigate('room', room.uuid);
-    } else {
-      this.router.navigateByUrl('/room', { state: room });
-    }
+  goToRoom(roomName: string, uuid?: string){
+    this.router.navigateByUrl(`/room/${roomName}`);
   }
 }

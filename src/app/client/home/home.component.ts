@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -8,30 +8,35 @@ import { RemoteControlService } from 'src/app/services/control.service';
   selector: 'app-door',
   templateUrl: './home.component.html',
 })
-export class HomeComponent{
+export class HomeComponent implements AfterViewInit{
 
   user?: User;
-
-  navigationModes: any[] = [
-    { label: 'Maître', value: 'master' },
-    { label: 'Libre', value: 'free' },
-  ];
-
-  navigationMode: any;
+  showControls = false;
+  transparentControls = false;
+  showLogo = true;
+  navigationMode = "free";
 
   constructor(
     private authService: AuthService,
     private control: RemoteControlService,
     private router: Router,
   ) {
+
+  }
+
+  ngAfterViewInit(): void {
     this.authService.user$.subscribe((x) => {
       this.user = x;
-      this.navigationMode = 'free';
     });
 
-    this.control.navitationMode$.subscribe((v) => {
-      if(!v) return
-      this.navigationMode = v;
+    this.control.activatedNavigation$.subscribe((v) => {
+      this.showControls = v
+    });
+    this.control.transparentNavigation$.subscribe((v) => {
+      this.transparentControls = v
+    });
+    this.control.logoVisible$.subscribe((v) => {
+      this.showLogo = v
     });
 
     this.control.navigateToDoor$.subscribe(v => {
@@ -44,12 +49,8 @@ export class HomeComponent{
     this.control.switchNavigationMode(this.navigationMode);
   }
 
-  goToDoor(){
-    if(this.navigationMode == "master"){
-      this.control.navigate('door', new Date().toISOString());
-    } else {
-      this.router.navigateByUrl('/door');
-    }
+  goToMap(){
+    this.router.navigateByUrl('/map');
   }
 
 

@@ -1,0 +1,58 @@
+<svg width="744.99963" height="744.99969" viewBox="0 0 197.11448 197.11468" version="1.1" id="svg474" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <defs id="defs47" />
+  <g (click)="goToRoom('garden', 'c36a8e9f-5aff-4c17-9fc0-f174abca030e')"
+  style="cursor:pointer" id="c36a8e9f-5aff-4c17-9fc0-f174abca030e" transform="translate(-232.89968,-80.343939)">
+    <path style="fill:#7cbd8f;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1" d="m 1142.9362,807.28094 c -34.8106,-32.29752 -63.4753,-59.57676 -63.6992,-60.62051 -0.3184,-1.48367 7.8764,-76.37475 18.0911,-165.33286 l 0.8538,-7.43544 25.3209,-13.06922 c 13.9266,-7.18807 48.6237,-25.13979 77.1048,-39.8927 l 51.7839,-26.82349 77.2422,39.95249 77.2423,39.95249 0.9811,9.58352 c 0.5396,5.27093 4.9029,44.02615 9.6963,86.1227 4.7933,42.09656 8.7174,76.95652 8.7201,77.46658 0,0.51006 -24.6544,23.69261 -54.7935,51.51677 -30.1391,27.82416 -58.8705,54.39793 -63.8475,59.05284 l -9.0492,8.46347 -46.1776,-0.10686 -46.1775,-0.10686 -63.292,-58.7228 z" id="path13562" transform="scale(0.26458333)" />
+    <text x="314.62766" y="182.57939" id="text13473" transform="scale(0.99417947,1.0058546)">
+      <tspan style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13.3356px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;fill-opacity:1;stroke-width:0">Jardin</tspan>
+    </text>
+  </g>
+  <g (click)="goToRoom('garage', 'be3c0c63-5d14-45b9-be84-0bd4306ca7e0')"
+    style="cursor:pointer" id="be3c0c63-5d14-45b9-be84-0bd4306ca7e0" transform="matrix(1.0439325,0,0,1.056192,-61.845829,-44.829708)">
+    <path style="fill:#7a9e4a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1" d="m 171.43151,206.04898 c 3.1842,12.49685 5.81328,22.77386 5.84239,22.8378 0.0291,0.0639 1.65413,-0.38189 3.61114,-0.99073 26.48848,-8.24072 49.23678,-28.67104 59.91144,-53.80667 l 1.73575,-4.08715 -22.14993,-8.29096 -22.14993,-8.29096 -16.24001,14.80619 c -8.93199,8.14341 -16.26482,14.87251 -16.29516,14.95356 -0.0303,0.0811 2.5501,10.37207 5.73431,22.86892 z" id="path7255-5" />
+    <text x="177.90294" y="190.61794" id="text11331-7" transform="translate(-0.29970257,0.1801067)">
+      <tspan style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;fill-opacity:1;stroke-width:0" x="177.90294" y="190.61794">Garage</tspan>
+    </text>
+  </g>
+  <g (click)="goToRoom('livingroom', '98dd6d2c-8ede-45c4-a0ea-490e988fd48b')"
+  id="98dd6d2c-8ede-45c4-a0ea-490e988fd48b" transform="matrix(-0.3659584,0.98916732,-0.9776858,-0.37025606,364.7289,-93.968822)" style="cursor:pointer;fill:#309a9e;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.00013;stroke-dasharray:none;stroke-opacity:1">
+    <path style="fill:#309a9e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1" d="m 360.04524,364.16455 c -40.01601,-27.82869 -72.91,-50.75123 -73.09775,-50.93899 -0.18776,-0.18776 3.54337,-5.3491 8.2914,-11.46963 64.26524,-82.84237 166.72229,-136.29515 269.83777,-140.77683 l 16.76698,-0.72874 v 89.38877 89.38877 l -73.9263,37.86713 c -40.65946,20.82691 -74.19391,37.86712 -74.521,37.86712 -0.32711,0 -33.33509,-22.76892 -73.3511,-50.5976 z" id="path5701-5" transform="matrix(0.26458333,0,0,0.26458333,107.33353,37.463552)" />
+    <text x="204.07298" y="131.83105" id="text11331-1" transform="rotate(-110.52142,220.65501,118.4308)">
+      <tspan style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;fill-opacity:1;stroke-width:0" x="204.07298" y="131.83105">Salon</tspan>
+    </text>
+  </g>
+  <g (click)="goToRoom('bathroom', '7190a5b0-92e3-42cb-884e-73b5caa2d5b0')"
+  id="7190a5b0-92e3-42cb-884e-73b5caa2d5b0" transform="matrix(-1.0439325,0,0,1.056192,371.31407,-84.350795)" style="cursor:pointer;fill:#0caffa;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.00013;stroke-dasharray:none;stroke-opacity:1">
+    <path style="fill:#0caffa;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1" d="m 360.04524,364.16455 c -40.01601,-27.82869 -72.91,-50.75123 -73.09775,-50.93899 -0.18776,-0.18776 3.54337,-5.3491 8.2914,-11.46963 64.26524,-82.84237 166.72229,-136.29515 269.83777,-140.77683 l 16.76698,-0.72874 v 89.38877 89.38877 l -73.9263,37.86713 c -40.65946,20.82691 -74.19391,37.86712 -74.521,37.86712 -0.32711,0 -33.33509,-22.76892 -73.3511,-50.5976 z" id="path7255" transform="matrix(0.26458333,0,0,0.26458333,107.33353,37.463552)" />
+    <text style="font-size:12.7px;line-height:0.5;text-align:center;text-anchor:middle;fill:#5d3a67;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1" x="186.43674" y="76.962814" id="text11331-2" transform="matrix(-1,0,0,1,415.23065,37.598575)">
+      <tspan id="tspan11329-6" style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke-width:0" x="186.43674" y="76.962814">Salle de</tspan>
+      <tspan style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke-width:0" x="186.43674" y="89.662811" id="tspan12246">bains</tspan>
+    </text>
+  </g>
+  <g (click)="goToRoom('kitchen', '587e65f0-971e-48a0-bb63-9146f2c2c127')"
+  id="587e65f0-971e-48a0-bb63-9146f2c2c127" transform="matrix(1.0439325,0,0,1.056192,-174.20766,-84.350795)" style="cursor:pointer;fill:#f2f2f2;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.00013;stroke-dasharray:none;stroke-opacity:1">
+    <path style="fill:#d67738;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1" d="m 360.04524,364.16455 c -40.01601,-27.82869 -72.91,-50.75123 -73.09775,-50.93899 -0.18776,-0.18776 3.54337,-5.3491 8.2914,-11.46963 64.26524,-82.84237 166.72229,-136.29515 269.83777,-140.77683 l 16.76698,-0.72874 v 89.38877 89.38877 l -73.9263,37.86713 c -40.65946,20.82691 -74.19391,37.86712 -74.521,37.86712 -0.32711,0 -33.33509,-22.76892 -73.3511,-50.5976 z" id="path5701" transform="matrix(0.26458333,0,0,0.26458333,107.33353,37.463552)" />
+    <text x="94.552818" y="81.788757" id="text11331" transform="translate(107.33353,37.598575)">
+      <tspan style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;fill-opacity:1;stroke-width:0" x="94.552818" y="81.788757">Cuisine</tspan>
+    </text>
+  </g>
+  <g (click)="goToRoom('office', '10e285bc-e7d2-4464-abde-bdc2b7c4204e')"
+  id="10e285bc-e7d2-4464-abde-bdc2b7c4204e" transform="matrix(0.36595841,0.98916732,0.9776858,-0.37025607,-167.61433,-93.969568)" style="cursor:pointer;fill:#ffd572;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.00013;stroke-dasharray:none;stroke-opacity:1">
+    <path style="fill:#ffd572;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1" d="m 360.04524,364.16455 c -40.01601,-27.82869 -72.91,-50.75123 -73.09775,-50.93899 -0.18776,-0.18776 3.54337,-5.3491 8.2914,-11.46963 64.26524,-82.84237 166.72229,-136.29515 269.83777,-140.77683 l 16.76698,-0.72874 v 89.38877 89.38877 l -73.9263,37.86713 c -40.65946,20.82691 -74.19391,37.86712 -74.521,37.86712 -0.32711,0 -33.33509,-22.76892 -73.3511,-50.5976 z" id="path5701-5-0" transform="matrix(0.26458333,0,0,0.26458333,107.33353,37.463552)" />
+    <text x="61.641109" y="133.00272" id="text11331-7-2" transform="matrix(0.35055754,0.9365412,0.9365412,-0.35055754,79.154229,78.234207)">
+      <tspan style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;fill-opacity:1;stroke-width:0" x="61.641109" y="133.00272">Bureau</tspan>
+    </text>
+  </g>
+  <g (click)="goToRoom('bedroom', '6ac60b3d-66c2-4c41-ae31-43e87e776b4d')"
+  id="6ac60b3d-66c2-4c41-ae31-43e87e776b4d" style="cursor:pointer;fill:#c4618c;fill-opacity:1" transform="matrix(1.0439325,0,0,1.056192,-62.158699,-44.639481)">
+    <path style="fill:#c4618c;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1" d="m 136.47344,206.04826 c -3.18421,12.49685 -5.81329,22.77386 -5.8424,22.8378 -0.0291,0.0639 -1.65412,-0.38189 -3.61114,-0.99073 -26.48848,-8.24072 -49.236779,-28.67104 -59.911443,-53.80667 l -1.735742,-4.08715 22.149928,-8.29096 22.149927,-8.29096 16.24001,14.80619 c 8.932,8.14341 16.26482,14.87251 16.29516,14.95356 0.0303,0.0811 -2.5501,10.37207 -5.7343,22.86892 z" id="path7255-5-6" />
+    <text x="76.732956" y="189.06075" id="text11331-7-2-3">
+      <tspan style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;fill-opacity:1;stroke-width:0" x="76.732956" y="189.06075">Chambre</tspan>
+    </text>
+  </g>
+  <g (click)="goToRoom('entrance', 'ffd4bfd0-3977-4e1a-9124-da530eb522bb')"
+  id="ffd4bfd0-3977-4e1a-9124-da530eb522bb" style="cursor:pointer;fill:#5d3a67;fill-opacity:1" transform="matrix(1.0439325,0,0,1.056192,-62.158699,-44.639481)">
+    <path style="fill:#5d3a67;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1" d="m 142.08666,183.09184 23.93879,-0.0502 11.5853,45.6994 -47.08271,0.13484" id="path10764" />
+    <text style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.87778px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;fill-opacity:1;stroke-width:0" x="137.69841" y="212.20811" id="text11331-7-2-3-9">Entrée</text>
+  </g>
+</svg>

@@ -11,6 +11,7 @@ export type Room = {
   slug: string;
   image: string;
   items: Item[];
+  mainColor: string;
 }
 
 export type Item = {

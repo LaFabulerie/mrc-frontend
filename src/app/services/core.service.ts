@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Area, DigitalService, DigitalUse, Room } from '../models/use';
+import { Area, DigitalService, DigitalUse, Item, Room } from '../models/use';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,9 @@ export class CoreService {
   private digitalUsesSubject = new BehaviorSubject<DigitalUse[]>([]);
   public digitalUses$ = this.digitalUsesSubject.asObservable();
 
+  private roomsSubject = new BehaviorSubject<Room[]>([]);
+  public rooms$ = this.roomsSubject.asObservable();
+
   private defaultFlexFields = {
     expand: ['items', 'items.room'],
     omit : ['description', 'slug', 'tags', 'services', 'items.image', 'items.slug', 'items.room.video', 'items.room.description', 'items.room.items', 'items.room.uses.description']
@@ -21,7 +24,20 @@ export class CoreService {
   constructor(
     private http: HttpClient
   ) {
-    this.loadDigitalUses(); // Load all digital uses
+  }
+
+
+  fetchFullRooms(){
+    this.getRooms({
+      expand: ['items','items.room', 'items.uses', 'items.uses.services', 'items.uses.services.area'],
+      omit: ['items.room.items', 'items.uses.items' ]
+    }).subscribe((rooms: Room[]) => {
+      this.roomsSubject.next(rooms);
+    });
+  }
+
+  findItem(uuid : string): Item|undefined {
+    return this.roomsSubject.value.flatMap((room: Room) => room.items).find((item: Item) => item.uuid === uuid);
   }
 
   getRooms(params?: any): Observable<Room[]> {

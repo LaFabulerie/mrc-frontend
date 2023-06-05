@@ -31,9 +31,19 @@
   --green-mrc: #90c5ab;
   --blue-light-mrc: #8da6ff;
 
-  .p-button-small {
-    height: 1.9rem!important;
-    width: 1.9rem!important;
-    font-size: 0.8rem!important;
+  .bg-blue-mrc {
+    background-color: var(--blue-mrc);
+  }
+  .p-button {
+    &.p-button-small {
+      height: 1.9rem!important;
+      width: 1.9rem!important;
+      font-size: 0.8rem!important;
+    }
+    &.p-button-orange-mrc {
+      color: #ffffff;
+      background: var(--orange-mrc);
+      border: 1px solid var(--orange-mrc);
+    }
   }
 }

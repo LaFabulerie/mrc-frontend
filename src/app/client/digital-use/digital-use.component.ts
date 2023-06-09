@@ -26,6 +26,7 @@ export class DigitalUseComponent {
 
     let state = this.location.getState() as any;
     this.control.currentBackUrl = `/item/${state['back']}`
+    this.control.title = `Fiche ${state['itemName']}`;
 
     this.activatedRoute.params.subscribe(params => {
       const uuid = params['uuid'];

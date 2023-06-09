@@ -47,6 +47,7 @@ export class ItemComponent implements OnInit {
         fields: ['name', 'uses', 'room.uuid', 'room.main_color', 'image', 'uuid']
       }).subscribe(item => {
         this.item = item
+        this.control.title = item.name;
         this.renderer.setStyle(document.body, 'background-color', item.room.mainColor);
         if(this.item){
           this.useGrid = [

@@ -38,6 +38,13 @@ export class RemoteControlService {
   private currentBackUrlSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public currentBackUrl$: Observable<string> = this.currentBackUrlSubject.asObservable();
 
+  private titleSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public title$: Observable<string> = this.titleSubject.asObservable();
+
+  set title(value: string) {
+    this.titleSubject.next(value);
+  }
+
 
   set showControls(value: boolean) {
     this.showControlsSubject.next(value);

@@ -16,6 +16,7 @@ export class HomeComponent implements AfterViewInit{
   showLogo = true;
   navigationMode = "free";
   backUrl = '';
+  title = '';
 
   constructor(
     private control: RemoteControlService,
@@ -43,6 +44,11 @@ export class HomeComponent implements AfterViewInit{
     this.control.currentBackUrl$.subscribe(v => {
       this.backUrl = v;
     });
+
+    this.control.title$.subscribe(v => {
+      this.title = v;
+    });
+
   }
 
   switchNavigationMode(){

@@ -20,6 +20,7 @@ import { InplaceModule } from 'primeng/inplace';
 import { EditorModule } from 'primeng/editor';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -54,6 +55,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     ScrollPanelModule,
     SafeHtmlPipe,
     SelectButtonModule,
+    CheckboxModule,
 
     FontAwesomeModule,
   ],

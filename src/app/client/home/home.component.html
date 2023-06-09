@@ -1,23 +1,23 @@
 <div class="relative">
-  <div class="flex p-5 fixed w-full align-items-center" [ngClass]="{'bg-white': !transparentControls, 'justify-content-between' : showLogo || backUrl !== '', 'justify-content-end' : !showLogo && backUrl === ''}" >
-    <div [ngStyle]="{'min-width.px': showControls ? 450 : 130}">
+  <div class="flex p-3 fixed w-full align-items-between" [ngClass]="{'bg-white': !transparentControls}" >
+    <div class="w-4 flex justify-content-start">
       <button pButton [routerLink]="backUrl" class="p-button-orange-mrc mx-3" *ngIf="backUrl !== ''">
         <fa-icon [icon]="['fas', 'arrow-left']" size="4x"></fa-icon>
       </button>
     </div>
-    <img src="assets/img/logo_mrc.svg" *ngIf="showLogo">
-    <h1 *ngIf="title !== ''" class="text-center text-5xl">{{title}}</h1>
-    <div [ngStyle]="{'min-width.px': showControls ? 450 : 130}">
+    <div class="w-4 flex justify-content-center">
+      <img src="assets/img/logo_mrc.svg" *ngIf="showLogo">
+      <h1 *ngIf="title !== ''" class="text-center text-5xl">{{title}}</h1>
+    </div>
+    <div class="w-4 flex justify-content-end">
       <button pButton (click)="1+1" class="p-button-white-mrc mx-3" *ngIf="showControls">
-        <!-- <fa-icon [icon]="['fas', 'lock']" size="3x"></fa-icon> -->
         <img src="assets/img/picto_eye.svg">
       </button>
-      <button pButton (click)="1+1" class="p-button-white-mrc mx-3" *ngIf="showControls">
-        <!-- <fa-icon [icon]="['fas', 'rectangle-list']" size="3x"></fa-icon> -->
-        <img src="assets/img/picto_cart.svg">
+      <button pButton (click)="1+1" class="p-button-white-mrc mx-3 relative overflow-visible" *ngIf="showControls" [disabled]="basketCount == 0" (click)="goToBasket()">
+        <img src="assets/img/picto_basket.svg">
+        <span class="badge bg-white font-bold border-2 border-circle flex justify-content-center align-items-center absolute" *ngIf="basketCount">{{basketCount}}</span>
       </button>
       <button pButton (click)="1+1" class="p-button-white-mrc mx-3" *ngIf="showControls">
-        <!-- <fa-icon [icon]="['fas', 'arrow-right-from-bracket']" size="3x"></fa-icon> -->
         <img src="assets/img/picto_exit.svg">
       </button>
     </div>

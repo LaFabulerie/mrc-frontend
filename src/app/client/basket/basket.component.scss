@@ -1,0 +1,16 @@
+::ng-deep {
+  .p-checkbox {
+
+    width: 50px;
+    height: 50px;
+    .p-checkbox-box {
+      width: 50px;
+      height: 50px;
+      .p-icon {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+
+}

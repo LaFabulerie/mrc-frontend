@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DigitalUse } from 'src/app/models/use';
+import { BasketService } from 'src/app/services/basket.service';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
 
@@ -11,12 +12,14 @@ import { CoreService } from 'src/app/services/core.service';
   styleUrls: ['./digital-use.component.scss']
 })
 export class DigitalUseComponent {
-  use: DigitalUse = {} as DigitalUse;
+  use!: DigitalUse;
+
   constructor(
     private location:Location,
     private control: RemoteControlService,
     private coreService: CoreService,
     private activatedRoute: ActivatedRoute,
+    public basket: BasketService,
   ) { }
 
   ngOnInit(): void {

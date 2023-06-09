@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { RemoteAccess } from '../models/client';
 import { AuthService } from './auth.service';
-import { Item } from '../models/use';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
+import { BasketService } from 'src/app/services/basket.service';
 import { RemoteControlService } from 'src/app/services/control.service';
 
 @Component({
@@ -17,9 +18,11 @@ export class HomeComponent implements AfterViewInit{
   navigationMode = "free";
   backUrl = '';
   title = '';
+  basketCount = 0;
 
   constructor(
     private control: RemoteControlService,
+    public basket: BasketService,
     private router: Router,
   ) {
 
@@ -49,6 +52,13 @@ export class HomeComponent implements AfterViewInit{
       this.title = v;
     });
 
+    this.basket.basketSubject$.subscribe(_ => {
+      this.basketCount = this.basket.count();
+    });
+  }
+
+  goToBasket() {
+    this.router.navigateByUrl('/basket', { state: { back: this.router.url } });
   }
 
   switchNavigationMode(){

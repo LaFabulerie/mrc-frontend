@@ -6,4 +6,11 @@ button {
     width: 4rem;
     height: 4rem;
   }
+  .badge {
+    color: var(--orange-mrc);
+    width: 30px;
+    height: 30px;
+    top:-15px;
+    right: -15px;
+  }
 }

@@ -6,6 +6,7 @@ import { ItemComponent } from './item/item.component';
 import { DigitalUseComponent } from './digital-use/digital-use.component';
 import { HomeComponent } from './home/home.component';
 import { BathroomComponent } from './rooms/bathroom/bathroom.component';
+import { BasketComponent } from './basket/basket.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, children: [
@@ -17,6 +18,7 @@ const routes: Routes = [
     ]},
     { path: 'item/:uuid', component: ItemComponent},
     { path: 'use/:uuid', component: DigitalUseComponent},
+    { path: 'basket', component: BasketComponent},
   ]},
 ];
 

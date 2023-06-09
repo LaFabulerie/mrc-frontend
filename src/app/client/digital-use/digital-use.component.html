@@ -1,18 +1,21 @@
-<div class="surface-ground p-8 flex justify-content-center">
-  <div class="bg-white px-4 py-2 m-8 w-8">
+<div class="surface-ground p-8 flex justify-content-center" *ngIf="use">
+  <div class="bg-white px-4 py-2 mt-8 w-8">
     <h1 class="text-center text-5xl mb-4">{{use.title}}</h1>
 
-      <p-chip *ngFor="let tag of use.tags" styleClass="mr-2 mb-2" [label]="'#'+tag"></p-chip>
+      <p-chip *ngFor="let tag of use.tags" styleClass="mr-2 mb-2 surface-ground" [label]="'#'+tag"></p-chip>
 
       <p [innerHtml]="use.description | safeHtml"></p>
 
       <h3>Services</h3>
 
       <div class="border-1 border-round-md mb-3 surface-border" *ngFor="let service of use.services">
-        <div class="flex justify-content-between p-2 border-bottom-1 surface-border" style="background-color: #f8f9fa;">
+        <div class="flex align-items-center justify-content-between p-2 border-bottom-1 surface-border surface-ground">
           <h4 class="my-1">{{ service.title }} <span *ngIf="service.area"><i class="pi pi-map-marker mx-1"></i>{{service.area.name}}</span></h4>
+          <button pButton (click)="1+1" class="p-button-white-mrc mx-3" (click)="basket.add(service)" *ngIf="!basket.contains(service)">
+            <img src="assets/img/picto_basket_plus.svg">
+          </button>
         </div>
-        <div class="p-2">
+        <div class="p-2" [ngClass]="{'surface-ground' : basket.contains(service)}">
           <span class="text-600"><i class="pi pi-globe mr-2"></i><a href="{{service.url}}" target="_blank" class="text-700">{{ service.url }}</a></span>
           <p [innerHtml]="service.description | safeHtml"></p>
         </div>

@@ -8,6 +8,7 @@ import { DigitalUseComponent } from './digital-use/digital-use.component';
 import { HomeComponent } from './home/home.component';
 import { WelcomeVideoDialogComponent } from './components/welcome-video-dialog/welcome-video-dialog.component';
 import { DisclaimerDialogComponent } from './components/disclaimer-dialog/disclaimer-dialog.component';
+import { BasketComponent } from './basket/basket.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { DisclaimerDialogComponent } from './components/disclaimer-dialog/discla
     HomeComponent,
     WelcomeVideoDialogComponent,
     DisclaimerDialogComponent,
+    BasketComponent,
   ],
   imports: [
     SharedModule,

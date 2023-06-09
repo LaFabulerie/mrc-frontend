@@ -4,7 +4,6 @@ import { AuthService } from './services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { User } from './models/user';
 import { Title } from '@angular/platform-browser';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +19,6 @@ export class AppComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private authService: AuthService,
     private translateService: TranslateService,
-    private title: Title,
   ) {
     this.authService.user$.subscribe((x) => (this.user = x));
   }

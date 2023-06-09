@@ -6,17 +6,21 @@ import { environment } from 'src/environments/environment';
 
 
 @Injectable()
-export class JwtInterceptor implements HttpInterceptor {
+export class AuthInterceptor implements HttpInterceptor {
     constructor(private authService: AuthService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        // add auth header with jwt if user is logged in and request is to the api url
         const user = this.authService.userValue;
-        const isApiUrl = request.url.startsWith(environment.apiHost);
-        if (user && isApiUrl) {
+        const isReadOnlyApiUrl = request.url.startsWith(`${environment.apiHost}/api/r/`);
+        const isWriteApiUrl = request.url.startsWith(`${environment.apiHost}/api/w/`);
+        if (user && isWriteApiUrl) {
             const token = this.authService.getToken('accessToken');
             request = request.clone({
                 setHeaders: { Authorization: `Bearer  ${token}` }
+            });
+        } else if (isReadOnlyApiUrl) {
+            request = request.clone({
+                setHeaders: { Authorization: `Api-Key ${environment.apiKey}` }
             });
         }
 

@@ -1,46 +1,45 @@
 
 <div class="pt-8" *ngIf="item">
-    <h1 class="text-center text-5xl text-200">{{item.name}}</h1>
-    <table class="text-700">
+    <table class="text-700 mt-5">
       <tr>
-        <td><span class="border-1 shadow-5 p-4 border-round-2xl surface-ground surface-border" *ngIf="useGrid[0][0]">
+        <td><span class="border-1 shadow-7 p-4 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[0][0]">
           <a (click)="goToDigitalUse(useGrid[0][0].uuid)">{{useGrid[0][0].title}}</a>
         </span></td>
-        <td><span class="border-1 shadow-5 p-4 border-round-2xl surface-ground surface-border" *ngIf="useGrid[0][1]">
+        <td><span class="border-1 shadow-7 p-4 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[0][1]">
           <a (click)="goToDigitalUse(useGrid[0][1].uuid)">{{useGrid[0][1].title}}</a>
         </span></td>
-        <td><span class="border-1 shadow-5 p-4 border-round-2xl surface-ground surface-border" *ngIf="useGrid[0][2]">
+        <td><span class="border-1 shadow-7 p-4 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[0][2]">
           <a (click)="goToDigitalUse(useGrid[0][2].uuid)">{{useGrid[0][2].title}}</a>
         </span></td>
       </tr>
       <tr>
-        <td><span class="border-1 shadow-5 p-4 border-round-2xl surface-ground surface-border" *ngIf="useGrid[1][0]">
+        <td><span class="border-1 shadow-7 p-4 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[1][0]">
           <a (click)="goToDigitalUse(useGrid[1][0].uuid)">{{useGrid[1][0].title}}</a>
         </span></td>
         <td rowspan="2">
           <img [src]="item!.image" style="max-height: 23rem;" >
         </td>
-        <td><span class="border-1 shadow-5 p-4 border-round-2xl surface-ground surface-border" *ngIf="useGrid[1][2]">
+        <td><span class="border-1 shadow-7 p-4 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[1][2]">
           <a (click)="goToDigitalUse(useGrid[1][2].uuid)">{{useGrid[1][2].title}}</a>
         </span></td>
       </tr>
       <tr>
-        <td><span class="border-1 shadow-5 p-4 border-round-2xl surface-ground surface-border" *ngIf="useGrid[2][0]">
+        <td><span class="border-1 shadow-7 p-4 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[2][0]">
           <a (click)="goToDigitalUse(useGrid[2][0].uuid)">{{useGrid[2][0].title}}</a>
         </span></td>
 
-        <td><span class="border-1 shadow-5 p-4 border-round-2xl surface-ground surface-border" *ngIf="useGrid[2][2]">
+        <td><span class="border-1 shadow-7 p-4 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[2][2]">
           <a (click)="goToDigitalUse(useGrid[2][2].uuid)">{{useGrid[2][2].title}}</a>
         </span></td>
       </tr>
       <tr>
-        <td><span class="border-1 shadow-5 p-4 border-round-2xl surface-ground surface-border" *ngIf="useGrid[3][0]">
+        <td><span class="border-1 shadow-7 p-4 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[3][0]">
           <a (click)="goToDigitalUse(useGrid[3][0].uuid)">{{useGrid[3][0].title}}</a>
         </span></td>
-        <td><span class="border-1 shadow-5 p-4 border-round-2xl surface-ground surface-border" *ngIf="useGrid[3][1]">
+        <td><span class="border-1 shadow-7 p-4 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[3][1]">
           <a (click)="goToDigitalUse(useGrid[3][1].uuid)">{{useGrid[3][1].title}}</a>
         </span></td>
-        <td><span class="border-1 shadow-5 p-4 border-round-2xl surface-ground surface-border" *ngIf="useGrid[3][2]">
+        <td><span class="border-1 shadow-7 p-4 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[3][2]">
           <a (click)="goToDigitalUse(useGrid[3][2].uuid)">{{useGrid[3][2].title}}</a>
         </span></td>
       </tr>

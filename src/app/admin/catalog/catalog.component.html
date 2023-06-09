@@ -53,7 +53,7 @@
       <p-button icon="pi pi-trash" label="Supprimer" styleClass="p-button-outlined p-button-danger p-button-sm" (click)="removeDigitalUse($event)"  *ngIf="selectedNode"></p-button>
     </div>
     <div>
-      <app-edit-digital-use [useId]="selectedNode.data" (onSave)="useSaved($event)" *ngIf="selectedNode"></app-edit-digital-use>
+      <app-edit-digital-use [useUuid]="selectedNode.data" (onSave)="useSaved($event)" *ngIf="selectedNode"></app-edit-digital-use>
       <app-new-digital-use (onSave)="createDigitalUse($event)" *ngIf="digitalUseCreation"></app-new-digital-use>
     </div>
   </div>

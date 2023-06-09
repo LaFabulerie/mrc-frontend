@@ -40,7 +40,7 @@ export class CatalogComponent implements OnInit{
       uses.forEach((use: DigitalUse) => {
         const newUse = {
           label: use.title,
-          data: use.id,
+          data: use.uuid,
           type: 'use',
           icon: 'pi pi-file',
           leaf: true

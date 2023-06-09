@@ -18,12 +18,12 @@ export class EditDigitalUseComponent implements OnInit {
   @Output() onSave: EventEmitter<any> = new EventEmitter();
 
   @Input()
-  get useId(): number {
-    return this.use.id;
+  get useUuid(): string {
+    return this.use.uuid;
   }
-  set useId(id: number) {
+  set useUuid(uuid: string) {
     this.coreService
-      .getDigitalUse(id, {
+      .getDigitalUse(uuid, {
         expand: ['items', 'items.room', 'services', 'services.area'],
         omit: [
           'items.room.video',

@@ -66,7 +66,6 @@ export class AuthService {
   }
 
   private _processLogin(response: any) {
-    console.log("Process Login")
     const userData = response.user;
     localStorage.setItem('user', this.encrypt(JSON.stringify(userData)));
     this.storeToken('refreshToken', response.refreshToken);

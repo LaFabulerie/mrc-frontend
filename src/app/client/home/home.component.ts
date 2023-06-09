@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
-import { AuthService } from 'src/app/services/auth.service';
 import { RemoteControlService } from 'src/app/services/control.service';
 
 @Component({
-  selector: 'app-door',
+  selector: 'app-home',
   templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements AfterViewInit{
 
@@ -15,9 +15,9 @@ export class HomeComponent implements AfterViewInit{
   transparentControls = false;
   showLogo = true;
   navigationMode = "free";
+  backUrl = '';
 
   constructor(
-    private authService: AuthService,
     private control: RemoteControlService,
     private router: Router,
   ) {
@@ -25,11 +25,7 @@ export class HomeComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    this.authService.user$.subscribe((x) => {
-      this.user = x;
-    });
-
-    this.control.activatedNavigation$.subscribe((v) => {
+    this.control.showControls$.subscribe((v) => {
       this.showControls = v
     });
     this.control.transparentNavigation$.subscribe((v) => {
@@ -42,6 +38,10 @@ export class HomeComponent implements AfterViewInit{
     this.control.navigateToDoor$.subscribe(v => {
       if(!v) return;
       this.router.navigateByUrl('/door');
+    });
+
+    this.control.currentBackUrl$.subscribe(v => {
+      this.backUrl = v;
     });
   }
 

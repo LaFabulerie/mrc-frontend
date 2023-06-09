@@ -41,9 +41,20 @@
       font-size: 0.8rem!important;
     }
     &.p-button-orange-mrc {
-      color: #ffffff;
-      background: var(--orange-mrc);
+      color: var(--orange-mrc);
+      background: white;
       border: 1px solid var(--orange-mrc);
+      &:hover, &:focus {
+        box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--orange-mrc), 0 1px 2px 0 black!important;
+      }
+    }
+    &.p-button-white-mrc {
+      // color: #ffffff;
+      background: white;
+      border: 1px solid var(--orange-mrc);
+      &:hover, &:focus {
+        box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--orange-mrc), 0 1px 2px 0 black!important;
+      }
     }
   }
 }

@@ -12,7 +12,6 @@ import { RemoteControlService } from 'src/app/services/control.service';
 })
 export class BathroomComponent implements OnInit{
 
-  navigationMode: string|undefined = undefined;
   room: Room = {} as Room;
 
   constructor(
@@ -23,15 +22,10 @@ export class BathroomComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.control.enableNavigation();
+    this.control.showControls = true;
     this.control.transparentNavigation = true;
-    this.control.hideLogo();
-
-    this.control.navitationMode$.subscribe((v) => {
-      if(v) {
-        this.navigationMode = v
-      }
-    });
+    this.control.showLogo = false;
+    this.control.currentBackUrl = '/map';
 
     this.room = this.location.getState() as Room;
 

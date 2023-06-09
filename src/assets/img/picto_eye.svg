@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="9.6784506mm"
+   height="8.0089369mm"
+   viewBox="0 0 9.6784506 8.0089369"
+   version="1.1"
+   id="svg3355"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="picto_eye.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview3357"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.76702441"
+     inkscape:cx="-183.1754"
+     inkscape:cy="217.07262"
+     inkscape:window-width="1706"
+     inkscape:window-height="749"
+     inkscape:window-x="1970"
+     inkscape:window-y="118"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs3352" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-140.38377,-91.546054)">
+    <g
+       id="g3331"
+       transform="matrix(0.26458333,0,0,0.26458333,-23.724043,85.852221)">
+      <g
+         id="g1643"
+         style="isolation:isolate">
+        <path
+           class="cls-19"
+           d="m 638.54,51.29 c -5.13,0 -9.8,-2.93 -12.81,-5.39 -2.41,-1.97 -4.18,-3.96 -4.98,-4.92 0.8,-0.96 2.57,-2.95 4.98,-4.92 3.01,-2.46 7.68,-5.39 12.81,-5.39 5.13,0 9.8,2.93 12.81,5.39 2.41,1.97 4.18,3.96 4.98,4.92 -1.9,2.27 -9.23,10.31 -17.79,10.31 z"
+           id="path1637"
+           style="fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
+        <path
+           class="cls-19"
+           d="m 638.54,33.41 c -4.17,0 -7.57,3.4 -7.57,7.57 0,4.17 3.4,7.57 7.57,7.57 4.17,0 7.57,-3.4 7.57,-7.57 0,-4.17 -3.4,-7.57 -7.57,-7.57 z"
+           id="path1639"
+           style="fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
+        <path
+           class="cls-19"
+           d="m 638.54,37.8 c -1.75,0 -3.17,1.42 -3.17,3.17 0,1.75 1.42,3.17 3.17,3.17 1.75,0 3.17,-1.42 3.17,-3.17 0,-1.75 -1.42,-3.17 -3.17,-3.17 z"
+           id="path1641"
+           style="fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
+      </g>
+      <line
+         class="cls-19"
+         x1="638.81"
+         y1="22.02"
+         x2="638.81"
+         y2="27.15"
+         id="line1647"
+         style="isolation:isolate;fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
+      <line
+         class="cls-19"
+         x1="645.34998"
+         y1="23.4"
+         x2="642.88"
+         y2="27.889999"
+         id="line1649"
+         style="isolation:isolate;fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
+      <line
+         class="cls-19"
+         x1="632.27002"
+         y1="23.4"
+         x2="634.73999"
+         y2="27.889999"
+         id="line1651"
+         style="isolation:isolate;fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
+    </g>
+  </g>
+</svg>

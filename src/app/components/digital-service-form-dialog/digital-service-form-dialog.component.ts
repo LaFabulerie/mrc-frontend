@@ -41,8 +41,6 @@ export class DigitalServiceFormDialogComponent implements OnInit {
       areaId: [areaId, [Validators.required]],
       useId: [useId, [Validators.required]],
     });
-
-    console.log(this.serviceForm.value)
   }
 
   ngOnInit(): void {

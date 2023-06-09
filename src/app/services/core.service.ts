@@ -26,76 +26,67 @@ export class CoreService {
   ) {
   }
 
-
-  fetchFullRooms(){
-    this.getRooms({
-      expand: ['items','items.room', 'items.uses', 'items.uses.services', 'items.uses.services.area'],
-      omit: ['items.room.items', 'items.uses.items' ]
-    }).subscribe((rooms: Room[]) => {
-      this.roomsSubject.next(rooms);
-    });
-  }
-
-  findItem(uuid : string): Item|undefined {
-    return this.roomsSubject.value.flatMap((room: Room) => room.items).find((item: Item) => item.uuid === uuid);
-  }
-
   getRooms(params?: any): Observable<Room[]> {
     const queryParams = new URLSearchParams(params);
-    return this.http.get<Room[]>(`${environment.apiHost}/api/rooms/?${queryParams.toString()}`);
+    return this.http.get<Room[]>(`${environment.apiHost}/api/r/rooms/?${queryParams.toString()}`);
   }
 
-  getDigitalUse(useId: number, params?: any) {
+  getDigitalUse(uuid: string, params?: any): Observable<DigitalUse> {
     const queryParams = new URLSearchParams(params);
-    return this.http.get(`${environment.apiHost}/api/digital-uses/${useId}/?${queryParams.toString()}`);
+    return this.http.get<DigitalUse>(`${environment.apiHost}/api/r/digital-uses/${uuid}/?${queryParams.toString()}`);
   }
 
   loadDigitalUses(params?: any) {
     const queryParams = new URLSearchParams(params ? params : this.defaultFlexFields);
-    this.http.get<DigitalUse[]>(`${environment.apiHost}/api/digital-uses/?${queryParams.toString()}`).subscribe((uses: DigitalUse[]) => {
+    this.http.get<DigitalUse[]>(`${environment.apiHost}/api/r/digital-uses/?${queryParams.toString()}`).subscribe((uses: DigitalUse[]) => {
       this.digitalUsesSubject.next(uses);
     });
   }
 
   createDigitalUse(data: any): Observable<DigitalUse> {
-    return this.http.post<DigitalUse>(`${environment.apiHost}/api/digital-uses/`, data);
+    return this.http.post<DigitalUse>(`${environment.apiHost}/api/w/digital-uses/`, data);
   }
 
   updateDigitalUse(useId: number, data: any): Observable<DigitalUse> {
-    return this.http.patch<DigitalUse>(`${environment.apiHost}/api/digital-uses/${useId}/`, data);
+    return this.http.patch<DigitalUse>(`${environment.apiHost}/api/w/digital-uses/${useId}/`, data);
   }
 
   deleteDigitalUse(useId: number) {
-    return this.http.delete(`${environment.apiHost}/api/digital-uses/${useId}/`);
+    return this.http.delete(`${environment.apiHost}/api/w/digital-uses/${useId}/`);
   }
 
   get digitalUses(): DigitalUse[] {
     return this.digitalUsesSubject.value;
   }
 
+  getItem(uuid: string, params?: any) {
+    const queryParams = new URLSearchParams(params);
+    return this.http.get<Item>(`${environment.apiHost}/api/r/items/${uuid}/?${queryParams.toString()}`);
+  }
+
   getTags(): Observable<string[]> {
-    return this.http.get<string[]>(`${environment.apiHost}/api/tags/`);
+    return this.http.get<string[]>(`${environment.apiHost}/api/r/tags/`);
   }
 
   getAreas() : Observable<Area[]> {
-    return this.http.get<Area[]>(`${environment.apiHost}/api/areas/`);
+    return this.http.get<Area[]>(`${environment.apiHost}/api/r/areas/`);
   }
 
   createArea(data: any): Observable<Area> {
-    return this.http.post<Area>(`${environment.apiHost}/api/areas/`, data);
+    return this.http.post<Area>(`${environment.apiHost}/api/w/areas/`, data);
   }
 
   deleteDigitalService(serviceId: number) {
-    return this.http.delete(`${environment.apiHost}/api/digital-services/${serviceId}/`);
+    return this.http.delete(`${environment.apiHost}/api/w/digital-services/${serviceId}/`);
   }
 
   updateDigitalService(serviceId: number, data: any, params?: any): Observable<DigitalService> {
     const queryParams = new URLSearchParams(params);
-    return this.http.patch<DigitalService>(`${environment.apiHost}/api/digital-services/${serviceId}/?${queryParams.toString()}`, data);
+    return this.http.patch<DigitalService>(`${environment.apiHost}/api/w/digital-services/${serviceId}/?${queryParams.toString()}`, data);
   }
 
   createDigitalService(data: any, params?: any): Observable<DigitalService> {
     const queryParams = new URLSearchParams(params);
-    return this.http.post<DigitalService>(`${environment.apiHost}/api/digital-services/?${queryParams.toString()}`, data);
+    return this.http.post<DigitalService>(`${environment.apiHost}/api/w/digital-services/?${queryParams.toString()}`, data);
   }
 }

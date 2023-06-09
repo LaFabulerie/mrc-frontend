@@ -8,8 +8,8 @@ import { environment } from 'src/environments/environment';
 })
 export class RemoteControlService {
 
-  private activatedNavigationSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public activatedNavigation$: Observable<boolean> = this.activatedNavigationSubject.asObservable();
+  private showControlsSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public showControls$: Observable<boolean> = this.showControlsSubject.asObservable();
 
   private logoVisibleSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public logoVisible$: Observable<boolean> = this.logoVisibleSubject.asObservable();
@@ -35,40 +35,25 @@ export class RemoteControlService {
   private navigateToDigitalUseSubject: Subject<string> = new Subject<string>();
   public navigateToDigitalUse$: Observable<string|undefined> = this.navigateToDigitalUseSubject.asObservable();
 
-  get navigationMode() {
-    return this.navigationModeSubject.value;
+  private currentBackUrlSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public currentBackUrl$: Observable<string> = this.currentBackUrlSubject.asObservable();
+
+
+  set showControls(value: boolean) {
+    this.showControlsSubject.next(value);
   }
 
-  enableNavigation() {
-    this.activatedNavigationSubject.next(true);
-  }
-
-  disableNavigation() {
-    this.activatedNavigationSubject.next(false);
-  }
-
-  get activatedNavigation() {
-    return this.activatedNavigationSubject.value;
+  set currentBackUrl(value: string) {
+    this.currentBackUrlSubject.next(value);
   }
 
   set transparentNavigation(value: boolean) {
     this.transparentNavigationSubject.next(value);
   }
 
-  get transparentNavigation() {
-    return this.transparentNavigationSubject.value;
+  set showLogo(value: boolean){
+    this.logoVisibleSubject.next(value);
   }
-
-  hideLogo(){
-    this.logoVisibleSubject.next(false);
-  }
-
-  showLogo(){
-    this.logoVisibleSubject.next(true);
-  }
-
-
-
 
   private _mqtt : MqttService | undefined
 

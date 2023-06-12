@@ -42,6 +42,13 @@ export class HomeComponent implements AfterViewInit{
     if(environment.mqttBrokenHost) {
       this.mqtt = <MqttService>this.injector.get(MqttService);
     }
+
+    const navigationMode = localStorage.getItem('navigationMode');
+    if (navigationMode) {
+      this.currentNavigationMode = navigationMode;
+      this.control.navigationMode
+    }
+
   }
 
   ngAfterViewInit(): void {
@@ -58,6 +65,7 @@ export class HomeComponent implements AfterViewInit{
     this.control.navigationMode$.subscribe(modeValue => {
       if(this.mqtt && this.currentNavigationMode !== 'secondary') {
         this.mqtt.unsafePublish(`mrc/mode`, modeValue, { qos: 1, retain: true });
+        this.basket.refresh();
       }
     });
 
@@ -65,13 +73,17 @@ export class HomeComponent implements AfterViewInit{
       this.mqtt.observe('mrc/mode').subscribe((message: IMqttMessage) => {
         const modeValue = message.payload.toString();
         if(modeValue !== this.currentNavigationMode) {
+          if(this.currentNavigationMode === 'secondary' && modeValue === 'free') {
+            this.basket.clear();
+          }
           this.currentNavigationMode = modeValue === 'primary' ? 'secondary' : 'free';
           this.control.navigationMode = this.currentNavigationMode;
+
         }
       });
 
       this.mqtt.observe('mrc/nav').subscribe((message: IMqttMessage) => {
-        if(this.control.navigationMode === 'secondary') { //to be sure but only secondary should receive this
+        if(this.currentNavigationMode === 'secondary') { //to be sure but only secondary should receive this
           const nav = JSON.parse(message.payload.toString());
 
           if(nav.url === 'back') {
@@ -81,11 +93,18 @@ export class HomeComponent implements AfterViewInit{
           this.router.navigate(nav.url, {state: nav.state});
         }
       });
+
+      this.mqtt.observe('mrc/basket').subscribe((message: IMqttMessage) => {
+        if(this.currentNavigationMode === 'secondary') {
+          const basket = JSON.parse(message.payload.toString());
+          this.basket.load(basket);
+        }
+      });
     }
 
     this.control.navigateTo$.subscribe(navData => {
       console.log('HOME navigateTo', navData)
-      if(navData && this.control.navigationMode !== 'secondary') {
+      if(navData && this.currentNavigationMode !== 'secondary') {
         this.router.navigate(navData.url, {state: navData.state});
         if(this.mqtt) {
           this.mqtt.unsafePublish(`mrc/nav`, JSON.stringify({url: navData.url, state: navData.state || {}}), { qos: 1, retain: true });
@@ -93,12 +112,16 @@ export class HomeComponent implements AfterViewInit{
       }
     });
 
+    this.basket.basketSubject$.subscribe(basket => {
+      if(this.mqtt && this.currentNavigationMode !== 'secondary') {
+        this.mqtt.unsafePublish(`mrc/basket`, JSON.stringify(basket), { qos: 1, retain: true });
+      }
+    });
+
   }
 
   goToBasket() {
-    const url = ['basket']
-    this.control.navigate(url);
-    this.router.navigate(url);
+    this.control.navigate(['basket']);
   }
 
   navigationModeChange(){

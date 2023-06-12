@@ -11,10 +11,12 @@ export class BasketService {
   basketSubject$ = this.basketSubject.asObservable();
 
   constructor() {
-    const basket = localStorage.getItem('basket');
-    if (basket) {
-      this.basketSubject.next(JSON.parse(basket));
-    }
+    this.refresh();
+  }
+
+  load(basketData: []) {
+    localStorage.setItem('basket', JSON.stringify(basketData));
+    this.basketSubject.next(basketData);
   }
 
   add(service: DigitalService) {
@@ -42,7 +44,15 @@ export class BasketService {
   }
 
   clear() {
+    localStorage.removeItem('basket');
     this.basketSubject.next([]);
+  }
+
+  refresh() {
+    const basket = localStorage.getItem('basket');
+    if (basket) {
+      this.load(JSON.parse(basket));
+    }
   }
 
   count() {

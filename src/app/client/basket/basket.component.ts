@@ -15,7 +15,6 @@ export class BasketComponent implements OnInit{
   constructor(
     public basket: BasketService,
     private control: RemoteControlService,
-    private location: Location,
   ) { }
 
   private controlSetup() {
@@ -26,9 +25,6 @@ export class BasketComponent implements OnInit{
 
   ngOnInit(): void {
     this.control.navigationMode$.subscribe(v => this.controlSetup());
-
-    let state = this.location.getState() as any;
-    this.control.currentBackUrl = state['back']
 
     this.basket.basketSubject$.subscribe(services => {
       this.basketEmpty = services.length == 0;

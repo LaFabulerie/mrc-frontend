@@ -11,7 +11,6 @@ import { BasketComponent } from './basket/basket.component';
 const routes: Routes = [
   { path: '', component: HomeComponent, children: [
     { path: '', redirectTo: 'door', pathMatch: 'full'},
-    // {path: '**', redirectTo: 'door'},
     { path: 'door', component: DoorComponent },
     { path: 'map', component: MapComponent},
     { path: 'room', children: [

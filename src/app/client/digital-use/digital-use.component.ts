@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DigitalUse } from 'src/app/models/use';
 import { BasketService } from 'src/app/services/basket.service';
 import { RemoteControlService } from 'src/app/services/control.service';
@@ -27,7 +27,6 @@ export class DigitalUseComponent {
     this.control.showLogo = false;
     this.control.titleColor = 'text-800'
     let state = this.location.getState() as any;
-    this.control.currentBackUrl = state['back']
     this.control.title = `Fiche ${state['itemName']}`;
   }
 

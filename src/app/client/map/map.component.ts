@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Room } from 'src/app/models/use';
 import { RemoteControlService } from 'src/app/services/control.service';
 
@@ -14,16 +13,15 @@ export class MapComponent  implements OnInit{
   showBathroom: boolean = false;
 
   constructor(
-    private router: Router,
     private control: RemoteControlService,
   ) {
+    this.controlSetup();
   }
 
   private controlSetup() {
     this.control.showControls = true;
     this.control.showLogo = true;
     this.control.title = '';
-    this.control.currentBackUrl = ''
     this.control.bgColor = '#17ada9';
   }
 
@@ -32,9 +30,6 @@ export class MapComponent  implements OnInit{
   }
 
   goToRoom(roomName: string, uuid: string){
-    const url = ['room', roomName, uuid]
-    const state = { back: this.router.url }
-    this.control.navigateTo(url, state);
-    this.router.navigate(url, {state: state});
+    this.control.navigate(['room', roomName, uuid]);
   }
 }

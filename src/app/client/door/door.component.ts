@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { RemoteControlService } from 'src/app/services/control.service';
 
 @Component({
@@ -15,7 +14,6 @@ export class DoorComponent implements OnInit{
 
   constructor(
     private control: RemoteControlService,
-    private router: Router,
   ) {
     this.controlSetup();
   }
@@ -40,8 +38,8 @@ export class DoorComponent implements OnInit{
 
   gotToMap(){
     const url = ['map']
-    this.control.navigateTo(url, {});
-    this.router.navigate(url);
+    this.control.navigate(url);
+    // this.router.navigate(url);
   }
 
 }

@@ -1,6 +1,5 @@
-import { Location } from '@angular/common';
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DigitalUse, Item } from 'src/app/models/use';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
@@ -21,9 +20,7 @@ export class ItemComponent implements OnInit {
   ];
 
   constructor(
-    private location:Location,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
     private control: RemoteControlService,
     private renderer: Renderer2,
     private coreService: CoreService,
@@ -35,9 +32,6 @@ export class ItemComponent implements OnInit {
     this.control.showLogo = false;
     this.control.navigationBgColor = 'bg-transparent'
     this.control.titleColor = 'text-200'
-
-    let state = this.location.getState() as any;
-    this.control.currentBackUrl = state['back']
   }
 
   ngOnInit(): void {
@@ -66,9 +60,6 @@ export class ItemComponent implements OnInit {
   }
 
   goToDigitalUse(uuid: string){
-    const url = ['use', uuid]
-    const state = { back: this.router.url, itemName: this.item?.name }
-    this.control.navigateTo(url, state);
-    this.router.navigate(url, {state: state});
+    this.control.navigate(['use', uuid], { itemName: this.item?.name });
   }
 }

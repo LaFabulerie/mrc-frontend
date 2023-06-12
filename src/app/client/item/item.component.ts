@@ -2,7 +2,6 @@ import { Location } from '@angular/common';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DigitalUse, Item } from 'src/app/models/use';
-import { User } from 'src/app/models/user';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
 
@@ -13,7 +12,6 @@ import { CoreService } from 'src/app/services/core.service';
 })
 export class ItemComponent implements OnInit {
   item?: Item;
-  user?: User;
 
   useGrid: (DigitalUse|undefined)[][] = [
     [undefined, undefined, undefined],
@@ -32,13 +30,19 @@ export class ItemComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
+  private controlSetup() {
     this.control.showControls = true;
     this.control.showLogo = false;
-    this.control.transparentNavigation = true;
+    this.control.navigationBgColor = 'bg-transparent'
+    this.control.titleColor = 'text-200'
 
     let state = this.location.getState() as any;
-    this.control.currentBackUrl = `/room/${state['back']}`
+    this.control.currentBackUrl = state['back']
+  }
+
+  ngOnInit(): void {
+
+    this.control.navigationMode$.subscribe(v => this.controlSetup());
 
     this.activatedRoute.params.subscribe(params => {
       const uuid = params['uuid'];
@@ -59,16 +63,12 @@ export class ItemComponent implements OnInit {
         }
       })
     })
-
-
-    this.control.navigateToDigitalUse$.subscribe(uuid => {
-      if(!uuid && !this.item) return;
-      const use = this.item!.uses.find(r => r.uuid == uuid);
-      this.router.navigateByUrl('/use', { state: use });
-    })
   }
 
   goToDigitalUse(uuid: string){
-    this.router.navigate(['/use', uuid], { state: {back : this.item?.uuid, itemName: this.item?.name} });
+    const url = ['use', uuid]
+    const state = { back: this.router.url, itemName: this.item?.name }
+    this.control.navigateTo(url, state);
+    this.router.navigate(url, {state: state});
   }
 }

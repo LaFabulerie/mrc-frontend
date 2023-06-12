@@ -11,10 +11,11 @@ import { BasketComponent } from './basket/basket.component';
 const routes: Routes = [
   { path: '', component: HomeComponent, children: [
     { path: '', redirectTo: 'door', pathMatch: 'full'},
+    // {path: '**', redirectTo: 'door'},
     { path: 'door', component: DoorComponent },
     { path: 'map', component: MapComponent},
     { path: 'room', children: [
-      { path: 'bathroom', component: BathroomComponent},
+      { path: 'bathroom/:uuid', component: BathroomComponent},
     ]},
     { path: 'item/:uuid', component: ItemComponent},
     { path: 'use/:uuid', component: DigitalUseComponent},

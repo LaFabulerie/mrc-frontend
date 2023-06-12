@@ -5,7 +5,24 @@ table {
     td {
       text-align: center;
       width: 33%;
+      .item-picture {
+        height: 23rem;
+      }
     }
   }
+}
+
+@media screen and (max-width: 1281px) {
+  table {
+    tr {
+      height: 5rem;
+      td {
+        .item-picture {
+          height: 20rem;
+        }
+      }
+    }
+  }
+
 }
 

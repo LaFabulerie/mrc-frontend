@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DialogService } from 'primeng/dynamicdialog';
-import { User } from 'src/app/models/user';
 import { RemoteControlService } from 'src/app/services/control.service';
 
 @Component({
@@ -19,15 +17,18 @@ export class DoorComponent implements OnInit{
     private control: RemoteControlService,
     private router: Router,
   ) {
+    this.controlSetup();
+  }
+
+  private  controlSetup() {
+    this.currentFillColor = this.normalFillColor;
+    this.control.showControls = false;
+    this.control.title = '';
+    this.control.bgColor = 'surface-ground';
   }
 
   ngOnInit(): void {
-    this.currentFillColor = this.normalFillColor;
-    this.control.showControls = false;
-    this.control.navigateToMap$.subscribe(v => {
-      if(!v) return;
-      this.router.navigateByUrl('/map');
-    })
+    this.control.navigationMode$.subscribe(v => this.controlSetup());
   }
 
   openWelcomeVideoDialog() {
@@ -38,7 +39,9 @@ export class DoorComponent implements OnInit{
   }
 
   gotToMap(){
-    this.router.navigateByUrl('/map');
+    const url = ['map']
+    this.control.navigateTo(url, {});
+    this.router.navigate(url);
   }
 
 }

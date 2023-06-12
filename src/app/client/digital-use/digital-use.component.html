@@ -1,5 +1,5 @@
-<div class="surface-ground p-8 flex justify-content-center" *ngIf="use">
-  <div class="bg-white px-4 py-2 mt-8 w-8">
+<div class="surface-ground flex justify-content-center h-screen" *ngIf="use" style="padding-top: 120px;">
+  <div class="bg-white px-4 py-2 w-8 overflow-auto">
     <h1 class="text-center text-5xl mb-4">{{use.title}}</h1>
 
       <p-chip *ngFor="let tag of use.tags" styleClass="mr-2 mb-2 surface-ground" [label]="'#'+tag"></p-chip>

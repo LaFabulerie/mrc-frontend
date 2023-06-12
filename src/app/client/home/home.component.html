@@ -1,13 +1,14 @@
 <div class="relative">
-  <div class="flex p-3 fixed w-full align-items-between" [ngClass]="{'bg-white': !transparentControls}" >
+  <div class="flex p-3 fixed w-full align-items-between {{navigationBgColor}}">
     <div class="w-4 flex justify-content-start">
-      <button pButton [routerLink]="backUrl" class="p-button-orange-mrc mx-3" *ngIf="backUrl !== ''">
+      <button pButton class="p-button-orange-mrc mx-3" *ngIf="backUrl !== ''" (click)="goBack()">
         <fa-icon [icon]="['fas', 'arrow-left']" size="4x"></fa-icon>
       </button>
+      <p-dropdown [options]="navigationModes" [(ngModel)]="currentNavigationMode" optionValue="value" (onChange)="navigationModeChange()"></p-dropdown>
     </div>
     <div class="w-4 flex justify-content-center">
       <img src="assets/img/logo_mrc.svg" *ngIf="showLogo">
-      <h1 *ngIf="title !== ''" class="text-center text-5xl">{{title}}</h1>
+      <h1 *ngIf="title !== ''" class="text-center text-5xl {{titleColor}}">{{title}}</h1>
     </div>
     <div class="w-4 flex justify-content-end">
       <button pButton (click)="1+1" class="p-button-white-mrc mx-3" *ngIf="showControls">
@@ -22,6 +23,5 @@
       </button>
     </div>
   </div>
-
-  <router-outlet></router-outlet>
 </div>
+<router-outlet></router-outlet>

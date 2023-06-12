@@ -1,9 +1,9 @@
 
-<div class="surface-ground p-8 flex justify-content-center h-screen">
-  <div class="bg-white px-4 py-2 m-8 w-8">
+<div  class="flex justify-content-center align-items-center h-screen">
+  <div class="bg-white p-4 w-8 border-1 border-round surface-border shadow-7">
   <div *ngFor="let service of basket.services" class="flex mb-2 ">
     <!-- <p-checkbox [(ngModel)]="selectedServices[service.uuid]" [binary]="true" inputId="binary" class="mr-2"></p-checkbox> -->
-    <div class="border-1 border-round p-1">
+    <div class="border-1 border-round p-2">
       <div class="my1">{{service.title}}</div>
       <a href="{{service.url}}" target="_blank" class="text-700">{{ service.url }}</a>
       <p class="p-0 my-1"[innerHtml]="service.description | safeHtml"></p>
@@ -13,7 +13,10 @@
     </div>
   </div>
   <div *ngIf="basketEmpty" class="flex mb-2 ">
-    Votre panier est vide
+    <div class="border-1 border-round p-2 w-full text-center">
+      <p>Votre panier est vide</p>
+    </div>
+
   </div>
   <button pButton class="p-button-orange-mrc p-4 w-full" label="Télécharger votre liste de services" (click)="1+1" [disabled]="basketEmpty"></button>
   </div>

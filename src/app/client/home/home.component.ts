@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models/user';
 import { BasketService } from 'src/app/services/basket.service';
 import { RemoteControlService } from 'src/app/services/control.service';
 
@@ -11,62 +10,64 @@ import { RemoteControlService } from 'src/app/services/control.service';
 })
 export class HomeComponent implements AfterViewInit{
 
-  user?: User;
   showControls = false;
-  transparentControls = false;
   showLogo = true;
-  navigationMode = "free";
   backUrl = '';
   title = '';
   basketCount = 0;
+  navigationBgColor = '';
+  bgColor = '';
+  titleColor = '';
+
+  navigationModes = [
+    {value: 'free', label: 'Libre'},
+    {value: 'primary', label: 'Principal'},
+    {value: 'secondary', label: 'Secondaire'},
+  ]
+  currentNavigationMode = 'free';
 
   constructor(
     private control: RemoteControlService,
     public basket: BasketService,
     private router: Router,
+    private renderer: Renderer2
   ) {
 
   }
 
   ngAfterViewInit(): void {
-    this.control.showControls$.subscribe((v) => {
-      this.showControls = v
-    });
-    this.control.transparentNavigation$.subscribe((v) => {
-      this.transparentControls = v
-    });
-    this.control.logoVisible$.subscribe((v) => {
-      this.showLogo = v
+    this.control.showControls$.subscribe(v => this.showControls = v);
+    this.control.navigationBgColor$.subscribe(v => this.navigationBgColor = v);
+    this.control.logoVisible$.subscribe(v => this.showLogo = v);
+    this.control.currentBackUrl$.subscribe(v => this.backUrl = v);
+    this.control.title$.subscribe(v => this.title = v);
+    this.control.bgColor$.subscribe(v => this.renderer.setStyle(document.body, 'background-color', v));
+    this.control.titleColor$.subscribe(v => this.titleColor = v);
+    this.basket.basketSubject$.subscribe(_ => this.basketCount = this.basket.count());
+
+    this.control.navigateTo$.subscribe(navData => {
+      if(!navData) return;
+      this.router.navigate(navData.url, {state: navData.state});
     });
 
-    this.control.navigateToDoor$.subscribe(v => {
-      if(!v) return;
-      this.router.navigateByUrl('/door');
-    });
-
-    this.control.currentBackUrl$.subscribe(v => {
-      this.backUrl = v;
-    });
-
-    this.control.title$.subscribe(v => {
-      this.title = v;
-    });
-
-    this.basket.basketSubject$.subscribe(_ => {
-      this.basketCount = this.basket.count();
+    this.control.navigationMode$.subscribe(v => {
+      this.currentNavigationMode = v;
     });
   }
 
   goToBasket() {
-    this.router.navigateByUrl('/basket', { state: { back: this.router.url } });
+    const url = ['basket']
+    const state = { back: this.router.url }
+    this.control.navigateTo(url, state);
+    this.router.navigate(['basket'], { state: state });
   }
 
-  switchNavigationMode(){
-    this.control.switchNavigationMode(this.navigationMode);
+  navigationModeChange(){
+    this.control.navigationMode = this.currentNavigationMode;
   }
 
-  goToMap(){
-    this.router.navigateByUrl('/map');
+  goBack() {
+    this.router.navigateByUrl(this.backUrl);
   }
 
 

@@ -1,9 +1,11 @@
 :host {
   display: flex;
   justify-content: center;
+  align-items: center;
   background-color: #db7665;
+  height: 100vh;
 
   svg {
-    height: 100vh;
+    height: 100%;
   }
 }

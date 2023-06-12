@@ -22,14 +22,18 @@ export class DigitalUseComponent {
     public basket: BasketService,
   ) { }
 
-  ngOnInit(): void {
+  private controlSetup(){
     this.control.showControls = false;
     this.control.showLogo = false;
-    this.control.transparentNavigation = true;
-
+    this.control.titleColor = 'text-800'
     let state = this.location.getState() as any;
-    this.control.currentBackUrl = `/item/${state['back']}`
+    this.control.currentBackUrl = state['back']
     this.control.title = `Fiche ${state['itemName']}`;
+  }
+
+  ngOnInit(): void {
+
+    this.control.navigationMode$.subscribe(v => this.controlSetup());
 
     this.activatedRoute.params.subscribe(params => {
       const uuid = params['uuid'];

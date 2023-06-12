@@ -8,32 +8,28 @@ import { environment } from 'src/environments/environment';
 })
 export class RemoteControlService {
 
+
+
   private showControlsSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public showControls$: Observable<boolean> = this.showControlsSubject.asObservable();
 
   private logoVisibleSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public logoVisible$: Observable<boolean> = this.logoVisibleSubject.asObservable();
 
-  private transparentNavigationSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public transparentNavigation$: Observable<boolean> = this.transparentNavigationSubject.asObservable();
+  private navigationBgColorSubject: BehaviorSubject<string> = new BehaviorSubject<string>('bg-white');
+  public navigationBgColor$: Observable<string> = this.navigationBgColorSubject.asObservable();
 
-  private navigationModeSubject: BehaviorSubject<string|undefined> = new BehaviorSubject<string|undefined>(undefined);
-  public navitationMode$: Observable<string|undefined> = this.navigationModeSubject.asObservable();
+  private bgColorSubject: BehaviorSubject<string> = new BehaviorSubject<string>('bg-white');
+  public bgColor$: Observable<string> = this.bgColorSubject.asObservable();
 
-  private navigateToMapSubject: Subject<string> = new Subject<string>();
-  public navigateToMap$: Observable<string> = this.navigateToMapSubject.asObservable();
+  private titleColorSubject: BehaviorSubject<string> = new BehaviorSubject<string>('text-50');
+  public titleColor$: Observable<string> = this.titleColorSubject.asObservable();
 
-  private navigateToDoorSubject: Subject<string> = new Subject<string>();
-  public navigateToDoor$: Observable<string|undefined> = this.navigateToDoorSubject.asObservable();
+  private navigationModeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('free');
+  public navigationMode$: Observable<string> = this.navigationModeSubject.asObservable();
 
-  private navigateToRoomSubject: Subject<string> = new Subject<string>();
-  public navigateToRoom$: Observable<string|undefined> = this.navigateToRoomSubject.asObservable();
-
-  private navigateToItemSubject: Subject<string> = new Subject<string>();
-  public navigateToItem$: Observable<string|undefined> = this.navigateToItemSubject.asObservable();
-
-  private navigateToDigitalUseSubject: Subject<string> = new Subject<string>();
-  public navigateToDigitalUse$: Observable<string|undefined> = this.navigateToDigitalUseSubject.asObservable();
+  private navigateToSubject: BehaviorSubject<string> = new BehaviorSubject<any>(null);
+  public navigateTo$: Observable<any> = this.navigateToSubject.asObservable();
 
   private currentBackUrlSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public currentBackUrl$: Observable<string> = this.currentBackUrlSubject.asObservable();
@@ -45,21 +41,43 @@ export class RemoteControlService {
     this.titleSubject.next(value);
   }
 
-
   set showControls(value: boolean) {
-    this.showControlsSubject.next(value);
+    this.showControlsSubject.next(this.isSecondaryMode ? false : value);
   }
 
   set currentBackUrl(value: string) {
-    this.currentBackUrlSubject.next(value);
+    this.currentBackUrlSubject.next(this.isSecondaryMode ? '' : value);
   }
 
-  set transparentNavigation(value: boolean) {
-    this.transparentNavigationSubject.next(value);
+  set navigationBgColor(value: string) {
+    this.navigationBgColorSubject.next(value);
   }
 
   set showLogo(value: boolean){
     this.logoVisibleSubject.next(value);
+  }
+
+  set bgColor(value: string) {
+    this.bgColorSubject.next(value);
+  }
+
+  set titleColor(value: string) {
+    this.titleColorSubject.next(value);
+  }
+
+  set navigationMode(value: string) {
+    this.navigationModeSubject.next(value); // must be called before _mqtt is set
+    if(this._mqtt) {
+      this._mqtt.unsafePublish(`mrc/mode`, value === 'primary' ? 'secondary' : 'free' , { qos: 1, retain: true });
+    }
+  }
+
+  get navigationMode() {
+    return this.navigationModeSubject.value;
+  }
+
+  get isSecondaryMode() {
+    return this.navigationMode === 'secondary';
   }
 
   private _mqtt : MqttService | undefined
@@ -72,47 +90,25 @@ export class RemoteControlService {
     if(environment.mqttBrokenHost) {
       this._mqtt = <MqttService>this.injector.get(MqttService);
       this._mqtt.observe('mrc/mode').subscribe((message: IMqttMessage) => {
-        console.log('NAVIGATION MODE', message.payload.toString());
-        this.navigationModeSubject.next(message.payload.toString());
+        const mode = message.payload.toString();
+        if(this.navigationMode === 'primary') return
+        this.navigationModeSubject.next(mode);
       });
-      this._mqtt.observe('mrc/room').subscribe((message: IMqttMessage) => {
-        console.log('ROOM', message.payload.toString());
-        this.navigateToRoomSubject.next(message.payload.toString());
-      });
-      this._mqtt.observe('mrc/item').subscribe((message: IMqttMessage) => {
-        console.log('ITEM', message.payload.toString());
-        this.navigateToRoomSubject.next(message.payload.toString());
-      });
-      this._mqtt.observe('mrc/map').subscribe((message: IMqttMessage) => {
-        console.log('MAP', message.payload.toString());
-        this.navigateToMapSubject.next(message.payload.toString());
-      });
-      this._mqtt.observe('mrc/door').subscribe((message: IMqttMessage) => {
-        console.log('DOOR', message.payload.toString());
-        this.navigateToDoorSubject.next(message.payload.toString());
-      });
-      this._mqtt.observe('mrc/use').subscribe((message: IMqttMessage) => {
-        console.log('USE', message.payload.toString());
-        this.navigateToDigitalUseSubject.next(message.payload.toString());
+
+      this._mqtt.observe('mrc/nav').subscribe((message: IMqttMessage) => {
+        if(this.navigationMode === 'secondary') {
+          const nav = JSON.parse(String.fromCharCode(...new Uint8Array(message.payload)));
+          this.navigateToSubject.next(nav);
+        }
       });
     }
 
   }
 
-
-  switchNavigationMode(mode:string) {
+  navigateTo(url: string[], state: any) {
     if(this._mqtt) {
-      this._mqtt.unsafePublish(`mrc/mode`, mode, { qos: 1, retain: true });
-    };
+      this._mqtt.unsafePublish(`mrc/nav`, JSON.stringify({url: url, state: state}), { qos: 1, retain: true });
+    }
   }
-
-  // navigate(type: string, data: string|undefined) {
-  //   if(this._mqtt && data) {
-  //     this._mqtt.unsafePublish(`mrc/${type}`, data, { qos: 1, retain: true });
-  //   }
-  // }
-
-
-
 
 }

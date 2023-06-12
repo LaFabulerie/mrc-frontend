@@ -18,10 +18,14 @@ export class BasketComponent implements OnInit{
     private location: Location,
   ) { }
 
-  ngOnInit(): void {
+  private controlSetup() {
     this.control.showControls = true;
     this.control.showLogo = false;
     this.control.title = "Liste des services selectionnés";
+  }
+
+  ngOnInit(): void {
+    this.control.navigationMode$.subscribe(v => this.controlSetup());
 
     let state = this.location.getState() as any;
     this.control.currentBackUrl = state['back']

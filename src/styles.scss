@@ -31,6 +31,10 @@
   --green-mrc: #90c5ab;
   --blue-light-mrc: #8da6ff;
 
+ .bg-transparent {
+    background-color: transparent!important;
+  }
+
   .bg-blue-mrc {
     background-color: var(--blue-mrc);
   }

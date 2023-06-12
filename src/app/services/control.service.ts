@@ -55,6 +55,7 @@ export class RemoteControlService {
   }
 
   set navigationMode(value: string) {
+    localStorage.setItem('navigationMode', value);
     this.navigationModeSubject.next(value);
   }
 

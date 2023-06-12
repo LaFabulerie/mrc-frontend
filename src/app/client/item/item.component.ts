@@ -25,6 +25,7 @@ export class ItemComponent implements OnInit {
     private renderer: Renderer2,
     private coreService: CoreService,
   ) {
+    this.controlSetup();
   }
 
   private controlSetup() {

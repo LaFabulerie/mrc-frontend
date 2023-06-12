@@ -22,6 +22,7 @@ export class MapComponent  implements OnInit{
     this.control.showControls = true;
     this.control.showLogo = true;
     this.control.title = '';
+    this.control.navigationBgColor = 'bg-transparent'
     this.control.bgColor = '#17ada9';
   }
 

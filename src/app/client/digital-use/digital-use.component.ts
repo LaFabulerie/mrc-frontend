@@ -23,7 +23,7 @@ export class DigitalUseComponent {
   ) { }
 
   private controlSetup(){
-    this.control.showControls = false;
+    this.control.showControls = true;
     this.control.showLogo = false;
     this.control.titleColor = 'text-800'
     let state = this.location.getState() as any;

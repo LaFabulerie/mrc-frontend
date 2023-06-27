@@ -7,6 +7,7 @@ import { DigitalUseComponent } from './digital-use/digital-use.component';
 import { HomeComponent } from './home/home.component';
 import { BathroomComponent } from './rooms/bathroom/bathroom.component';
 import { BasketComponent } from './basket/basket.component';
+import { BedroomComponent } from './rooms/bedroom/bedroom.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, children: [
@@ -15,6 +16,7 @@ const routes: Routes = [
     { path: 'map', component: MapComponent},
     { path: 'room', children: [
       { path: 'bathroom/:uuid', component: BathroomComponent},
+      { path: 'bedroom/:uuid', component: BedroomComponent},
     ]},
     { path: 'item/:uuid', component: ItemComponent},
     { path: 'use/:uuid', component: DigitalUseComponent},

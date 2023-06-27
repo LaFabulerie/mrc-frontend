@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { WelcomeVideoDialogComponent } from './components/welcome-video-dialog/welcome-video-dialog.component';
 import { DisclaimerDialogComponent } from './components/disclaimer-dialog/disclaimer-dialog.component';
 import { BasketComponent } from './basket/basket.component';
+import { BedroomComponent } from './rooms/bedroom/bedroom.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { BasketComponent } from './basket/basket.component';
     WelcomeVideoDialogComponent,
     DisclaimerDialogComponent,
     BasketComponent,
+    BedroomComponent,
   ],
   imports: [
     SharedModule,

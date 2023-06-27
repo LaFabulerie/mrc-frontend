@@ -38,8 +38,8 @@ export class DigitalUseComponent {
     this.activatedRoute.params.subscribe(params => {
       const uuid = params['uuid'];
       this.coreService.getDigitalUse(uuid, {
-        expand: ['services', 'services.area'],
-        omit: ['items', 'item_ids', 'services.use', 'service.use_id'],
+        expand: ['services', 'services.area', 'items'],
+        omit: ['item_ids', 'services.use', 'service.use_id'],
       }).subscribe(use => {
         this.use = use
       });

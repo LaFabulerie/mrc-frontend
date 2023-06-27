@@ -1,28 +1,16 @@
-table {
-  width: 100%;
-  tr {
-    height: 12rem;
-    td {
-      text-align: center;
-      width: 33%;
-      .item-picture {
-        height: 23rem;
+
+:host {
+  .use-item {
+    fa-icon {
+      visibility: hidden;
+    }
+    &:hover {
+      &.activable {
+        background-color: var(--blue-200);
+      }
+      fa-icon {
+        visibility: visible;
       }
     }
   }
 }
-
-@media screen and (max-width: 1281px) {
-  table {
-    tr {
-      height: 5rem;
-      td {
-        .item-picture {
-          height: 20rem;
-        }
-      }
-    }
-  }
-
-}
-

@@ -1,48 +1,20 @@
 
-<div class="flex justify-content-center align-items-center h-screen" *ngIf="item">
-    <table class="text-700 mt-6">
-      <tr>
-        <td><div class="border-1 shadow-7 p-3 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[0][0]">
-          <a (click)="goToDigitalUse(useGrid[0][0].uuid)">{{useGrid[0][0].title}}</a>
-        </div></td>
-        <td><div class="border-1 shadow-7 p-3 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[0][1]">
-          <a (click)="goToDigitalUse(useGrid[0][1].uuid)">{{useGrid[0][1].title}}</a>
-        </div></td>
-        <td><div class="border-1 shadow-7 p-3 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[0][2]">
-          <a (click)="goToDigitalUse(useGrid[0][2].uuid)">{{useGrid[0][2].title}}</a>
-        </div></td>
-      </tr>
-      <tr>
-        <td><div class="border-1 shadow-7 p-3 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[1][0]">
-          <a (click)="goToDigitalUse(useGrid[1][0].uuid)">{{useGrid[1][0].title}}</a>
-        </div></td>
-        <td rowspan="2">
-          <img class="item-picture" [src]="item!.image">
-        </td>
-        <td><div class="border-1 shadow-7 p-3 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[1][2]">
-          <a (click)="goToDigitalUse(useGrid[1][2].uuid)">{{useGrid[1][2].title}}</a>
-        </div></td>
-      </tr>
-      <tr>
-        <td><div class="border-1 shadow-7 p-3 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[2][0]">
-          <a (click)="goToDigitalUse(useGrid[2][0].uuid)">{{useGrid[2][0].title}}</a>
-        </div></td>
-
-        <td><div class="border-1 shadow-7 p-3 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[2][2]">
-          <a (click)="goToDigitalUse(useGrid[2][2].uuid)">{{useGrid[2][2].title}}</a>
-        </div></td>
-      </tr>
-      <tr>
-        <td><div class="border-1 shadow-7 p-3 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[3][0]">
-          <a (click)="goToDigitalUse(useGrid[3][0].uuid)">{{useGrid[3][0].title}}</a>
-        </div></td>
-        <td><div class="border-1 shadow-7 p-3 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[3][1]">
-          <a (click)="goToDigitalUse(useGrid[3][1].uuid)">{{useGrid[3][1].title}}</a>
-        </div></td>
-        <td><div class="border-1 shadow-7 p-3 border-round-2xl surface-ground surface-border cursor-pointer" *ngIf="useGrid[3][2]">
-          <a (click)="goToDigitalUse(useGrid[3][2].uuid)">{{useGrid[3][2].title}}</a>
-        </div></td>
-      </tr>
-    </table>
+<div class="flex justify-content-center align-items-center h-screen pt-6" *ngIf="item">
+    <div class="w-6 flex justify-content-center align-items-center">
+      <img class="item-picture w-9" [src]="item.image">
+    </div>
+    <div class="w-6 flex justify-content-center align-items-center">
+      <div class="w-8 use-list flex flex-column border-left-1  border-right-1  border-bottom-1 bg-white shadow-7 border-round-bottom-3xl">
+        <div class="header"></div>
+        <div class="text-2xl font-bold text-center py-2 border-bottom-1" [ngStyle]="{'color' : item.room.mainColor}">{{item.name}}</div>
+        <div class="use-item text-lg py-2 pl-6"
+            [ngClass]="{'border-round-bottom-3xl' : last, 'border-bottom-1' : !last, 'activable cursor-pointer' : use != null}"
+            *ngFor="let use of useList;let last=last">
+          <fa-icon [icon]="['fas', 'chevron-right']" class="mr-3" *ngIf="use"></fa-icon>
+          <span (click)="goToDigitalUse(use.uuid)" *ngIf="use">{{use.title}}</span>
+          <span *ngIf="!use">&nbsp;</span>
+        </div>
+      </div>
+    </div>
 </div>
 

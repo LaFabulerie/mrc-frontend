@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Nullable } from 'primeng/ts-helpers';
 import { DigitalUse, Item } from 'src/app/models/use';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
@@ -11,13 +12,7 @@ import { CoreService } from 'src/app/services/core.service';
 })
 export class ItemComponent implements OnInit {
   item?: Item;
-
-  useGrid: (DigitalUse|undefined)[][] = [
-    [undefined, undefined, undefined],
-    [undefined, undefined, undefined],
-    [undefined, undefined, undefined],
-    [undefined, undefined, undefined],
-  ];
+  useList: any[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -50,16 +45,12 @@ export class ItemComponent implements OnInit {
         fields: ['name', 'uses', 'room.uuid', 'room.main_color', 'image', 'uuid']
       }).subscribe(item => {
         this.item = item
-        this.control.title = item.name;
-        this.renderer.setStyle(document.body, 'background-color', item.room.mainColor);
-        if(this.item){
-          this.useGrid = [
-            [this.item.uses[9], this.item.uses[0], this.item.uses[6]],
-            [this.item.uses[5], undefined, this.item.uses[2]],
-            [this.item.uses[3], undefined, this.item.uses[4]],
-            [this.item.uses[8], this.item.uses[1], this.item.uses[7]],
-          ];
+        this.useList = [...item.uses];
+        const limit = 10-this.useList.length
+        for(let i=0; i<=limit; i++){
+          this.useList.push(null);
         }
+        this.renderer.setStyle(document.body, 'background-color', item.room.mainColor);
       })
     })
   }

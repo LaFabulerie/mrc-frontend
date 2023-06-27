@@ -18,7 +18,10 @@ export class BasketComponent implements OnInit{
   ) { }
 
   private controlSetup() {
-    this.control.showControls = true;
+    this.control.showMapButton = true;
+    this.control.showBackButton = true;
+    this.control.showListButton = true;
+    this.control.showExitButton = true;
     this.control.showLogo = false;
     this.control.title = "Liste des services selectionnés";
   }

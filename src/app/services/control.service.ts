@@ -6,8 +6,17 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class RemoteControlService {
 
-  private showControlsSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public showControls$: Observable<boolean> = this.showControlsSubject.asObservable();
+  private showMapButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public showMapButton$: Observable<boolean> = this.showMapButtonSubject.asObservable();
+
+  private showBackButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public showBackButton$: Observable<boolean> = this.showBackButtonSubject.asObservable();
+
+  private showListButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public showListButton$: Observable<boolean> = this.showListButtonSubject.asObservable();
+
+  private showExitButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public showExitButton$: Observable<boolean> = this.showExitButtonSubject.asObservable();
 
   private showLogoSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public showLogo$: Observable<boolean> = this.showLogoSubject.asObservable();
@@ -34,9 +43,22 @@ export class RemoteControlService {
     this.titleSubject.next(value);
   }
 
-  set showControls(value: boolean) {
-    this.showControlsSubject.next(this.isSecondaryMode ? false : value);
+  set showMapButton(value: boolean) {
+    this.showMapButtonSubject.next(this.isSecondaryMode ? false : value);
   }
+
+  set showBackButton(value: boolean) {
+    this.showBackButtonSubject.next(this.isSecondaryMode ? false : value);
+  }
+
+  set showListButton(value: boolean) {
+    this.showListButtonSubject.next(this.isSecondaryMode ? false : value);
+  }
+
+  set showExitButton(value: boolean) {
+    this.showExitButtonSubject.next(this.isSecondaryMode ? false : value);
+  }
+
 
   set navigationBgColor(value: string) {
     this.navigationBgColorSubject.next(value);

@@ -27,7 +27,7 @@ import { environment } from 'src/environments/environment';
 
 let clientExtraModules = [];
 
-if(environment.mqttBrokenHost) {
+if(environment.mode === 'standalone' && environment.mqttBrokenHost) {
   clientExtraModules.push(
     MqttModule.forRoot({
       hostname: environment.mqttBrokenHost,

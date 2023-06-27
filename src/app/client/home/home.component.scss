@@ -1,16 +1,18 @@
 img {
   width: 200px;
 }
-button {
+.custom-button {
   img, i {
     width: 4rem;
     height: 4rem;
   }
   .badge {
-    color: var(--orange-mrc);
+    color: white;
+    background-color: var(--dark-blue-mrc)!important;
     width: 30px;
     height: 30px;
-    top:-15px;
-    right: -15px;
+    top:20%;
+    left: 0;
+    transform: translateX(-50%);
   }
 }

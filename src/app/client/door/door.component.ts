@@ -20,13 +20,18 @@ export class DoorComponent implements OnInit{
 
   private  controlSetup() {
     this.currentFillColor = this.normalFillColor;
-    this.control.showControls = false;
+    this.control.showMapButton = false;
+    this.control.showBackButton = false;
+    this.control.showListButton = false;
+    this.control.showExitButton = false;
+    this.control.showLogo = true;
     this.control.title = '';
-    this.control.bgColor = 'surface-ground';
+    this.control.navigationBgColor = 'bg-transparent'
+    this.control.bgColor = '#FFFFFF';
   }
 
   ngOnInit(): void {
-    this.control.navigationMode$.subscribe(v => this.controlSetup());
+    // this.control.navigationMode$.subscribe(v => this.controlSetup());
   }
 
   openWelcomeVideoDialog() {
@@ -39,7 +44,6 @@ export class DoorComponent implements OnInit{
   gotToMap(){
     const url = ['map']
     this.control.navigate(url);
-    // this.router.navigate(url);
   }
 
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="8.6942081mm"
+   height="8.6942081mm"
+   viewBox="0 0 8.6942081 8.6942081"
+   version="1.1"
+   id="svg4069"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="picto_back.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview4071"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.5456559"
+     inkscape:cx="-9.3811306"
+     inkscape:cy="30.73129"
+     inkscape:window-width="1706"
+     inkscape:window-height="749"
+     inkscape:window-x="1970"
+     inkscape:window-y="118"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs4066" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-98.447321,-108.79575)">
+    <g
+       id="g3444"
+       transform="matrix(0.26458333,0,0,0.26458333,67.043927,102.94317)">
+		<circle
+   class="st111"
+   cx="135.12"
+   cy="38.549999"
+   r="15.68"
+   id="circle3436"
+   style="fill:none;stroke:#fb3e2b;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+
+		<g
+   id="g3442">
+			<line
+   class="st111"
+   x1="138.78999"
+   y1="31.07"
+   x2="128.14"
+   y2="38.860001"
+   id="line3438"
+   style="fill:none;stroke:#fb3e2b;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+
+			<line
+   class="st111"
+   x1="138.64"
+   y1="46.91"
+   x2="128.14"
+   y2="38.860001"
+   id="line3440"
+   style="fill:none;stroke:#fb3e2b;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+
+		</g>
+
+	</g>
+  </g>
+</svg>

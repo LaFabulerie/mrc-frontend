@@ -11,11 +11,13 @@ import { environment } from 'src/environments/environment';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements AfterViewInit{
+export class HomeComponent{
 
-  showControls = false;
+  showMapButton = false;
+  showBackButton = false;
+  showListButton = false;
+  showExitButton = false;
   showLogo = true;
-  backUrl = '';
   title = '';
   basketCount = 0;
   navigationBgColor = '';
@@ -39,20 +41,23 @@ export class HomeComponent implements AfterViewInit{
     private location: Location,
     private injector: Injector,
   ) {
-    if(environment.mqttBrokenHost) {
+    if(environment.mode === 'standalone' && environment.mqttBrokenHost) {
       this.mqtt = <MqttService>this.injector.get(MqttService);
     }
 
     const navigationMode = localStorage.getItem('navigationMode');
     if (navigationMode) {
       this.currentNavigationMode = navigationMode;
-      this.control.navigationMode
     }
 
-  }
+  // }
 
-  ngAfterViewInit(): void {
-    this.control.showControls$.subscribe(v => this.showControls = v);
+  // ngAfterViewInit(): void {
+    this.control.showMapButton$.subscribe(v => this.showMapButton = v);
+    this.control.showBackButton$.subscribe(v => this.showBackButton = v);
+    this.control.showListButton$.subscribe(v => this.showListButton = v);
+    this.control.showExitButton$.subscribe(v => this.showExitButton = v);
+
     this.control.navigationBgColor$.subscribe(v => this.navigationBgColor = v);
     this.control.showLogo$.subscribe(v => this.showLogo = v);
     this.control.title$.subscribe(v => this.title = v);
@@ -103,7 +108,6 @@ export class HomeComponent implements AfterViewInit{
     }
 
     this.control.navigateTo$.subscribe(navData => {
-      console.log('HOME navigateTo', navData)
       if(navData && this.currentNavigationMode !== 'secondary') {
         this.router.navigate(navData.url, {state: navData.state});
         if(this.mqtt) {
@@ -133,6 +137,14 @@ export class HomeComponent implements AfterViewInit{
     if(this.mqtt && this.control.navigationMode === 'primary') {
       this.mqtt.unsafePublish(`mrc/nav`, JSON.stringify({url: 'back', state: {}}), { qos: 1, retain: true });
     }
+  }
+
+  goHome() {
+    this.control.navigate(['door']);
+  }
+
+  goMap() {
+    this.control.navigate(['map']);
   }
 
 

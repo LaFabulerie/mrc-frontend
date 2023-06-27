@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="10.451732mm"
-   height="9.0408068mm"
-   viewBox="0 0 10.451732 9.0408068"
+   width="6.4214425mm"
+   height="9.1730967mm"
+   viewBox="0 0 6.4214427 9.1730967"
    version="1.1"
    id="svg3892"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
@@ -24,9 +24,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.76702441"
-     inkscape:cx="-146.67069"
-     inkscape:cy="-0.65186974"
+     inkscape:zoom="6.6526852"
+     inkscape:cx="-23.223705"
+     inkscape:cy="12.851953"
      inkscape:window-width="1706"
      inkscape:window-height="749"
      inkscape:window-x="1970"
@@ -39,102 +39,45 @@
      inkscape:label="Calque 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-130.68354,-148.98134)">
+     transform="translate(-129.30228,-148.29234)">
     <g
-       id="g3350"
-       transform="matrix(0.26458333,0,0,0.26458333,-69.208474,143.29809)">
-      <g
-         id="g1623"
-         style="isolation:isolate">
-        <path
-           class="cls-19"
-           d="m 765.33,38.1 -2.2,-1.83 1.41,-2.85 c 0.22,-0.44 0.04,-0.97 -0.4,-1.19 -0.02,0 -0.03,-0.02 -0.05,-0.02 -0.43,-0.18 -0.93,0 -1.14,0.42 l -1.55,3.06 c -0.29,0.58 -0.1,1.29 0.44,1.65 l 3.28,2.28"
-           id="path1605"
-           style="fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
-        <path
-           class="cls-19"
-           d="m 766.61,41.25 c 0.17,0.74 0.64,2.72 1.36,5.03 0,0 0,0.02 0,0.03 0.11,0.76 0.17,1.6 0.23,2.5 0.1,1.31 0.21,2.8 0.48,4.3 0.01,0.09 -0.04,0.17 -0.13,0.18 0,0 -0.02,0 -0.02,0 v 0 c 0,0 -1.56,0 -1.56,0 -0.08,0 -0.14,-0.06 -0.16,-0.13 0,-0.03 -0.37,-2.22 -0.95,-5.1 -0.35,-0.87 -1.02,-2.91 -1.31,-3.49"
-           id="path1607"
-           style="fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
-        <path
-           class="cls-19"
-           d="m 765.56,41.54 c -0.31,0.88 -1.86,5.21 -2.27,6.03 -0.46,0.92 -4.65,4.81 -4.83,4.97 -0.03,0.03 -0.07,0.04 -0.1,0.04 v 0 c 0,0 -0.07,-0.01 -0.1,-0.04 l -1.17,-0.97 c -0.07,-0.06 -0.08,-0.15 -0.02,-0.22 l 4.12,-5.16 0.96,-5.36"
-           id="path1609"
-           style="fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
-        <path
-           class="cls-19"
-           d="m 764.33,30.5 1.71,1.15 c 0.07,0.05 0.09,0.14 0.05,0.21 l -0.19,0.35 c 2.41,3.82 0.8,8.82 0.77,9.09 0,0.06 -0.05,0.12 -0.12,0.13 -0.32,0.08 -0.65,0.12 -0.99,0.11 v 0 c -1.45,0 -3.26,-0.5 -3.36,-0.53 -0.07,-0.02 -0.12,-0.09 -0.11,-0.16 0,-0.01 0.07,-1.16 0.08,-3.15"
-           id="path1611"
-           style="fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
-        <path
-           class="cls-19"
-           d="m 768.7,53.3 1.33,1 c 0.17,0.13 0.2,0.36 0.07,0.53 -0.07,0.09 -0.18,0.15 -0.3,0.15 v 0 c 0,0 0,0 0,0 l -2.73,-0.02 c -0.08,0 -0.15,-0.07 -0.16,-0.15 l -0.09,-1.39"
-           id="path1613"
-           style="fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
-        <path
-           class="cls-19"
-           d="m 758.46,52.54 0.35,1.71 c 0.03,0.15 -0.05,0.3 -0.18,0.37 -0.05,0.03 -0.11,0.04 -0.17,0.04 v 0 c -0.09,0 -0.17,-0.03 -0.24,-0.09 l -2.18,-1.9 c -0.07,-0.06 -0.07,-0.16 -0.01,-0.23 0,0 0,0 0,0 l 1.04,-1.1"
-           id="path1615"
-           style="fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
-        <path
-           class="cls-19"
-           d="m 764.1,30.36 c -0.36,-0.43 -1.06,-1.08 -1.07,-2.29 0,-1.08 0.87,-2.06 2.27,-2.11 1.4,-0.05 1.78,-0.83 2.82,-0.86 2.38,-0.07 1.32,2.91 0,2.54 -1.1,-0.31 -2.43,-0.64 -3.6,0.33 -0.78,0.65 -0.29,2.45 -0.29,2.45"
-           id="path1617"
-           style="fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
-        <line
-           class="cls-19"
-           x1="764.15002"
-           y1="30.309999"
-           x2="763.5"
-           y2="32.169998"
-           id="line1619"
-           style="fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
-        <path
-           class="cls-19"
-           d="m 768.42,27.66 c 0,0 0.33,2.56 -1.46,3.64 -0.75,0.45 -0.92,0.35 -0.92,0.35"
-           id="path1621"
-           style="fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
-      </g>
+       id="g3856"
+       transform="matrix(0.26458333,0,0,0.26458333,-74.68617,142.67524)">
       <path
-         class="cls-19"
+         class="st111"
          d="m 774.87,38.62 2.34,-1.6 c 0.27,-0.27 0.27,-0.7 0,-0.97 l -2.34,-1.54"
-         id="path1625"
-         style="isolation:isolate;fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
+         id="path3370"
+         style="fill:none;stroke:#fb3e2b;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
       <line
-         class="cls-19"
+         class="st111"
          x1="771.72998"
          y1="36.540001"
          x2="777.32001"
          y2="36.540001"
-         id="line1627"
-         style="isolation:isolate;fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
+         id="line3372"
+         style="fill:none;stroke:#fb3e2b;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
       <polyline
-         class="cls-19"
-         points="781.03 50.59 776.14 50.59 776.14 42.77"
-         id="polyline1629"
-         style="isolation:isolate;fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
+         class="st111"
+         points="781.03,50.59 776.14,50.59 776.14,42.77  "
+         id="polyline3374"
+         style="fill:none;stroke:#fb3e2b;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
       <polyline
-         class="cls-19"
-         points="776.14 30.67 776.14 21.98 794.5 21.98"
-         id="polyline1631"
-         style="isolation:isolate;fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
+         class="st111"
+         points="776.14,30.67 776.14,21.98 794.5,21.98  "
+         id="polyline3376"
+         style="fill:none;stroke:#fb3e2b;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
       <polygon
-         class="cls-19"
-         points="794.5,50.59 781.1,55.15 781.1,26.53 794.5,21.98 "
-         id="polygon1633"
-         style="isolation:isolate;fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
+         class="st111"
+         points="781.1,26.53 794.5,21.98 794.5,50.59 781.1,55.15 "
+         id="polygon3378"
+         style="fill:none;stroke:#fb3e2b;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
       <circle
-         class="cls-76"
+         class="st112"
          cx="784.88"
          cy="37.73"
          r="1.29"
-         id="circle1635"
-         style="isolation:isolate;fill:#fb3e2b" />
-      <path
-         class="cls-19"
-         d="m 765.48,37.25 c 0,0 0.02,2.08 -0.5,2.81"
-         id="path1645"
-         style="isolation:isolate;fill:none;stroke:#fb3e2b;stroke-linecap:round;stroke-linejoin:round" />
+         id="circle3380"
+         style="fill:#fb3e2b" />
     </g>
   </g>
 </svg>

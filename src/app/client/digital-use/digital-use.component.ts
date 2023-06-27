@@ -23,11 +23,12 @@ export class DigitalUseComponent {
   ) { }
 
   private controlSetup(){
-    this.control.showControls = true;
-    this.control.showLogo = false;
-    this.control.titleColor = 'text-800'
-    let state = this.location.getState() as any;
-    this.control.title = `Fiche ${state['itemName']}`;
+    this.control.showMapButton = true;
+    this.control.showBackButton = true;
+    this.control.showListButton = true;
+    this.control.showExitButton = true;
+    this.control.showLogo = true;
+    this.control.title = "";
   }
 
   ngOnInit(): void {

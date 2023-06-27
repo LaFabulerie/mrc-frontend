@@ -11,6 +11,7 @@ export class MapComponent  implements OnInit{
 
   rooms: Room[] = [];
   showBathroom: boolean = false;
+  showBedroom: boolean = false;
 
   constructor(
     private control: RemoteControlService,
@@ -19,10 +20,13 @@ export class MapComponent  implements OnInit{
   }
 
   private controlSetup() {
-    this.control.showControls = true;
+    this.control.showMapButton = false;
+    this.control.showBackButton = false;
+    this.control.showListButton = true;
+    this.control.showExitButton = true;
     this.control.showLogo = true;
     this.control.title = '';
-    this.control.navigationBgColor = 'bg-transparent'
+    this.control.navigationBgColor = 'bg-trasparent'
     this.control.bgColor = '#17ada9';
   }
 

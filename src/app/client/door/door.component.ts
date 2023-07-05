@@ -4,7 +4,7 @@ import { RemoteControlService } from 'src/app/services/control.service';
 @Component({
   selector: 'app-door',
   templateUrl: './door.component.svg',
-  styleUrls: ['./door.component.scss']
+  styleUrls: ['../common.scss']
 })
 export class DoorComponent implements OnInit{
 
@@ -31,7 +31,7 @@ export class DoorComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // this.control.navigationMode$.subscribe(v => this.controlSetup());
+    this.control.navigationMode$.subscribe(v => this.controlSetup());
   }
 
   openWelcomeVideoDialog() {

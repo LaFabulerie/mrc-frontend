@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Room } from 'src/app/models/use';
 import { RemoteControlService } from 'src/app/services/control.service';
+import { DisclaimerDialogComponent } from '../components/disclaimer-dialog/disclaimer-dialog.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-map',
   templateUrl: './plan.component.svg',
-  styleUrls: ['./map.component.scss']
+  styleUrls: ['../common.scss']
 })
 export class MapComponent  implements OnInit{
 
@@ -35,6 +37,13 @@ export class MapComponent  implements OnInit{
   }
 
   goToRoom(roomName: string, uuid: string){
-    this.control.navigate(['room', roomName, uuid]);
+    if(environment.mode === 'standalone'){
+      this.control.openDialog(DisclaimerDialogComponent, {
+        next: ['room', roomName, uuid]
+      });
+    } else {
+      this.control.navigate(['room', roomName, uuid]);
+    }
+
   }
 }

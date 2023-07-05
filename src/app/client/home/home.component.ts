@@ -2,9 +2,12 @@ import { Location } from '@angular/common';
 import { AfterViewInit, Component, Injector, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
+import { DialogService } from 'primeng/dynamicdialog';
 import { BasketService } from 'src/app/services/basket.service';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { environment } from 'src/environments/environment';
+import { DisclaimerDialogComponent } from '../components/disclaimer-dialog/disclaimer-dialog.component';
+import { VideoDialogComponent } from '../components/video-dialog/video-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -39,6 +42,7 @@ export class HomeComponent{
     private renderer: Renderer2,
     private router : Router,
     private location: Location,
+    private dialogService: DialogService,
     private injector: Injector,
   ) {
     if(environment.mode === 'standalone' && environment.mqttBrokenHost) {
@@ -50,9 +54,9 @@ export class HomeComponent{
       this.currentNavigationMode = navigationMode;
     }
 
-  // }
+  }
 
-  // ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     this.control.showMapButton$.subscribe(v => this.showMapButton = v);
     this.control.showBackButton$.subscribe(v => this.showBackButton = v);
     this.control.showListButton$.subscribe(v => this.showListButton = v);
@@ -105,6 +109,13 @@ export class HomeComponent{
           this.basket.load(basket);
         }
       });
+
+      this.mqtt.observe('mrc/dialog').subscribe((message: IMqttMessage) => {
+        if(this.currentNavigationMode === 'secondary') {
+          const dialog = JSON.parse(message.payload.toString());
+          this.openDialog(dialog);
+        }
+      });
     }
 
     this.control.navigateTo$.subscribe(navData => {
@@ -113,6 +124,7 @@ export class HomeComponent{
         if(this.mqtt) {
           this.mqtt.unsafePublish(`mrc/nav`, JSON.stringify({url: navData.url, state: navData.state || {}}), { qos: 1, retain: true });
         }
+        this.control.stopNavigate()
       }
     });
 
@@ -122,6 +134,44 @@ export class HomeComponent{
       }
     });
 
+    this.control.dialog$.subscribe(dialog => {
+      if(dialog && this.currentNavigationMode !== 'secondary') {
+        this.openDialog(dialog);
+        if(this.mqtt) {
+          this.mqtt.unsafePublish(`mrc/dialog`, JSON.stringify(dialog), { qos: 1, retain: true });
+        };
+      }
+    });
+
+  }
+
+
+  openDialog(dialog: any) {
+    let dialogClass: any;
+
+    switch(dialog.name) {
+      case 'DisclaimerDialogComponent':
+        dialogClass = DisclaimerDialogComponent;
+        break;
+      case 'VideoDialogComponent':
+        dialogClass = VideoDialogComponent;
+        break;
+    }
+    if(dialogClass){
+      const ref = this.dialogService.open(dialogClass, {
+        closable: false,
+        maximizable: false,
+        resizable: false,
+        draggable: false,
+        showHeader: false,
+        data: dialog.data,
+      });
+      ref.onClose.subscribe((next) => {
+        if(next) {
+          this.control.navigate(next)
+        }
+      });
+    }
   }
 
   goToBasket() {

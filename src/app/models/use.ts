@@ -12,6 +12,7 @@ export type Room = {
   image: string;
   items: Item[];
   mainColor: string;
+  video: string;
 }
 
 export type Item = {

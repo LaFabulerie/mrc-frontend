@@ -1,0 +1,15 @@
+<div class="video-player-wrapper">
+  <vg-player (onPlayerReady)="onPlayerReady($event)" [style.width.px]="width" [style.height.px]="height">
+    <vg-overlay-play></vg-overlay-play>
+    <video #media
+        [vgMedia]="$any(media)"
+        src="{{videoUrl}}"
+        id="singleVideo"
+        type="video/mp4"
+        preload="auto"
+        autoplay="true"
+        crossorigin
+        >
+    </video>
+  </vg-player>
+</div>

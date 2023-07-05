@@ -2,10 +2,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: -webkit-fill-available;
 
   svg {
-    margin-top: 150px;
-    width: 70%;
+    margin-top: 1rem;
+    width: 75%;
   }
 }

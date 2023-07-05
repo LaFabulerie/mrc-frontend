@@ -6,7 +6,7 @@ import { MapComponent } from './map/map.component';
 import { ItemComponent } from './item/item.component';
 import { DigitalUseComponent } from './digital-use/digital-use.component';
 import { HomeComponent } from './home/home.component';
-import { WelcomeVideoDialogComponent } from './components/welcome-video-dialog/welcome-video-dialog.component';
+import { VideoDialogComponent } from './components/video-dialog/video-dialog.component';
 import { DisclaimerDialogComponent } from './components/disclaimer-dialog/disclaimer-dialog.component';
 import { BasketComponent } from './basket/basket.component';
 import { BedroomComponent } from './rooms/bedroom/bedroom.component';
@@ -19,7 +19,7 @@ import { BedroomComponent } from './rooms/bedroom/bedroom.component';
     ItemComponent,
     DigitalUseComponent,
     HomeComponent,
-    WelcomeVideoDialogComponent,
+    VideoDialogComponent,
     DisclaimerDialogComponent,
     BasketComponent,
     BedroomComponent,

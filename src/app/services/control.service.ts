@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -30,14 +30,18 @@ export class RemoteControlService {
   private titleColorSubject: BehaviorSubject<string> = new BehaviorSubject<string>('text-50');
   public titleColor$: Observable<string> = this.titleColorSubject.asObservable();
 
+  private titleSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public title$: Observable<string> = this.titleSubject.asObservable();
+
   private navigationModeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('free');
   public navigationMode$: Observable<string> = this.navigationModeSubject.asObservable();
 
   private navigateToSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public navigateTo$: Observable<any> = this.navigateToSubject.asObservable();
 
-  private titleSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public title$: Observable<string> = this.titleSubject.asObservable();
+  private dialogSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public dialog$: Observable<any> = this.dialogSubject.asObservable();
+
 
   set title(value: string) {
     this.titleSubject.next(value);
@@ -91,6 +95,14 @@ export class RemoteControlService {
 
   navigate(url: string[], state?: any) {
     this.navigateToSubject.next({url: url, state: state || {}});
+  }
+
+  stopNavigate() {
+    this.navigateToSubject.next(null);
+  }
+
+  openDialog(dialogClass: any, data: any) {
+    this.dialogSubject.next({name : dialogClass.name, data: data});
   }
 
 }

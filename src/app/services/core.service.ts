@@ -31,6 +31,11 @@ export class CoreService {
     return this.http.get<Room[]>(`${environment.apiHost}/api/r/rooms/?${queryParams.toString()}`);
   }
 
+  getRoom(uuid: string, params?: any): Observable<Room> {
+    const queryParams = new URLSearchParams(params);
+    return this.http.get<Room>(`${environment.apiHost}/api/r/rooms/${uuid}/?${queryParams.toString()}`);
+  }
+
   getDigitalUse(uuid: string, params?: any): Observable<DigitalUse> {
     const queryParams = new URLSearchParams(params);
     return this.http.get<DigitalUse>(`${environment.apiHost}/api/r/digital-uses/${uuid}/?${queryParams.toString()}`);

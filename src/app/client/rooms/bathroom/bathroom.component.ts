@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DialogService } from 'primeng/dynamicdialog';
 import { RemoteControlService } from 'src/app/services/control.service';
+import { CoreService } from 'src/app/services/core.service';
+import { VideoDialogComponent } from '../../components/video-dialog/video-dialog.component';
 
 @Component({
   selector: 'app-bathroom',
@@ -10,6 +14,8 @@ export class BathroomComponent implements OnInit{
 
   constructor(
     private control: RemoteControlService,
+    private activatedRoute: ActivatedRoute,
+    private coreService: CoreService,
   ) {
   }
 
@@ -26,6 +32,17 @@ export class BathroomComponent implements OnInit{
 
   ngOnInit(): void {
     this.control.navigationMode$.subscribe(v => this.controlSetup());
+
+    this.activatedRoute.params.subscribe(params => {
+      const uuid = params['uuid'];
+      this.coreService.getRoom(uuid, {
+        fields: ["video"]
+      }).subscribe(room => {
+        this.control.openDialog(VideoDialogComponent, {
+          videoURL: room.video
+        });
+      })
+    });
   }
 
   goToItem(uuid: string){

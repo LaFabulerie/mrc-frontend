@@ -12,12 +12,11 @@
       <button pButton icon="pi pi-trash" (click)="basket.remove(service)"></button>
     </div>
   </div>
-  <div *ngIf="basketEmpty" class="flex mb-2 ">
-    <div class="border-1 border-round p-2 w-full text-center">
-      <p>Votre panier est vide</p>
-    </div>
 
+  <div *ngIf="basketEmpty" class="border-1 border-round p-2 w-full text-center">
+    <p>Votre liste est vide</p>
+    <p>Pour collecter des fiches « service », visitez les différentes pièces de la Maison Reconnectée et découvrer les services liés aux objets présents dans ces pièces.</p>
   </div>
-  <button pButton class="p-button-orange-mrc p-4 w-full" label="Télécharger votre liste de services" (click)="1+1" [disabled]="basketEmpty"></button>
+  <button *ngIf="!basketEmpty" pButton class="p-button-orange-mrc p-4 w-full" label="Télécharger votre liste de services" (click)="1+1"></button>
   </div>
 </div>

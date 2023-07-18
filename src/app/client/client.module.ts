@@ -12,6 +12,7 @@ import { BasketComponent } from './basket/basket.component';
 import { OfficeComponent } from './rooms/office/office.component';
 import { GarageComponent } from './rooms/garage/garage.component';
 import { KitchenComponent } from './rooms/kitchen/kitchen.component';
+import { ExitDialogComponent } from './components/exit-dialog/exit-dialog.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { KitchenComponent } from './rooms/kitchen/kitchen.component';
     OfficeComponent,
     GarageComponent,
     KitchenComponent,
+    ExitDialogComponent,
   ],
   imports: [
     SharedModule,

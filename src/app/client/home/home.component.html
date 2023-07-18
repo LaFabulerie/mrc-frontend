@@ -6,21 +6,21 @@
     <span class="custom-button mx-5 cursor-pointer bg-white border-round p-2" (click)="goBack()" *ngIf="showBackButton && currentNavigationMode !== 'secondary'">
       <img src="assets/img/picto_back.svg" />
     </span>
-    <p-dropdown [options]="navigationModes" [(ngModel)]="currentNavigationMode" optionValue="value" (onChange)="navigationModeChange()"></p-dropdown>
+    <span class="p-2" *ngIf="mode === 'standalone'">
+      <p-dropdown [options]="navigationModes" [(ngModel)]="currentNavigationMode" optionValue="value" (onChange)="navigationModeChange()"></p-dropdown>
+      ({{mode}} : {{ currentNavigationMode }})
+    </span>
   </div>
   <div class="w-4 flex justify-content-center">
     <img src="assets/img/logo_mrc.svg" *ngIf="showLogo" />
     <h1 *ngIf="title !== ''" class="text-center text-4xl {{ titleColor }}">{{ title }}</h1>
   </div>
   <div class="w-4 flex justify-content-end">
-    <!-- <span class="custom-button mx-5 cursor-pointer" (click)="1+1" *ngIf="showControls">
-            <img src="assets/img/picto_eye.svg">
-          </span> -->
     <span class="custom-button mx-5 relative flex cursor-pointer bg-white border-round p-2" *ngIf="showListButton || currentNavigationMode === 'secondary'" (click)="goToBasket()">
       <img src="assets/img/picto_list.svg" />
       <span class="badge font-bold border-2 border-circle flex justify-content-center align-items-center absolute bg-white border-round p-2" *ngIf="basketCount">{{ basketCount }}</span>
     </span>
-    <span class="custom-button mx-3 cursor-pointer bg-white border-round p-2" (click)="goHome()" *ngIf="showExitButton">
+    <span class="custom-button mx-3 cursor-pointer bg-white border-round p-2" (click)="exit()" *ngIf="showExitButton">
       <img src="assets/img/picto_exit.svg" />
     </span>
   </div>

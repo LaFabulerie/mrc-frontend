@@ -8,6 +8,7 @@ import { RemoteControlService } from 'src/app/services/control.service';
 import { environment } from 'src/environments/environment';
 import { DisclaimerDialogComponent } from '../components/disclaimer-dialog/disclaimer-dialog.component';
 import { VideoDialogComponent } from '../components/video-dialog/video-dialog.component';
+import { ExitDialogComponent } from '../components/exit-dialog/exit-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -32,6 +33,7 @@ export class HomeComponent{
     {value: 'secondary', label: 'Secondaire'},
   ]
   currentNavigationMode = 'free';
+  mode = environment.mode;
 
   private mqtt : MqttService | undefined
 
@@ -187,8 +189,19 @@ export class HomeComponent{
     }
   }
 
-  goHome() {
-    this.control.navigate(['door']);
+  exit() {
+      const ref = this.dialogService.open(ExitDialogComponent, {
+        closable: false,
+        maximizable: false,
+        resizable: false,
+        draggable: false,
+        showHeader: false,
+      });
+      ref.onClose.subscribe((next) => {
+        if(next) {
+          this.control.navigate(next)
+        }
+      });
   }
 
   goMap() {

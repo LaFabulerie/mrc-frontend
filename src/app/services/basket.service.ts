@@ -58,4 +58,8 @@ export class BasketService {
   count() {
     return this.basketSubject.getValue().length;
   }
+
+  isEmpty() {
+    return this.count() == 0;
+  }
 }

@@ -1,14 +1,17 @@
 
-<div class="flex justify-content-center align-items-center h-screen pt-6" *ngIf="item">
+<div class="content flex justify-content-center align-items-center" *ngIf="item">
     <div class="w-6 flex justify-content-center align-items-center">
-      <img class="item-picture w-9" [src]="item.image">
+      <img class="item-picture" [src]="item.image">
     </div>
     <div class="w-6 flex justify-content-center align-items-center">
-      <div class="w-8 use-list flex flex-column border-left-1  border-right-1  border-bottom-1 bg-white shadow-7 border-round-bottom-3xl">
-        <div class="header"></div>
-        <div class="text-2xl font-bold text-center py-2 border-bottom-1" [ngStyle]="{'color' : item.room.mainColor}">{{item.name}}</div>
-        <div class="use-item text-lg py-2 pl-6"
+      <div class="w-8 use-list flex flex-column border-round-bottom-3xl">
+        <div class="header">
+          <img src="assets/img/ring.svg" class="w-full h-full flex">
+        </div>
+        <div class="text-2xl font-bold text-center py-2 border-bottom-1 surface-200" [ngStyle]="{'color' : item.room.mainColor}">{{item.name}}</div>
+        <div class="use-item text-lg py-2 pl-6 surface-200"
             [ngClass]="{'border-round-bottom-3xl' : last, 'border-bottom-1' : !last, 'activable cursor-pointer' : use != null}"
+            [ngStyle]="{'border-color': '#1c096b'}"
             *ngFor="let use of useList;let last=last">
           <fa-icon [icon]="['fas', 'chevron-right']" class="mr-3" *ngIf="use"></fa-icon>
           <span (click)="goToDigitalUse(use.uuid)" *ngIf="use">{{use.title}}</span>

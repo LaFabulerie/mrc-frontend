@@ -1,11 +1,7 @@
 :host {
+  background-color: #d8736e;
+  height: calc(100% - var(--navbar-height));
   display: flex;
   justify-content: center;
-  align-items: center;
-  background-color: #db7665;
-  height: 100vh;
-
-  svg {
-    height: 100%;
-  }
+  //DO NOT USE ALIGN-ITEMS: CENTER, IT WILL BREAK THE LAYOUT
 }

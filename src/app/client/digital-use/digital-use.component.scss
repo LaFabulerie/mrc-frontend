@@ -1,0 +1,7 @@
+:host {
+  background-color: inherit;
+  height: calc(100% - var(--navbar-height));
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}

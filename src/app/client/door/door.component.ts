@@ -4,7 +4,7 @@ import { RemoteControlService } from 'src/app/services/control.service';
 @Component({
   selector: 'app-door',
   templateUrl: './door.component.svg',
-  styleUrls: ['../common.scss']
+  styleUrls: ['./door.component.scss']
 })
 export class DoorComponent implements OnInit{
 

@@ -1,18 +1,22 @@
-img {
-  width: 200px;
-}
-.custom-button {
-  img, i {
-    width: 4rem;
-    height: 4rem;
+.navbar {
+  height: var(--navbar-height);
+
+  img {
+    width: 200px;
   }
-  .badge {
-    color: white;
-    background-color: var(--dark-blue-mrc)!important;
-    width: 30px;
-    height: 30px;
-    top:20%;
-    left: 0;
-    transform: translateX(-50%);
+  .custom-button {
+    img, i {
+      width: 4rem;
+      height: 4rem;
+    }
+    .badge {
+      color: white;
+      background-color: var(--dark-blue-mrc)!important;
+      width: 30px;
+      height: 30px;
+      top:20%;
+      left: 0;
+      transform: translateX(-10%);
+    }
   }
 }

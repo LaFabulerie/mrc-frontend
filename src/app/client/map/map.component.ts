@@ -6,8 +6,8 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-map',
-  templateUrl: './plan.component.svg',
-  styleUrls: ['../common.scss']
+  templateUrl: './map.component.svg',
+  styleUrls: ['./map.component.scss']
 })
 export class MapComponent  implements OnInit{
 

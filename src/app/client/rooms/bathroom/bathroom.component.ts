@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DialogService } from 'primeng/dynamicdialog';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
-import { VideoDialogComponent } from '../../components/video-dialog/video-dialog.component';
 
 @Component({
   selector: 'app-bathroom',
@@ -11,6 +9,8 @@ import { VideoDialogComponent } from '../../components/video-dialog/video-dialog
   styleUrls: ['./bathroom.component.scss']
 })
 export class BathroomComponent implements OnInit{
+
+  _currentHighLight: string = '';
 
   constructor(
     private control: RemoteControlService,
@@ -29,6 +29,24 @@ export class BathroomComponent implements OnInit{
 
   }
 
+  set currentHighLight(value: string) {
+    console.log(value)
+    this._currentHighLight = value;
+  }
+
+  activate(value: string) {
+    this.currentHighLight = value;
+  }
+
+  release(value: string) {
+    this.currentHighLight = '';
+  }
+
+  isActive(value: string): boolean {
+    console.log("isActive", this._currentHighLight, value)
+    return this._currentHighLight === value;
+  }
+
   ngOnInit(): void {
     this.control.navigationMode$.subscribe(v => this.controlSetup());
 
@@ -37,9 +55,9 @@ export class BathroomComponent implements OnInit{
       this.coreService.getRoom(uuid, {
         fields: ["video"]
       }).subscribe(room => {
-        this.control.openDialog(VideoDialogComponent, {
-          videoURL: room.video
-        });
+        // this.control.openDialog(VideoDialogComponent, {
+        //   videoURL: room.video
+        // });
       })
     });
   }

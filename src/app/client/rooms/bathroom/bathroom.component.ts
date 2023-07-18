@@ -2,68 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
+import { BaseRoomComponent } from '../room.component';
 
 @Component({
   selector: 'app-bathroom',
   templateUrl: './bathroom.component.svg',
-  styleUrls: ['./bathroom.component.scss']
+  styleUrls: ['../room.component.scss']
 })
-export class BathroomComponent implements OnInit{
-
-  _currentHighLight: string = '';
+export class BathroomComponent extends BaseRoomComponent implements OnInit{
 
   constructor(
-    private control: RemoteControlService,
-    private activatedRoute: ActivatedRoute,
-    private coreService: CoreService,
+    control: RemoteControlService,
+    activatedRoute: ActivatedRoute,
+    coreService: CoreService,
   ) {
+    super(control, activatedRoute, coreService);
   }
 
-  private controlSetup() {
-    this.control.showMapButton = true;
-    this.control.showBackButton = true;
-    this.control.showListButton = true;
-    this.control.showExitButton = true;
-    this.control.showLogo = true;
-    this.control.title = '';
-
-  }
-
-  set currentHighLight(value: string) {
-    console.log(value)
-    this._currentHighLight = value;
-  }
-
-  activate(value: string) {
-    this.currentHighLight = value;
-  }
-
-  release(value: string) {
-    this.currentHighLight = '';
-  }
-
-  isActive(value: string): boolean {
-    console.log("isActive", this._currentHighLight, value)
-    return this._currentHighLight === value;
-  }
-
-  ngOnInit(): void {
-    this.control.navigationMode$.subscribe(v => this.controlSetup());
-
-    this.activatedRoute.params.subscribe(params => {
-      const uuid = params['uuid'];
-      this.coreService.getRoom(uuid, {
-        fields: ["video"]
-      }).subscribe(room => {
-        // this.control.openDialog(VideoDialogComponent, {
-        //   videoURL: room.video
-        // });
-      })
-    });
-  }
-
-  goToItem(uuid: string){
-    this.control.navigate(['item', uuid]);
+  override ngOnInit(): void {
+    super.ngOnInit();
   }
 
 }

@@ -86,6 +86,7 @@ export class RemoteControlService {
   }
 
   navigate(url: string[], state?: any) {
+    this.bgColor = '#ffffff';
     this.navigateToSubject.next({url: url, state: state || {}});
   }
 

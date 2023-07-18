@@ -1,32 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { RemoteControlService } from 'src/app/services/control.service';
+import { CoreService } from 'src/app/services/core.service';
+import { BaseRoomComponent } from '../room.component';
 
 @Component({
   selector: 'app-bedroom',
   templateUrl: './bedroom.component.svg',
-  styleUrls: ['./bedroom.component.scss']
+  styleUrls: ['../room.component.scss']
 })
-export class BedroomComponent {
+export class BedroomComponent extends BaseRoomComponent implements OnInit{
+
   constructor(
-    private control: RemoteControlService,
+    control: RemoteControlService,
+    activatedRoute: ActivatedRoute,
+    coreService: CoreService,
   ) {
+    super(control, activatedRoute, coreService);
   }
 
-  private controlSetup() {
-    this.control.showMapButton = true;
-    this.control.showBackButton = true;
-    this.control.showListButton = true;
-    this.control.showExitButton = true;
-    this.control.showLogo = true;
-    this.control.title = '';
-
+  override ngOnInit(): void {
+    super.ngOnInit();
   }
 
-  ngOnInit(): void {
-    this.control.navigationMode$.subscribe(v => this.controlSetup());
-  }
-
-  goToItem(uuid: string){
-    this.control.navigate(['item', uuid]);
-  }
 }

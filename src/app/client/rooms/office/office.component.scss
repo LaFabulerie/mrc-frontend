@@ -1,0 +1,7 @@
+:host {
+  background-color: #7e7cc1;
+  height: calc(100% - var(--navbar-height));
+  display: flex;
+  justify-content: center;
+  //DO NOT USE ALIGN-ITEMS: CENTER, IT WILL BREAK THE LAYOUT
+}

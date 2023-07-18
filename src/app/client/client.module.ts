@@ -9,7 +9,9 @@ import { HomeComponent } from './home/home.component';
 import { VideoDialogComponent } from './components/video-dialog/video-dialog.component';
 import { DisclaimerDialogComponent } from './components/disclaimer-dialog/disclaimer-dialog.component';
 import { BasketComponent } from './basket/basket.component';
-import { BedroomComponent } from './rooms/bedroom/bedroom.component';
+import { OfficeComponent } from './rooms/office/office.component';
+import { GarageComponent } from './rooms/garage/garage.component';
+import { KitchenComponent } from './rooms/kitchen/kitchen.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { BedroomComponent } from './rooms/bedroom/bedroom.component';
     VideoDialogComponent,
     DisclaimerDialogComponent,
     BasketComponent,
-    BedroomComponent,
+    OfficeComponent,
+    GarageComponent,
+    KitchenComponent,
   ],
   imports: [
     SharedModule,

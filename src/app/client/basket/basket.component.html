@@ -1,22 +1,40 @@
 
-<div  class="flex justify-content-center align-items-center h-screen">
+<div  class="flex justify-content-center align-items-center">
   <div class="bg-white p-4 w-8 border-1 border-round surface-border shadow-7">
-  <div *ngFor="let service of basket.services" class="flex mb-2 ">
-    <!-- <p-checkbox [(ngModel)]="selectedServices[service.uuid]" [binary]="true" inputId="binary" class="mr-2"></p-checkbox> -->
-    <div class="border-1 border-round p-2">
-      <div class="my1">{{service.title}}</div>
-      <a href="{{service.url}}" target="_blank" class="text-700">{{ service.url }}</a>
-      <p class="p-0 my-1"[innerHtml]="service.description | safeHtml"></p>
-    </div>
-    <div class="flex align-items-center ml-2">
-      <button pButton icon="pi pi-trash" (click)="basket.remove(service)"></button>
-    </div>
-  </div>
+
+  <div *ngFor="let service of basket.services" class="flex flex-column border-2 p-4  mb-2 relative shadow-2">
+          <span class="my-1 font-bold">{{ service.title }} <span *ngIf="service.area"><i class="pi pi-map-marker mx-1"></i>{{service.area.name}}</span></span>
+          <p [innerHtml]="service.description | safeHtml"></p>
+          <span class="font-bold"><i class="pi pi-globe mr-2"></i><a href="{{service.url}}" target="_blank" style="color:inherit">{{ service.url }}</a></span>
+
+          <span class="p-2 border-round border-2 bg-white absolute cursor-pointer hover:text-red-600" style="top: 50%; right: 0; transform: translate(50%, -50%);"
+                (click)="basket.remove(service)">
+            <fa-icon [icon]="['fas', 'trash']" size="2xl"></fa-icon>
+          </span>
+        </div>
 
   <div *ngIf="basketEmpty" class="border-1 border-round p-2 w-full text-center">
     <p>Votre liste est vide</p>
     <p>Pour collecter des fiches « service », visitez les différentes pièces de la Maison Reconnectée et découvrer les services liés aux objets présents dans ces pièces.</p>
   </div>
-  <button *ngIf="!basketEmpty" pButton class="p-button-orange-mrc p-4 w-full" label="Télécharger votre liste de services" (click)="1+1"></button>
+  <div *ngIf="!basketEmpty" class="border-2 border-round p-3 w-full mb-2 cursor-pointer flex justify-content-center" (click)="1+1"
+    [ngStyle]="{'border-color': 'var(--orange-mrc)', 'color': 'var(--orange-mrc)'}"
+  >
+    <span class="w-5" *ngIf="mode === 'web'">
+      <fa-icon [icon]="['fas', 'download']" size="xl"></fa-icon>
+      <span class="text-lg ml-3">Télécharger votre liste de services</span>
+    </span>
+    <span class="w-5" *ngIf="mode === 'standalone'">
+      <fa-icon [icon]="['fas', 'print']" size="xl"></fa-icon>
+      <span class="text-lg ml-3">Imprimer votre liste de services</span>
+    </span>
+  </div>
+  <div *ngIf="!basketEmpty" class="border-2 border-round p-3 w-full cursor-pointer flex justify-content-center" (click)="1+1"
+  [ngStyle]="{'border-color': 'var(--orange-mrc)', 'color': 'var(--orange-mrc)'}"
+  >
+    <span class="w-5">
+      <fa-icon [icon]="['fas', 'envelope']" size="xl"></fa-icon>
+      <span class="text-lg ml-3">Envoyer votre liste de services par email</span>
+    </span>
   </div>
 </div>

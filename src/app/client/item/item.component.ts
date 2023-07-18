@@ -28,9 +28,8 @@ export class ItemComponent implements OnInit {
     this.control.showBackButton = true;
     this.control.showListButton = true;
     this.control.showExitButton = true;
-    this.control.showLogo = false;
+    this.control.showLogo = true;
     this.control.title = "";
-    this.control.navigationBgColor = 'bg-transparent'
     this.control.titleColor = 'text-200'
   }
 

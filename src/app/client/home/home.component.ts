@@ -23,7 +23,6 @@ export class HomeComponent{
   showLogo = true;
   title = '';
   basketCount = 0;
-  navigationBgColor = '';
   bgColor = '';
   titleColor = '';
 
@@ -62,7 +61,6 @@ export class HomeComponent{
     this.control.showListButton$.subscribe(v => this.showListButton = v);
     this.control.showExitButton$.subscribe(v => this.showExitButton = v);
 
-    this.control.navigationBgColor$.subscribe(v => this.navigationBgColor = v);
     this.control.showLogo$.subscribe(v => this.showLogo = v);
     this.control.title$.subscribe(v => this.title = v);
     this.control.bgColor$.subscribe(v => this.renderer.setStyle(document.body, 'background-color', v));

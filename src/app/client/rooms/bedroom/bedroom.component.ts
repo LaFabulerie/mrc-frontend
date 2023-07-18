@@ -17,9 +17,8 @@ export class BedroomComponent {
     this.control.showBackButton = true;
     this.control.showListButton = true;
     this.control.showExitButton = true;
-    this.control.showLogo = false;
-    this.control.title = 'Chambre';
-    this.control.navigationBgColor = 'bg-transparent'
+    this.control.showLogo = true;
+    this.control.title = '';
 
   }
 

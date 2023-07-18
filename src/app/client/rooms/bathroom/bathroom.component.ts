@@ -24,9 +24,8 @@ export class BathroomComponent implements OnInit{
     this.control.showBackButton = true;
     this.control.showListButton = true;
     this.control.showExitButton = true;
-    this.control.showLogo = false;
-    this.control.title = 'Salle de bain';
-    this.control.navigationBgColor = 'bg-transparent'
+    this.control.showLogo = true;
+    this.control.title = '';
 
   }
 

@@ -21,9 +21,6 @@ export class RemoteControlService {
   private showLogoSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public showLogo$: Observable<boolean> = this.showLogoSubject.asObservable();
 
-  private navigationBgColorSubject: BehaviorSubject<string> = new BehaviorSubject<string>('bg-white');
-  public navigationBgColor$: Observable<string> = this.navigationBgColorSubject.asObservable();
-
   private bgColorSubject: BehaviorSubject<string> = new BehaviorSubject<string>('bg-white');
   public bgColor$: Observable<string> = this.bgColorSubject.asObservable();
 
@@ -61,11 +58,6 @@ export class RemoteControlService {
 
   set showExitButton(value: boolean) {
     this.showExitButtonSubject.next(this.isSecondaryMode ? false : value);
-  }
-
-
-  set navigationBgColor(value: string) {
-    this.navigationBgColorSubject.next(value);
   }
 
   set showLogo(value: boolean){

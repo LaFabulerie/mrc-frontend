@@ -2,48 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
+import { BaseRoomComponent } from '../room.component';
 
 @Component({
   selector: 'app-kitchen',
   templateUrl: './kitchen.component.svg',
-  styleUrls: ['./kitchen.component.scss']
+  styleUrls: ['../room.component.scss']
 })
-export class KitchenComponent  implements OnInit{
+export class KitchenComponent extends BaseRoomComponent implements OnInit{
 
   constructor(
-    private control: RemoteControlService,
-    private activatedRoute: ActivatedRoute,
-    private coreService: CoreService,
+    control: RemoteControlService,
+    activatedRoute: ActivatedRoute,
+    coreService: CoreService,
   ) {
+    super(control, activatedRoute, coreService);
   }
 
-  private controlSetup() {
-    this.control.showMapButton = true;
-    this.control.showBackButton = true;
-    this.control.showListButton = true;
-    this.control.showExitButton = true;
-    this.control.showLogo = true;
-    this.control.title = '';
-
-  }
-
-  ngOnInit(): void {
-    this.control.navigationMode$.subscribe(v => this.controlSetup());
-
-    this.activatedRoute.params.subscribe(params => {
-      const uuid = params['uuid'];
-      this.coreService.getRoom(uuid, {
-        fields: ["video"]
-      }).subscribe(room => {
-        // this.control.openDialog(VideoDialogComponent, {
-        //   videoURL: room.video
-        // });
-      })
-    });
-  }
-
-  goToItem(uuid: string){
-    this.control.navigate(['item', uuid]);
+  override ngOnInit(): void {
+    super.ngOnInit();
   }
 
 }

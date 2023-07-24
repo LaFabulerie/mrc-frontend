@@ -7,7 +7,6 @@ export type Room = {
   id: number;
   uuid: string;
   name: string;
-  description: string;
   slug: string;
   image: string;
   items: Item[];

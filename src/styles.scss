@@ -14,15 +14,12 @@
     height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-family: var(--font-family);
-  }
-  .p-component {
-    font-family: var(--font-family);
+
   }
 
-  // font-family: 'Caveat Brush','Noto Serif', sans-serif!important;
+  --font-family-1: 'Open Sans', sans-serif;
+  --font-family-2: 'Patrick Hand', cursive;
 
-  --font-family: "Noto Serif", serif;
   --blue-mrc: #2c28db;
   --dark-blue-mrc: #1c096b;
   --orange-mrc: #ff5738;

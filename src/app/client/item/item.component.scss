@@ -1,9 +1,11 @@
 
 :host {
+  font-family: var(--font-family-2)!important;
   .content {
     height: calc(100% - var(--navbar-height));
     .item-picture {
-      height: 600px;
+      max-height: 600px;
+      max-width: 600px;
     }
     .border-bottom-1 {
       border-color: #1c096b;
@@ -11,12 +13,13 @@
     .use-list {
       box-shadow: 18px 20px 46px 8px rgba(0, 0, 0, 0.12), 20px 18px 38px 3px rgba(0, 0, 0, 0.14), 7px 20px 15px rgba(0, 0, 0, 0.2);
       .use-item {
+        color: var(--dark-blue-mrc);
         fa-icon {
           visibility: hidden;
         }
         &:hover {
           &.activable {
-            background-color: var(--blue-200);
+            background-color: var(--blue-100)!important;
           }
           fa-icon {
             visibility: visible;

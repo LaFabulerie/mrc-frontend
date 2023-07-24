@@ -2045,7 +2045,7 @@ style="cursor: pointer;" (mouseenter)="activate('f5849ae9-e6c3-462a-9dee-667517b
 	<path class="st48" d="M189.3,68.3l-10,10.5c0,0-6.8,7.1-1.7,4.4c5.2-2.8,19.7-17,20.2-19.5C198.3,61.2,192.9,64.6,189.3,68.3z"/>
 </g>
 <g id="Vasque"
-style="cursor: pointer;" (mouseenter)="activate('fee6f548-7dfb-455e-954a-177def48f020')"
+style="cursor: pointer;" (mouseenter)="activate('f5849ae9-e6c3-462a-9dee-667517b5584a')"
 >
 	<path class="st22" d="M252.9,199.8l-1.2-29.6l-0.5-4.2l3.4,0l-1-3.8l-1.5-1.6c0,0-1.2-6.6-0.5-7.3c0.6-0.7,1.1-0.3,1.1-0.3l3-0.4
 		l0.7,5.1l-3.4,0.3l0.2,1.6l1.6,2.1l1.1,4.1h7l4.1-6.2l-2.6-1.3l3.3-4.6l2,1.3c0,0,1.6,0.1,1.1,1.3c-0.3,0.8-6,9.1-6.4,9.9
@@ -2578,9 +2578,9 @@ style="cursor: pointer;"
 </g>
 <g id="Vasque_x5F_Roll_x5F_On_00000015331260958393545250000004302695937125497781_"
 style="cursor: pointer;"
-[attr.display]="isActive('fee6f548-7dfb-455e-954a-177def48f020') ? 'inline' : 'none'"
-(mouseleave)="release('fee6f548-7dfb-455e-954a-177def48f020')"
-(click)="goToItem('fee6f548-7dfb-455e-954a-177def48f020')"
+[attr.display]="isActive('f5849ae9-e6c3-462a-9dee-667517b5584a') ? 'inline' : 'none'"
+(mouseleave)="release('f5849ae9-e6c3-462a-9dee-667517b5584a')"
+(click)="goToItem('f5849ae9-e6c3-462a-9dee-667517b5584a')"
 >
 	<path class="st75" d="M252.9,199.8l-1.2-29.6l-0.5-4.2l3.4,0l-1-3.8l-1.5-1.6c0,0-1.2-6.6-0.5-7.3c0.6-0.7,1.1-0.3,1.1-0.3l3-0.4
 		l0.7,5.1l-3.4,0.3l0.2,1.6l1.6,2.1l1.1,4.1h7l4.1-6.2l-2.6-1.3l3.3-4.6l2,1.3c0,0,1.6,0.1,1.1,1.3c-0.3,0.8-6,9.1-6.4,9.9

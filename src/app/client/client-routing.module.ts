@@ -11,6 +11,7 @@ import { BedroomComponent } from './rooms/bedroom/bedroom.component';
 import { OfficeComponent } from './rooms/office/office.component';
 import { GarageComponent } from './rooms/garage/garage.component';
 import { KitchenComponent } from './rooms/kitchen/kitchen.component';
+import { LivingRoomComponent } from './rooms/living-room/living-room.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, children: [
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'office/:uuid', component: OfficeComponent},
       { path: 'garage/:uuid', component: GarageComponent},
       { path: 'kitchen/:uuid', component: KitchenComponent},
+      { path: 'living-room/:uuid', component: LivingRoomComponent},
     ]},
     { path: 'item/:uuid', component: ItemComponent},
     { path: 'use/:uuid', component: DigitalUseComponent},

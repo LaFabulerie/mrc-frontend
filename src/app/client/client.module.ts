@@ -13,6 +13,7 @@ import { OfficeComponent } from './rooms/office/office.component';
 import { GarageComponent } from './rooms/garage/garage.component';
 import { KitchenComponent } from './rooms/kitchen/kitchen.component';
 import { ExitDialogComponent } from './components/exit-dialog/exit-dialog.component';
+import { LivingRoomComponent } from './rooms/living-room/living-room.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { ExitDialogComponent } from './components/exit-dialog/exit-dialog.compon
     GarageComponent,
     KitchenComponent,
     ExitDialogComponent,
+    LivingRoomComponent,
   ],
   imports: [
     SharedModule,

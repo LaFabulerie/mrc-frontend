@@ -66,6 +66,7 @@ export class AuthService {
   }
 
   private _processLogin(response: any) {
+    console.log("process login")
     const userData = response.user;
     localStorage.setItem('user', this.encrypt(JSON.stringify(userData)));
     this.storeToken('refreshToken', response.refreshToken);
@@ -84,6 +85,7 @@ export class AuthService {
   }
 
   logout() {
+    console.warn("logout")
     this.stopRefreshTokenTimer();
     localStorage.removeItem('user');
     localStorage.removeItem('refreshToken');

@@ -1,9 +1,10 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Nullable } from 'primeng/ts-helpers';
-import { DigitalUse, Item } from 'src/app/models/use';
+import { map } from 'rxjs';
+import { Item } from 'src/app/models/use';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-item',
@@ -42,7 +43,12 @@ export class ItemComponent implements OnInit {
       this.coreService.getItem(uuid, {
         expand: ['uses', 'room'],
         fields: ['name', 'uses', 'room.uuid', 'room.main_color', 'image', 'uuid']
-      }).subscribe(item => {
+      }).pipe(
+        map(item => {
+          item.image = environment.apiHost + item.image;
+          return item;
+        })
+      ).subscribe(item => {
         this.item = item
         this.useList = [...item.uses];
         const limit = 10-this.useList.length

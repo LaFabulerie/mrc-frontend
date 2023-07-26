@@ -26,6 +26,7 @@ export class DoorComponent implements OnInit{
     this.control.showExitButton = false;
     this.control.showLogo = true;
     this.control.title = '';
+    this.control.bgColor = '#FFFFFF';
   }
 
   ngOnInit(): void {

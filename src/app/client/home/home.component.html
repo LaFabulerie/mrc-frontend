@@ -1,9 +1,9 @@
 <div class="navbar flex p-3 w-full align-items-center bg-white">
   <div class="w-4 flex justify-content-start">
-    <span class="custom-button mx-3 cursor-pointer bg-white border-round p-2" (click)="goMap()" *ngIf="showMapButton && currentNavigationMode !== 'secondary'">
+    <span class="custom-button mx-3 cursor-pointer bg-white border-round p-2" (click)="goToMap()" *ngIf="showMapButton && currentNavigationMode !== 'secondary'">
       <img src="assets/img/picto_home.svg" />
     </span>
-    <span class="custom-button mx-5 cursor-pointer bg-white border-round p-2" (click)="goBack()" *ngIf="showBackButton && currentNavigationMode !== 'secondary'">
+    <span class="custom-button mx-5 cursor-pointer bg-white border-round p-2" (click)="goToBack()" *ngIf="showBackButton && currentNavigationMode !== 'secondary'">
       <img src="assets/img/picto_back.svg" />
     </span>
     <span class="p-2" *ngIf="mode === 'standalone'">

@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -38,7 +38,6 @@ export class RemoteControlService {
 
   private dialogSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public dialog$: Observable<any> = this.dialogSubject.asObservable();
-
 
   set title(value: string) {
     this.titleSubject.next(value);
@@ -96,6 +95,10 @@ export class RemoteControlService {
 
   openDialog(dialogClass: any, data: any) {
     this.dialogSubject.next({name : dialogClass.name, data: data});
+  }
+
+  closeDialog() {
+    this.dialogSubject.next(null);
   }
 
 }

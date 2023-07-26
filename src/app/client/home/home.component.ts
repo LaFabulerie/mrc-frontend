@@ -182,7 +182,7 @@ export class HomeComponent{
     this.control.navigationMode = this.currentNavigationMode;
   }
 
-  goBack() {
+  goToBack() {
     this.location.back()
     if(this.mqtt && this.control.navigationMode === 'primary') {
       this.mqtt.unsafePublish(`mrc/nav`, JSON.stringify({url: 'back', state: {}}), { qos: 1, retain: true });
@@ -204,10 +204,9 @@ export class HomeComponent{
       });
   }
 
-  goMap() {
+  goToMap() {
     this.control.navigate(['map']);
   }
-
 
 
 

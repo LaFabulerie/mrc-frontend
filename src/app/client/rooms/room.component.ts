@@ -2,6 +2,8 @@ import { AfterViewInit, Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
+import { VideoDialogComponent } from '../components/video-dialog/video-dialog.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-room',
@@ -32,7 +34,6 @@ export class BaseRoomComponent implements OnInit, AfterViewInit{
   }
 
   set currentHighLight(value: string) {
-    console.log(value)
     this._currentHighLight = value;
   }
 
@@ -45,7 +46,6 @@ export class BaseRoomComponent implements OnInit, AfterViewInit{
   }
 
   isActive(value: string): boolean {
-    console.log("isActive", this._currentHighLight, value)
     return this._currentHighLight === value;
   }
 
@@ -62,9 +62,9 @@ export class BaseRoomComponent implements OnInit, AfterViewInit{
       }).subscribe(room => {
         this.control.bgColor = room.mainColor;
         this.loading = false;
-        // this.control.openDialog(VideoDialogComponent, {
-        //   videoURL: room.video
-        // });
+        this.control.openDialog(VideoDialogComponent, {
+          videoURL: `${environment.apiHost}${room.video}`
+        });
       })
     });
   }

@@ -1,6 +1,8 @@
 .navbar {
   height: var(--navbar-height);
 
+
+
   img {
     width: 200px;
   }
@@ -18,5 +20,15 @@
       left: 0;
       transform: translateX(-10%);
     }
+  }
+}
+
+
+::ng-deep .p-inputswitch {
+  &.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: var(--orange-mrc)!important;
+  }
+  &.p-focus .p-inputswitch-slider {
+    box-shadow: none;
   }
 }

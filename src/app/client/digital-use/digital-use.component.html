@@ -15,7 +15,7 @@
           <span class="mt-1 font-bold">{{ service.title }} <span *ngIf="service.area"><i class="pi pi-map-marker mx-1"></i>{{service.area.name}}</span></span>
           <p class="mt-0 text-sm line-height-2" [innerHtml]="service.description | safeHtml"></p>
           <!-- <i class="pi pi-globe mr-2"></i> -->
-          <a href="{{service.url}}" style="color:inherit" target="_blank" class="text-sm font-italic">{{ service.url }}</a>
+          <a href="{{service.url}}" style="color:inherit;word-break: break-all;" target="_blank" class="text-sm font-italic">{{ service.url }}</a>
 
           <span class="bg-white absolute cursor-pointer" style="top: 50%; right: 0; transform: translate(50%, -50%);"
                 (click)="basket.add(service)"

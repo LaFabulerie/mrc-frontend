@@ -15,7 +15,6 @@ export class DigitalUseComponent {
   use!: DigitalUse;
 
   constructor(
-    private location:Location,
     private control: RemoteControlService,
     private coreService: CoreService,
     private activatedRoute: ActivatedRoute,
@@ -27,8 +26,6 @@ export class DigitalUseComponent {
     this.control.showBackButton = true;
     this.control.showListButton = true;
     this.control.showExitButton = true;
-    this.control.showLogo = true;
-    this.control.title = "";
   }
 
   ngOnInit(): void {

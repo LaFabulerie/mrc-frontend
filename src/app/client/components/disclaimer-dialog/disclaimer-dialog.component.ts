@@ -17,7 +17,7 @@ export class DisclaimerDialogComponent implements OnInit {
   ngOnInit(): void {
     const next = this.config.data.next;
     setTimeout(() => {
-      this.control.closeDialog(next);
+      this.control.closeDialog(DisclaimerDialogComponent, next);
     }, 3000);
   }
 

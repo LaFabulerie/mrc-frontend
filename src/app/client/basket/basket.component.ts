@@ -22,9 +22,7 @@ export class BasketComponent implements OnInit{
     this.control.showBackButton = true;
     this.control.showListButton = true;
     this.control.showExitButton = true;
-    this.control.showLogo = false;
-    this.control.title = "Liste des services selectionnés";
-    this.control.titleColor = "#000000";
+    this.control.bgColor = '#FFFFFF';
     this.mode = environment.mode;
   }
 

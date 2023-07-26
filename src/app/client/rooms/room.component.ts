@@ -29,8 +29,6 @@ export class BaseRoomComponent implements OnInit, AfterViewInit{
     this.control.showBackButton = true;
     this.control.showListButton = true;
     this.control.showExitButton = true;
-    this.control.showLogo = true;
-    this.control.title = '';
     this.control.bgColor = this.mainColor;
 
   }

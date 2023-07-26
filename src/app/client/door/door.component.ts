@@ -24,8 +24,6 @@ export class DoorComponent implements OnInit{
     this.control.showBackButton = false;
     this.control.showListButton = false;
     this.control.showExitButton = false;
-    this.control.showLogo = true;
-    this.control.title = '';
     this.control.bgColor = '#FFFFFF';
   }
 

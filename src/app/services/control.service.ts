@@ -6,29 +6,20 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class RemoteControlService {
 
-  private showMapButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private showMapButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public showMapButton$: Observable<boolean> = this.showMapButtonSubject.asObservable();
 
-  private showBackButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private showBackButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public showBackButton$: Observable<boolean> = this.showBackButtonSubject.asObservable();
 
-  private showListButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private showListButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public showListButton$: Observable<boolean> = this.showListButtonSubject.asObservable();
 
-  private showExitButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private showExitButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public showExitButton$: Observable<boolean> = this.showExitButtonSubject.asObservable();
-
-  private showLogoSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  public showLogo$: Observable<boolean> = this.showLogoSubject.asObservable();
 
   private bgColorSubject: BehaviorSubject<string> = new BehaviorSubject<string>('bg-white');
   public bgColor$: Observable<string> = this.bgColorSubject.asObservable();
-
-  private titleColorSubject: BehaviorSubject<string> = new BehaviorSubject<string>('text-50');
-  public titleColor$: Observable<string> = this.titleColorSubject.asObservable();
-
-  private titleSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public title$: Observable<string> = this.titleSubject.asObservable();
 
   private navigationModeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('free');
   public navigationMode$: Observable<string> = this.navigationModeSubject.asObservable();
@@ -39,40 +30,45 @@ export class RemoteControlService {
   private dialogSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public dialog$: Observable<any> = this.dialogSubject.asObservable();
 
-  set title(value: string) {
-    this.titleSubject.next(value);
-  }
 
   set showMapButton(value: boolean) {
-    this.showMapButtonSubject.next(this.isSecondaryMode ? false : value);
+    this.showMapButtonSubject.next(this.navigationMode === 'secondary' ? false : value);
   }
 
   set showBackButton(value: boolean) {
-    this.showBackButtonSubject.next(this.isSecondaryMode ? false : value);
+    this.showBackButtonSubject.next(this.navigationMode === 'secondary' ? false : value);
   }
 
   set showListButton(value: boolean) {
-    this.showListButtonSubject.next(this.isSecondaryMode ? false : value);
+    this.showListButtonSubject.next(this.navigationMode === 'secondary' ? false : value);
   }
 
   set showExitButton(value: boolean) {
-    this.showExitButtonSubject.next(this.isSecondaryMode ? false : value);
+    this.showExitButtonSubject.next(this.navigationMode === 'secondary' ? false : value);
   }
 
-  set showLogo(value: boolean){
-    this.showLogoSubject.next(value);
-  }
 
   set bgColor(value: string) {
     this.bgColorSubject.next(value);
   }
 
-  set titleColor(value: string) {
-    this.titleColorSubject.next(value);
+  get showExitButton() {
+    return this.showExitButtonSubject.value;
+  }
+
+  get showMapButton() {
+    return this.showMapButtonSubject.value;
+  }
+
+  get showBackButton() {
+    return this.showBackButtonSubject.value;
+  }
+
+  get showListButton() {
+    return this.showListButtonSubject.value;
   }
 
   set navigationMode(value: string) {
-    localStorage.setItem('navigationMode', value);
     this.navigationModeSubject.next(value);
   }
 
@@ -80,12 +76,7 @@ export class RemoteControlService {
     return this.navigationModeSubject.value;
   }
 
-  get isSecondaryMode() {
-    return this.navigationMode === 'secondary';
-  }
-
   navigate(url: string[], state?: any) {
-    // this.bgColor = '#ffffff';
     this.navigateToSubject.next({url: url, state: state || {}});
   }
 
@@ -94,11 +85,11 @@ export class RemoteControlService {
   }
 
   openDialog(dialogClass: any, data: any) {
-    this.dialogSubject.next({name : dialogClass.name, data: data});
+    this.dialogSubject.next({action : 'open', name : dialogClass.name, data: data});
   }
 
-  closeDialog(next?: string[]) {
-    this.dialogSubject.next({name : 'close', data: next});
+  closeDialog(dialogClass: any, next?: string[]) {
+    this.dialogSubject.next({action : 'close', name : dialogClass.name, data: {next: next}});
   }
 
 }

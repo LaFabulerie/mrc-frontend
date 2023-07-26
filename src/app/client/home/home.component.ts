@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { AfterViewInit, Component, Injector, Renderer2 } from '@angular/core';
+import { Component, Injector, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -17,29 +17,15 @@ import { ExitDialogComponent } from '../components/exit-dialog/exit-dialog.compo
 })
 export class HomeComponent{
 
-  showMapButton = false;
-  showBackButton = false;
-  showListButton = false;
-  showExitButton = false;
-  showLogo = true;
-  title = '';
   basketCount = 0;
-  bgColor = '';
-  titleColor = '';
-
-  navigationModes = [
-    {value: 'free', label: 'Libre'},
-    {value: 'primary', label: 'Principal'},
-    {value: 'secondary', label: 'Secondaire'},
-  ]
-  currentNavigationMode = 'free';
+  isPrimary = false;
   mode = environment.mode;
 
   private mqtt : MqttService | undefined
-  private currentOpennedDialog: DynamicDialogRef | null = null;
+  private currentOpennedDialogs: {[Key : string]: DynamicDialogRef} = {};
 
   constructor(
-    private control: RemoteControlService,
+    public control: RemoteControlService,
     public basket: BasketService,
     private renderer: Renderer2,
     private router : Router,
@@ -50,30 +36,15 @@ export class HomeComponent{
     if(environment.mode === 'standalone' && environment.mqttBrokenHost) {
       this.mqtt = <MqttService>this.injector.get(MqttService);
     }
-
-    const navigationMode = localStorage.getItem('navigationMode');
-    if (navigationMode) {
-      this.currentNavigationMode = navigationMode;
-    }
-
   }
 
   ngAfterViewInit(): void {
-    this.control.showMapButton$.subscribe(v => this.showMapButton = v);
-    this.control.showBackButton$.subscribe(v => this.showBackButton = v);
-    this.control.showListButton$.subscribe(v => this.showListButton = v);
-    this.control.showExitButton$.subscribe(v => this.showExitButton = v);
-
-    this.control.showLogo$.subscribe(v => this.showLogo = v);
-    this.control.title$.subscribe(v => this.title = v);
     this.control.bgColor$.subscribe(v => this.renderer.setStyle(document.body, 'background-color', v));
-    this.control.titleColor$.subscribe(v => this.titleColor = v);
     this.basket.basketSubject$.subscribe(_ => this.basketCount = this.basket.count());
 
 
-
     this.control.navigationMode$.subscribe(modeValue => {
-      if(this.mqtt && this.currentNavigationMode !== 'secondary') {
+      if(this.mqtt && this.control.navigationMode !== 'secondary') {
         this.mqtt.unsafePublish(`mrc/mode`, modeValue, { qos: 1, retain: true });
         this.basket.refresh();
       }
@@ -82,18 +53,17 @@ export class HomeComponent{
     if(this.mqtt) {
       this.mqtt.observe('mrc/mode').subscribe((message: IMqttMessage) => {
         const modeValue = message.payload.toString();
-        if(modeValue !== this.currentNavigationMode) {
-          if(this.currentNavigationMode === 'secondary' && modeValue === 'free') {
+        if(modeValue !== this.control.navigationMode) {
+          if(this.control.navigationMode === 'secondary' && modeValue === 'free') {
             this.basket.clear();
           }
-          this.currentNavigationMode = modeValue === 'primary' ? 'secondary' : 'free';
-          this.control.navigationMode = this.currentNavigationMode;
+          this.control.navigationMode = modeValue === 'primary' ? 'secondary' : 'free';
 
         }
       });
 
       this.mqtt.observe('mrc/nav').subscribe((message: IMqttMessage) => {
-        if(this.currentNavigationMode === 'secondary') { //to be sure but only secondary should receive this
+        if(this.control.navigationMode === 'secondary') { //to be sure but only secondary should receive this
           const nav = JSON.parse(message.payload.toString());
 
           if(nav.url === 'back') {
@@ -105,17 +75,17 @@ export class HomeComponent{
       });
 
       this.mqtt.observe('mrc/basket').subscribe((message: IMqttMessage) => {
-        if(this.currentNavigationMode === 'secondary') {
+        if(this.control.navigationMode === 'secondary') {
           const basket = JSON.parse(message.payload.toString());
           this.basket.load(basket);
         }
       });
 
       this.mqtt.observe('mrc/dialog').subscribe((message: IMqttMessage) => {
-        if(this.currentNavigationMode === 'secondary') {
+        if(this.control.navigationMode === 'secondary') {
           const dialog = JSON.parse(message.payload.toString());
-          if(dialog.name === 'close') {
-            this.closeDialog(dialog.data);
+          if(dialog.action === 'close') {
+            this.closeDialog(dialog);
           } else {
             this.openDialog(dialog);
           }
@@ -124,7 +94,7 @@ export class HomeComponent{
     }
 
     this.control.navigateTo$.subscribe(navData => {
-      if(navData && this.currentNavigationMode !== 'secondary') {
+      if(navData && this.control.navigationMode !== 'secondary') {
         this.router.navigate(navData.url, {state: navData.state});
         if(this.mqtt) {
           this.mqtt.unsafePublish(`mrc/nav`, JSON.stringify({url: navData.url, state: navData.state || {}}), { qos: 1, retain: true });
@@ -134,19 +104,22 @@ export class HomeComponent{
     });
 
     this.basket.basketSubject$.subscribe(basket => {
-      if(this.mqtt && this.currentNavigationMode !== 'secondary') {
+      if(this.mqtt && this.control.navigationMode !== 'secondary') {
         this.mqtt.unsafePublish(`mrc/basket`, JSON.stringify(basket), { qos: 1, retain: true });
       }
     });
 
     this.control.dialog$.subscribe(dialog => {
-      if(dialog && dialog.name != 'close' && this.currentNavigationMode !== 'secondary') {
-        this.openDialog(dialog);
-
-      } else {
-        this.closeDialog(dialog ? dialog.data : null);
+      if(dialog && this.control.navigationMode !== 'secondary'){
+        if(dialog.action === 'open' ) {
+          this.openDialog(dialog);
+        } else {
+          console.log('dialog$ notif => closeDialog', dialog)
+          this.closeDialog(dialog);
+        }
       }
-      if(this.mqtt && this.currentNavigationMode !== 'secondary' && dialog) {
+      if(this.mqtt && this.isPrimary && dialog) {
+        console.log('dialog$ notif => mqtt', dialog)
         this.mqtt.unsafePublish(`mrc/dialog`, JSON.stringify(dialog), { qos: 1, retain: true });
       }
     });
@@ -154,6 +127,7 @@ export class HomeComponent{
 
 
   private openDialog(dialog: any) {
+    console.log('openDialog', dialog)
     let dialogClass: any;
 
     switch(dialog.name) {
@@ -163,12 +137,9 @@ export class HomeComponent{
       case 'VideoDialogComponent':
         dialogClass = VideoDialogComponent;
         break;
-      case 'ExitDialogComponent':
-        dialogClass = ExitDialogComponent;
-        break;
     }
     if(dialogClass){
-      this.currentOpennedDialog = this.dialogService.open(dialogClass, {
+      this.currentOpennedDialogs[dialogClass.name] = this.dialogService.open(dialogClass, {
         closable: false,
         maximizable: false,
         resizable: false,
@@ -176,19 +147,16 @@ export class HomeComponent{
         showHeader: false,
         data: dialog.data,
       });
-      this.currentOpennedDialog.onClose.subscribe((next: string[]) => {
-        this.currentOpennedDialog = null;
-        this.closeDialog(next);
-      });
     }
   }
 
-  private closeDialog(next?: string[]) {
-    if(this.currentOpennedDialog) {
-      this.currentOpennedDialog.close();
+  private closeDialog(dialog: any) {
+    if(this.currentOpennedDialogs.hasOwnProperty(dialog.name)) {
+      this.currentOpennedDialogs[dialog.name].close(dialog.next);
+      delete this.currentOpennedDialogs[dialog.name];
     }
-    if(next) {
-      this.control.navigate(next)
+    if(dialog.data.next) {
+      this.control.navigate(dialog.data.next)
     }
 
   }
@@ -198,7 +166,8 @@ export class HomeComponent{
   }
 
   navigationModeChange(){
-    this.control.navigationMode = this.currentNavigationMode;
+    this.control.navigationMode = this.isPrimary ? 'primary' : 'free';
+    this.goToMap();
   }
 
   goToBack() {
@@ -209,7 +178,16 @@ export class HomeComponent{
   }
 
   exit() {
-    this.control.openDialog(ExitDialogComponent, {})
+    let ref = this.dialogService.open(ExitDialogComponent, {
+      closable: false,
+      maximizable: false,
+      resizable: false,
+      draggable: false,
+      showHeader: false,
+    });
+    ref.onClose.subscribe(() => {
+      this.control.navigate(['door']);
+    });
   }
 
   goToMap() {

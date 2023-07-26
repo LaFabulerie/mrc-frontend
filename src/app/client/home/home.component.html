@@ -1,26 +1,25 @@
 <div class="navbar flex p-3 w-full align-items-center bg-white">
   <div class="w-4 flex justify-content-start">
-    <span class="custom-button mx-3 cursor-pointer bg-white border-round p-2" (click)="goToMap()" *ngIf="showMapButton && currentNavigationMode !== 'secondary'">
+    <span class="custom-button mr-3 cursor-pointer bg-white border-round p-2" (click)="goToMap()" *ngIf="control.showMapButton">
       <img src="assets/img/picto_home.svg" />
     </span>
-    <span class="custom-button mx-5 cursor-pointer bg-white border-round p-2" (click)="goToBack()" *ngIf="showBackButton && currentNavigationMode !== 'secondary'">
+    <span class="custom-button cursor-pointer bg-white border-round p-2" (click)="goToBack()" *ngIf="control.showBackButton">
       <img src="assets/img/picto_back.svg" />
     </span>
-    <span class="p-2" *ngIf="mode === 'standalone'">
-      <p-dropdown [options]="navigationModes" [(ngModel)]="currentNavigationMode" optionValue="value" (onChange)="navigationModeChange()"></p-dropdown>
-      ({{mode}} : {{ currentNavigationMode }})
+    <span class="flex align-items-center p-2" *ngIf="mode === 'standalone'">
+      <p-inputSwitch [(ngModel)]="isPrimary" (onChange)="navigationModeChange()" styleClass="mr-2" *ngIf="control.navigationMode !== 'secondary'"></p-inputSwitch>
+      ({{mode}} : {{ control.navigationMode }})
     </span>
   </div>
   <div class="w-4 flex justify-content-center">
-    <img src="assets/img/logo_mrc.svg" *ngIf="showLogo" />
-    <h1 *ngIf="title !== ''" class="text-center text-4xl {{ titleColor }}">{{ title }}</h1>
+    <img src="assets/img/logo_mrc.svg"/>
   </div>
   <div class="w-4 flex justify-content-end">
-    <span class="custom-button mx-5 relative flex cursor-pointer bg-white border-round p-2" *ngIf="showListButton || currentNavigationMode === 'secondary'" (click)="goToBasket()">
+    <span class="custom-button relative flex cursor-pointer bg-white border-round p-2" (click)="goToBasket()">
       <img src="assets/img/picto_list.svg" />
       <span class="badge font-bold border-2 border-circle flex justify-content-center align-items-center absolute bg-white border-round p-2" *ngIf="basketCount">{{ basketCount }}</span>
     </span>
-    <span class="custom-button mx-3 cursor-pointer bg-white border-round p-2" (click)="exit()" *ngIf="showExitButton">
+    <span class="custom-button ml-3 cursor-pointer bg-white border-round p-2" (click)="exit()" *ngIf="control.showExitButton">
       <img src="assets/img/picto_exit.svg" />
     </span>
   </div>

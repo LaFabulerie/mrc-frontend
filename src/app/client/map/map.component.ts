@@ -26,8 +26,6 @@ export class MapComponent  implements OnInit{
     this.control.showBackButton = false;
     this.control.showListButton = true;
     this.control.showExitButton = true;
-    this.control.showLogo = true;
-    this.control.title = '';
     this.control.bgColor = '#17ada9';
   }
 

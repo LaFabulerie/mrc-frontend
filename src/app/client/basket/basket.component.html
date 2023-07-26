@@ -20,11 +20,11 @@
   <div *ngIf="!basketEmpty" class="border-2 border-round p-3 w-full mb-2 cursor-pointer flex justify-content-center" (click)="1+1"
     [ngStyle]="{'border-color': 'var(--orange-mrc)', 'color': 'var(--orange-mrc)'}"
   >
-    <span class="w-5" *ngIf="mode === 'web'">
+    <span class="w-8" *ngIf="mode === 'web'">
       <fa-icon [icon]="['fas', 'download']" size="xl"></fa-icon>
       <span class="text-lg ml-3">Télécharger votre liste de services</span>
     </span>
-    <span class="w-5" *ngIf="mode === 'standalone'">
+    <span class="w-8" *ngIf="mode === 'standalone'">
       <fa-icon [icon]="['fas', 'print']" size="xl"></fa-icon>
       <span class="text-lg ml-3">Imprimer votre liste de services</span>
     </span>
@@ -32,7 +32,7 @@
   <div *ngIf="!basketEmpty" class="border-2 border-round p-3 w-full cursor-pointer flex justify-content-center" (click)="1+1"
   [ngStyle]="{'border-color': 'var(--orange-mrc)', 'color': 'var(--orange-mrc)'}"
   >
-    <span class="w-5">
+    <span class="w-8">
       <fa-icon [icon]="['fas', 'envelope']" size="xl"></fa-icon>
       <span class="text-lg ml-3">Envoyer votre liste de services par email</span>
     </span>

@@ -17,22 +17,23 @@ export class VideoDialogComponent {
 
   constructor(
     private config: DynamicDialogConfig,
-    private control: RemoteControlService,
+    public control: RemoteControlService,
   ) {
     this.videoUrl = this.config.data.videoURL;
   }
 
   onPlayerReady(api:VgApiService) {
+    console.log('onPlayerReady');
     this.api = api;
     this.api.play();
     this.api.getDefaultMedia().subscriptions.ended.subscribe(() => {
-      this.control.closeDialog();
+      this.control.closeDialog(VideoDialogComponent);
     });
 
   }
 
   skip() {
-    this.control.closeDialog();
+    this.control.closeDialog(VideoDialogComponent);
   }
 
 }

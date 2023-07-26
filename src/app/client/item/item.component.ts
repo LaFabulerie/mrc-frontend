@@ -29,9 +29,6 @@ export class ItemComponent implements OnInit {
     this.control.showBackButton = true;
     this.control.showListButton = true;
     this.control.showExitButton = true;
-    this.control.showLogo = true;
-    this.control.title = "";
-    this.control.titleColor = 'text-200'
   }
 
   ngOnInit(): void {

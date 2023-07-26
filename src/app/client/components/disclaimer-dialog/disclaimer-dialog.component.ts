@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { RemoteControlService } from 'src/app/services/control.service';
 
 @Component({
   selector: 'app-disclaimer-dialog',
@@ -10,13 +11,13 @@ export class DisclaimerDialogComponent implements OnInit {
 
   constructor(
     private config: DynamicDialogConfig,
-    private ref : DynamicDialogRef,
+    private control: RemoteControlService,
   ) { }
 
   ngOnInit(): void {
     const next = this.config.data.next;
     setTimeout(() => {
-      this.ref.close(next);
+      this.control.closeDialog(next);
     }, 3000);
   }
 

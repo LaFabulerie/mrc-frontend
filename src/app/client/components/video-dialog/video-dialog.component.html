@@ -1,4 +1,5 @@
 <div class="video-player-wrapper">
+  <button (click)="skip()">SKIP</button>
   <vg-player (onPlayerReady)="onPlayerReady($event)" [style.width.px]="width" [style.height.px]="height">
     <vg-overlay-play></vg-overlay-play>
     <video #media

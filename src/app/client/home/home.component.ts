@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { AfterViewInit, Component, Injector, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BasketService } from 'src/app/services/basket.service';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { environment } from 'src/environments/environment';
@@ -36,6 +36,7 @@ export class HomeComponent{
   mode = environment.mode;
 
   private mqtt : MqttService | undefined
+  private currentOpennedDialog: DynamicDialogRef | null = null;
 
   constructor(
     private control: RemoteControlService,
@@ -113,7 +114,11 @@ export class HomeComponent{
       this.mqtt.observe('mrc/dialog').subscribe((message: IMqttMessage) => {
         if(this.currentNavigationMode === 'secondary') {
           const dialog = JSON.parse(message.payload.toString());
-          this.openDialog(dialog);
+          if(dialog.name === 'close') {
+            this.closeDialog(dialog.data);
+          } else {
+            this.openDialog(dialog);
+          }
         }
       });
     }
@@ -135,18 +140,20 @@ export class HomeComponent{
     });
 
     this.control.dialog$.subscribe(dialog => {
-      if(dialog && this.currentNavigationMode !== 'secondary') {
+      if(dialog && dialog.name != 'close' && this.currentNavigationMode !== 'secondary') {
         this.openDialog(dialog);
-        if(this.mqtt) {
-          this.mqtt.unsafePublish(`mrc/dialog`, JSON.stringify(dialog), { qos: 1, retain: true });
-        };
+
+      } else {
+        this.closeDialog(dialog ? dialog.data : null);
+      }
+      if(this.mqtt && this.currentNavigationMode !== 'secondary' && dialog) {
+        this.mqtt.unsafePublish(`mrc/dialog`, JSON.stringify(dialog), { qos: 1, retain: true });
       }
     });
-
   }
 
 
-  openDialog(dialog: any) {
+  private openDialog(dialog: any) {
     let dialogClass: any;
 
     switch(dialog.name) {
@@ -156,9 +163,12 @@ export class HomeComponent{
       case 'VideoDialogComponent':
         dialogClass = VideoDialogComponent;
         break;
+      case 'ExitDialogComponent':
+        dialogClass = ExitDialogComponent;
+        break;
     }
     if(dialogClass){
-      const ref = this.dialogService.open(dialogClass, {
+      this.currentOpennedDialog = this.dialogService.open(dialogClass, {
         closable: false,
         maximizable: false,
         resizable: false,
@@ -166,12 +176,21 @@ export class HomeComponent{
         showHeader: false,
         data: dialog.data,
       });
-      ref.onClose.subscribe((next) => {
-        if(next) {
-          this.control.navigate(next)
-        }
+      this.currentOpennedDialog.onClose.subscribe((next: string[]) => {
+        this.currentOpennedDialog = null;
+        this.closeDialog(next);
       });
     }
+  }
+
+  private closeDialog(next?: string[]) {
+    if(this.currentOpennedDialog) {
+      this.currentOpennedDialog.close();
+    }
+    if(next) {
+      this.control.navigate(next)
+    }
+
   }
 
   goToBasket() {
@@ -190,18 +209,7 @@ export class HomeComponent{
   }
 
   exit() {
-      const ref = this.dialogService.open(ExitDialogComponent, {
-        closable: false,
-        maximizable: false,
-        resizable: false,
-        draggable: false,
-        showHeader: false,
-      });
-      ref.onClose.subscribe((next) => {
-        if(next) {
-          this.control.navigate(next)
-        }
-      });
+    this.control.openDialog(ExitDialogComponent, {})
   }
 
   goToMap() {

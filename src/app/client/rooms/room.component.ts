@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
@@ -14,6 +14,7 @@ export class BaseRoomComponent implements OnInit, AfterViewInit{
 
   _currentHighLight: string = '';
   loading: boolean = true;
+  mainColor: string = '';
 
   constructor(
     private control: RemoteControlService,
@@ -30,6 +31,7 @@ export class BaseRoomComponent implements OnInit, AfterViewInit{
     this.control.showExitButton = true;
     this.control.showLogo = true;
     this.control.title = '';
+    this.control.bgColor = this.mainColor;
 
   }
 
@@ -60,11 +62,14 @@ export class BaseRoomComponent implements OnInit, AfterViewInit{
       this.coreService.getRoom(uuid, {
         fields: ["video", 'main_color']
       }).subscribe(room => {
-        this.control.bgColor = room.mainColor;
+        this.mainColor = room.mainColor;
+        this.control.bgColor = this.mainColor;
         this.loading = false;
-        this.control.openDialog(VideoDialogComponent, {
-          videoURL: `${environment.apiHost}${room.video}`
-        });
+        if(room.video) {
+          this.control.openDialog(VideoDialogComponent, {
+            videoURL: `${environment.apiHost}${room.video}`
+          });
+        }
       })
     });
   }

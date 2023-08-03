@@ -1,5 +1,5 @@
 import { Organization } from "./org";
-import { Area } from "./use";
+import { Area } from "./core";
 
 export type RemoteAccess = {
   id: number;

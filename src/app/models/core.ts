@@ -23,6 +23,8 @@ export type Item = {
   image: string;
   room: Room;
   uses: DigitalUse[];
+  lightCtrl: number;
+  lightPin: string;
 }
 
 export type DigitalUse = {

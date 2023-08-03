@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, TreeNode } from 'primeng/api';
-import { DigitalUse, Item } from 'src/app/models/use';
+import { DigitalUse, Item } from 'src/app/models/core';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { CoreService } from 'src/app/services/core.service';

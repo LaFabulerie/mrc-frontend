@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Room } from 'src/app/models/use';
+import { Room } from 'src/app/models/core';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { DisclaimerDialogComponent } from '../components/disclaimer-dialog/disclaimer-dialog.component';
 import { environment } from 'src/environments/environment';

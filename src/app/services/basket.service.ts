@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { DigitalService } from '../models/use';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { DigitalService } from '../models/core';
 
 @Injectable({
   providedIn: 'root'

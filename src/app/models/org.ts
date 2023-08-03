@@ -1,4 +1,4 @@
-import { Area } from "./use";
+import { Area } from "./core";
 import { User } from "./user";
 
 export type ApiKey = {

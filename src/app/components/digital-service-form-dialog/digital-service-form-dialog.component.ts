@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Area } from 'src/app/models/use';
+import { Area } from 'src/app/models/core';
 import { CoreService } from 'src/app/services/core.service';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DigitalUse } from 'src/app/models/use';
+import { DigitalUse } from 'src/app/models/core';
 import { BasketService } from 'src/app/services/basket.service';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';

@@ -7,7 +7,7 @@ import { ItemComponent } from './item/item.component';
 import { DigitalUseComponent } from './digital-use/digital-use.component';
 import { HomeComponent } from './home/home.component';
 import { VideoDialogComponent } from './components/video-dialog/video-dialog.component';
-import { DisclaimerDialogComponent } from './components/disclaimer-dialog/disclaimer-dialog.component';
+import { TurningTableDialogComponent } from './components/turning-table-dialog/turning-table-dialog.component';
 import { BasketComponent } from './basket/basket.component';
 import { OfficeComponent } from './rooms/office/office.component';
 import { GarageComponent } from './rooms/garage/garage.component';
@@ -24,7 +24,7 @@ import { LivingRoomComponent } from './rooms/living-room/living-room.component';
     DigitalUseComponent,
     HomeComponent,
     VideoDialogComponent,
-    DisclaimerDialogComponent,
+    TurningTableDialogComponent,
     BasketComponent,
     OfficeComponent,
     GarageComponent,

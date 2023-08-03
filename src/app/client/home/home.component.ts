@@ -6,7 +6,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BasketService } from 'src/app/services/basket.service';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { environment } from 'src/environments/environment';
-import { DisclaimerDialogComponent } from '../components/disclaimer-dialog/disclaimer-dialog.component';
+import { TurningTableDialogComponent } from '../components/turning-table-dialog/turning-table-dialog.component';
 import { VideoDialogComponent } from '../components/video-dialog/video-dialog.component';
 import { ExitDialogComponent } from '../components/exit-dialog/exit-dialog.component';
 
@@ -137,8 +137,8 @@ export class HomeComponent{
     let dialogClass: any;
 
     switch(dialog.name) {
-      case 'DisclaimerDialogComponent':
-        dialogClass = DisclaimerDialogComponent;
+      case 'TurningTableDialogComponent':
+        dialogClass = TurningTableDialogComponent;
         break;
       case 'VideoDialogComponent':
         dialogClass = VideoDialogComponent;

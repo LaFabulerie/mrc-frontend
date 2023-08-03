@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { RemoteControlService } from 'src/app/services/control.service';
+import { CoreService } from 'src/app/services/core.service';
 
 @Component({
-  selector: 'app-disclaimer-dialog',
-  templateUrl: './disclaimer-dialog.component.html',
-  styleUrls: ['./disclaimer-dialog.component.scss']
+  selector: 'app-turning-table-dialog',
+  templateUrl: './turning-table-dialog.component.html',
+  styleUrls: ['./turning-table-dialog.component.scss']
 })
-export class DisclaimerDialogComponent implements OnInit {
+export class TurningTableDialogComponent implements OnInit {
 
   constructor(
     private config: DynamicDialogConfig,
@@ -16,8 +17,9 @@ export class DisclaimerDialogComponent implements OnInit {
 
   ngOnInit(): void {
     const next = this.config.data.next;
+    console.log(next);
     setTimeout(() => {
-      this.control.closeDialog(DisclaimerDialogComponent, next);
+      this.control.closeDialog(TurningTableDialogComponent);//, next);
     }, 3000);
   }
 

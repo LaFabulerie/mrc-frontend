@@ -33,4 +33,8 @@ export class BasketComponent implements OnInit{
       this.basketEmpty = services.length == 0;
     })
   }
+
+  print() {
+    this.basket.print();
+  }
 }

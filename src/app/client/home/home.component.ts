@@ -109,6 +109,12 @@ export class HomeComponent{
       }
     });
 
+    this.basket.printBasket$.subscribe(payload => {
+      if(this.mqtt && this.control.navigationMode !== 'secondary' && environment.mode === 'standalone' && payload) {
+        this.mqtt.unsafePublish(`mrc/print`, JSON.stringify(payload), { qos: 1, retain: true });
+      }
+    });
+
     this.control.dialog$.subscribe(dialog => {
       if(dialog && this.control.navigationMode !== 'secondary'){
         if(dialog.action === 'open' ) {

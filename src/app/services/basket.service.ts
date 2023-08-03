@@ -8,7 +8,11 @@ import { DigitalService } from '../models/core';
 export class BasketService {
 
   private basketSubject = new BehaviorSubject<DigitalService[]>([]);
-  basketSubject$ = this.basketSubject.asObservable();
+  public basketSubject$: Observable<DigitalService[]> = this.basketSubject.asObservable();
+
+  private printBasketSubject: BehaviorSubject<any[] | null> = new BehaviorSubject<any[]|null>(null);
+  public printBasket$: Observable<any[]|null> = this.printBasketSubject.asObservable();
+
 
   constructor() {
     this.refresh();
@@ -61,5 +65,22 @@ export class BasketService {
 
   isEmpty() {
     return this.count() == 0;
+  }
+
+  get payload() {
+    if(this.isEmpty()) return null;
+
+    let data: any[] = []
+    this.basketSubject.getValue().forEach(service => {
+      data.push({
+        name: service.title,
+        url: service.url,
+      });
+    });
+    return data
+  }
+
+  print() {
+    this.printBasketSubject.next(this.payload);
   }
 }

@@ -23,7 +23,6 @@ export class VideoDialogComponent {
   }
 
   onPlayerReady(api:VgApiService) {
-    console.log('onPlayerReady');
     this.api = api;
     this.api.play();
     this.api.getDefaultMedia().subscriptions.ended.subscribe(() => {

@@ -13,8 +13,6 @@ export class CoreService {
   private digitalUsesSubject = new BehaviorSubject<DigitalUse[]>([]);
   public digitalUses$ = this.digitalUsesSubject.asObservable();
 
-  private roomsSubject = new BehaviorSubject<Room[]>([]);
-  public rooms$ = this.roomsSubject.asObservable();
 
   private defaultFlexFields = {
     expand: ['items', 'items.room'],

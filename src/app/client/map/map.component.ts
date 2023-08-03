@@ -3,13 +3,14 @@ import { Room } from 'src/app/models/core';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { TurningTableDialogComponent } from '../components/turning-table-dialog/turning-table-dialog.component';
 import { environment } from 'src/environments/environment';
+import { HighlightableComponent } from '../components/highlightable/highlightable.component';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.svg',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent  implements OnInit{
+export class MapComponent extends HighlightableComponent implements OnInit{
 
   rooms: Room[] = [];
   showBathroom: boolean = false;
@@ -18,6 +19,7 @@ export class MapComponent  implements OnInit{
   constructor(
     private control: RemoteControlService,
   ) {
+    super();
     this.controlSetup();
   }
 
@@ -26,7 +28,6 @@ export class MapComponent  implements OnInit{
     this.control.showBackButton = false;
     this.control.showListButton = true;
     this.control.showExitButton = true;
-    this.control.bgColor = '#17ada9';
   }
 
   ngOnInit(): void {

@@ -120,12 +120,10 @@ export class HomeComponent{
         if(dialog.action === 'open' ) {
           this.openDialog(dialog);
         } else {
-          console.log('dialog$ notif => closeDialog', dialog)
           this.closeDialog(dialog);
         }
       }
       if(this.mqtt && this.isPrimary && dialog) {
-        console.log('dialog$ notif => mqtt', dialog)
         this.mqtt.unsafePublish(`mrc/dialog`, JSON.stringify(dialog), { qos: 1, retain: true });
       }
     });
@@ -133,7 +131,6 @@ export class HomeComponent{
 
 
   private openDialog(dialog: any) {
-    console.log('openDialog', dialog)
     let dialogClass: any;
 
     switch(dialog.name) {
@@ -178,8 +175,8 @@ export class HomeComponent{
 
   goToBack() {
     this.location.back()
-    if(this.mqtt && this.control.navigationMode === 'primary') {
-      this.mqtt.unsafePublish(`mrc/nav`, JSON.stringify({url: 'back', state: {}}), { qos: 1, retain: true });
+    if(this.mqtt && this.control.navigationMode !== 'secondary') {
+      this.mqtt.unsafePublish(`mrc/nav`, JSON.stringify({url: ['back'], state: {}}), { qos: 1, retain: true });
     }
   }
 
@@ -199,10 +196,4 @@ export class HomeComponent{
   goToMap() {
     this.control.navigate(['map']);
   }
-
-
-
-
-
-
 }

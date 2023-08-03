@@ -4,15 +4,15 @@ import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
 import { VideoDialogComponent } from '../components/video-dialog/video-dialog.component';
 import { environment } from 'src/environments/environment';
+import { HighlightableComponent } from '../components/highlightable/highlightable.component';
 
 @Component({
   selector: 'app-room',
   template: `<p>Room</p>`,
   styleUrls: ['./room.component.scss']
 })
-export class BaseRoomComponent implements OnInit, AfterViewInit{
+export class BaseRoomComponent extends HighlightableComponent implements OnInit, AfterViewInit{
 
-  _currentHighLight: string = '';
   loading: boolean = true;
   mainColor: string = '';
 
@@ -21,7 +21,7 @@ export class BaseRoomComponent implements OnInit, AfterViewInit{
     private activatedRoute: ActivatedRoute,
     private coreService: CoreService,
   ) {
-
+    super();
   }
 
   private controlSetup() {
@@ -33,21 +33,6 @@ export class BaseRoomComponent implements OnInit, AfterViewInit{
 
   }
 
-  set currentHighLight(value: string) {
-    this._currentHighLight = value;
-  }
-
-  activate(value: string) {
-    this.currentHighLight = value;
-  }
-
-  release(value: string) {
-    this.currentHighLight = '';
-  }
-
-  isActive(value: string): boolean {
-    return this._currentHighLight === value;
-  }
 
   ngOnInit(): void {
     this.control.navigationMode$.subscribe(v => this.controlSetup());
@@ -74,7 +59,11 @@ export class BaseRoomComponent implements OnInit, AfterViewInit{
 
 
   goToItem(uuid: string){
-    this.control.navigate(['item', uuid]);
+    this.coreService.getItem(uuid, {
+      fields: ['light_ctrl', 'light_pin']
+    }).subscribe(item => {
+      this.control.navigate(['item', uuid], item);
+    });
   }
 
 }

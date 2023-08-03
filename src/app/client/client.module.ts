@@ -14,6 +14,7 @@ import { GarageComponent } from './rooms/garage/garage.component';
 import { KitchenComponent } from './rooms/kitchen/kitchen.component';
 import { ExitDialogComponent } from './components/exit-dialog/exit-dialog.component';
 import { LivingRoomComponent } from './rooms/living-room/living-room.component';
+import { HighlightableComponent } from './components/highlightable/highlightable.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { LivingRoomComponent } from './rooms/living-room/living-room.component';
     KitchenComponent,
     ExitDialogComponent,
     LivingRoomComponent,
+    HighlightableComponent,
   ],
   imports: [
     SharedModule,

@@ -15,6 +15,7 @@ import { KitchenComponent } from './rooms/kitchen/kitchen.component';
 import { ExitDialogComponent } from './components/exit-dialog/exit-dialog.component';
 import { LivingRoomComponent } from './rooms/living-room/living-room.component';
 import { HighlightableComponent } from './components/highlightable/highlightable.component';
+import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { HighlightableComponent } from './components/highlightable/highlightable
     ExitDialogComponent,
     LivingRoomComponent,
     HighlightableComponent,
+    ModeSelectorComponent,
   ],
   imports: [
     SharedModule,

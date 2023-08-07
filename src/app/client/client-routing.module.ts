@@ -12,10 +12,11 @@ import { OfficeComponent } from './rooms/office/office.component';
 import { GarageComponent } from './rooms/garage/garage.component';
 import { KitchenComponent } from './rooms/kitchen/kitchen.component';
 import { LivingRoomComponent } from './rooms/living-room/living-room.component';
+import { environment } from 'src/environments/environment';
+import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, children: [
-    { path: '', redirectTo: 'door', pathMatch: 'full'},
     { path: 'door', component: DoorComponent },
     { path: 'map', component: MapComponent},
     { path: 'room', children: [
@@ -31,6 +32,17 @@ const routes: Routes = [
     { path: 'basket', component: BasketComponent},
   ]},
 ];
+
+if(environment.mode === 'standalone'){
+  routes[0].children?.unshift(
+    { path: '', redirectTo: 'mode', pathMatch: 'full'},
+    { path: 'mode', component: ModeSelectorComponent},
+  );
+} else {
+  routes[0].children?.unshift(
+    { path: '', redirectTo: 'door', pathMatch: 'full'},
+  );
+}
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

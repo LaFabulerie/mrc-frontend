@@ -17,12 +17,7 @@ export class ExitDialogComponent {
   ) { }
 
   exit(response: boolean) {
-    if(response) {
-      this.basket.clear();
-      this.ref.close(['door']);
-    } else {
-      this.ref.close();
-    }
+      this.ref.close(response);
   }
 
   goToBasket() {

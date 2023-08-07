@@ -13,14 +13,21 @@ export class TurningTableDialogComponent implements OnInit {
   constructor(
     private config: DynamicDialogConfig,
     private control: RemoteControlService,
+    private coreService: CoreService,
   ) { }
 
   ngOnInit(): void {
     const next = this.config.data.next;
-    console.log(next);
-    setTimeout(() => {
-      this.control.closeDialog(TurningTableDialogComponent);//, next);
-    }, 3000);
+    const [urlName, roomName, uuid ] = next;
+    console.log(next, urlName, roomName, uuid);
+    this.coreService.getRoom(uuid, {
+      fields: ['slug', 'position', 'uuid']
+    }).subscribe(room => {
+      this.control.currentRoom = room;
+    });
+    // setTimeout(() => {
+    //   this.control.closeDialog(TurningTableDialogComponent);//, next);
+    // }, 3000);
   }
 
 }

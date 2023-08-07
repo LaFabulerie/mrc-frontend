@@ -91,6 +91,13 @@ export class HomeComponent{
           }
         }
       });
+
+      this.mqtt.observe('mrc/position').subscribe((message: IMqttMessage) => {
+        if(this.control.navigationMode !== 'secondary') {
+          const resp = JSON.parse(message.payload.toString());
+          this.control.closeDialog(TurningTableDialogComponent, ['room', resp.room, resp.uuid]);
+        }
+      });
     }
 
     this.control.navigateTo$.subscribe(navData => {
@@ -112,6 +119,12 @@ export class HomeComponent{
     this.basket.printBasket$.subscribe(payload => {
       if(this.mqtt && this.control.navigationMode !== 'secondary' && environment.mode === 'standalone' && payload) {
         this.mqtt.unsafePublish(`mrc/print`, JSON.stringify(payload), { qos: 1, retain: true });
+      }
+    });
+
+    this.control.currentRoom$.subscribe(room => {
+      if(this.mqtt && this.control.navigationMode !== 'secondary' && environment.mode === 'standalone' && room) {
+        this.mqtt.unsafePublish(`mrc/room`, JSON.stringify(room), { qos: 1, retain: true });
       }
     });
 
@@ -188,8 +201,11 @@ export class HomeComponent{
       draggable: false,
       showHeader: false,
     });
-    ref.onClose.subscribe(() => {
-      this.control.navigate(['door']);
+    ref.onClose.subscribe((willExit) => {
+      if(willExit) {
+        this.basket.clear();
+        this.control.navigate(['/']);
+      }
     });
   }
 

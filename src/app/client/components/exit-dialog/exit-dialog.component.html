@@ -1,19 +1,21 @@
-<div *ngIf="basket.isEmpty()">
-  <div class="flex justify-content-center align-items-center">
-    <p>Êtes-vous sûr de vouloir quitter la Maison Reconnectée ?</p>
+<div class="p-4">
+  <div *ngIf="basket.isEmpty()">
+    <div class="flex justify-content-center align-items-center">
+      <p>Êtes-vous sûr de vouloir quitter la Maison Reconnectée ?</p>
+    </div>
+    <div class="flex justify-content-around align-items-center">
+      <p-button styleClass="p-button-primary p-button-lg" label="Oui" (click)="exit(true)"></p-button>
+      <p-button styleClass="p-button-secondary p-button-lg" label="Non" (click)="exit(false)"></p-button>
+    </div>
   </div>
-  <div class="flex justify-content-around align-items-center">
-    <p-button styleClass="p-button-primary" label="Oui" (click)="exit(true)"></p-button>
-    <p-button styleClass="p-button-secondary" label="Non" (click)="exit(false)"></p-button>
-  </div>
-</div>
-<div *ngIf="!basket.isEmpty()">
-  <div class="flex justify-content-center align-items-center">
-    <p>Votre panier n'est pas vide. Que voulez-vous faire ?</p>
-  </div>
-  <div class="flex justify-content-around align-items-center">
-    <p-button styleClass="p-button-secondary" label="Annuler" (click)="exit(false)"></p-button>
-    <p-button styleClass="p-button-primary" label="Quitter" (click)="exit(true)"></p-button>
-    <p-button styleClass="p-button-primary" label="Voir le panier" (click)="goToBasket()"></p-button>
+  <div *ngIf="!basket.isEmpty()">
+    <div class="flex justify-content-center align-items-center">
+      <p>Votre panier n'est pas vide. Que voulez-vous faire ?</p>
+    </div>
+    <div class="flex justify-content-around align-items-center">
+      <p-button styleClass="p-button-secondary p-button-lg" label="Annuler" (click)="exit(false)"></p-button>
+      <p-button styleClass="p-button-primary p-button-lg" label="Quitter" (click)="exit(true)"></p-button>
+      <p-button styleClass="p-button-primary p-button-lg" label="Voir le panier" (click)="goToBasket()"></p-button>
+    </div>
   </div>
 </div>

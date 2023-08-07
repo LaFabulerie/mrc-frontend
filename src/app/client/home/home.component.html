@@ -6,9 +6,10 @@
     <span class="custom-button cursor-pointer bg-white border-round p-2" (click)="goToBack()" *ngIf="control.showBackButton">
       <img src="assets/img/picto_back.svg" />
     </span>
-    <span class="flex align-items-center p-2" *ngIf="mode === 'standalone'">
-      <p-inputSwitch [(ngModel)]="isPrimary" (onChange)="navigationModeChange()" styleClass="mr-2" *ngIf="control.navigationMode !== 'secondary'"></p-inputSwitch>
-      ({{mode}} : {{ control.navigationMode }})
+    <span class="flex align-items-center p-2" *ngIf="mode === 'standalone' && control.navigationMode === 'secondary'">
+      <!-- <p-inputSwitch [(ngModel)]="isPrimary" (onChange)="navigationModeChange()" styleClass="mr-2" *ngIf="control.navigationMode !== 'secondary'"></p-inputSwitch>
+      ({{mode}} : {{ control.navigationMode }}) -->
+      <fa-icon [icon]="['fas', 'lock']" size="4x"  [style]="{color: 'var(--orange-mrc)'}"></fa-icon>
     </span>
   </div>
   <div class="w-4 flex justify-content-center">

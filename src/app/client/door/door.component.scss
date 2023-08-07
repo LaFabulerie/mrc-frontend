@@ -1,11 +1,11 @@
 :host {
-  // background-color: #146C71;
-  height: calc(100% - var(--navbar-height));
+  background-color: #17ADA9;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 
   svg {
-    height: 90%;
+    height: 100%;
   }
 }

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { RemoteControlService } from 'src/app/services/control.service';
+import { HighlightableComponent } from '../components/highlightable/highlightable.component';
 
 @Component({
   selector: 'app-door',
   templateUrl: './door.component.svg',
   styleUrls: ['./door.component.scss']
 })
-export class DoorComponent implements OnInit{
+export class DoorComponent extends HighlightableComponent implements OnInit{
 
   normalFillColor = "#8da6ff";
   activeFillColor = "#f5b351";
@@ -15,6 +16,7 @@ export class DoorComponent implements OnInit{
   constructor(
     private control: RemoteControlService,
   ) {
+    super();
     this.controlSetup();
   }
 
@@ -25,6 +27,7 @@ export class DoorComponent implements OnInit{
     this.control.showListButton = false;
     this.control.showExitButton = false;
     this.control.bgColor = '#FFFFFF';
+    this.control.navBarEnabled = false;
   }
 
   ngOnInit(): void {
@@ -38,9 +41,8 @@ export class DoorComponent implements OnInit{
     // });
   }
 
-  gotToMap(){
-    const url = ['map']
-    this.control.navigate(url);
+  goToMap(){
+    this.control.navigate(['map']);
   }
 
 }

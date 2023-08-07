@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Room } from '../models/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RemoteControlService {
+
+  private navBarEnabledSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public navBarEnabled$: Observable<boolean> = this.navBarEnabledSubject.asObservable();
 
   private showMapButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public showMapButton$: Observable<boolean> = this.showMapButtonSubject.asObservable();
@@ -30,6 +34,12 @@ export class RemoteControlService {
   private dialogSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public dialog$: Observable<any> = this.dialogSubject.asObservable();
 
+  public currentRoomSubject: BehaviorSubject<Room|null> = new BehaviorSubject<Room|null>(null);
+  public currentRoom$: Observable<Room|null> = this.currentRoomSubject.asObservable();
+
+  set navBarEnabled(value: boolean) {
+    this.navBarEnabledSubject.next(value);
+  }
 
   set showMapButton(value: boolean) {
     this.showMapButtonSubject.next(this.navigationMode === 'secondary' ? false : value);
@@ -50,6 +60,14 @@ export class RemoteControlService {
 
   set bgColor(value: string) {
     this.bgColorSubject.next(value);
+  }
+
+  set currentRoom(value: any) {
+    this.currentRoomSubject.next(value);
+  }
+
+  get navBarEnabled() {
+    return this.navBarEnabledSubject.value;
   }
 
   get showExitButton() {

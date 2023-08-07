@@ -25,6 +25,7 @@ export class BaseRoomComponent extends HighlightableComponent implements OnInit,
   }
 
   private controlSetup() {
+    this.control.navBarEnabled = true;
     this.control.showMapButton = true;
     this.control.showBackButton = true;
     this.control.showListButton = true;

@@ -24,6 +24,7 @@ export class MapComponent extends HighlightableComponent implements OnInit{
   }
 
   private controlSetup() {
+    this.control.navBarEnabled = true;
     this.control.showMapButton = false;
     this.control.showBackButton = false;
     this.control.showListButton = true;

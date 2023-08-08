@@ -40,7 +40,7 @@ export class ItemComponent implements OnInit {
       const uuid = params['uuid'];
       this.coreService.getItem(uuid, {
         expand: ['uses', 'room'],
-        fields: ['name', 'uses', 'room.uuid', 'room.main_color', 'image', 'uuid']
+        fields: ['name', 'uses', 'room.uuid', 'room.main_color', 'image', 'uuid', 'light_ctrl', 'light_pin']
       }).pipe(
         map(item => {
           item.image = environment.apiHost + item.image;
@@ -48,6 +48,7 @@ export class ItemComponent implements OnInit {
         })
       ).subscribe(item => {
         this.item = item
+        this.control.currentItem= item;
         this.useList = [...item.uses];
         const limit = 10-this.useList.length
         for(let i=0; i<=limit; i++){

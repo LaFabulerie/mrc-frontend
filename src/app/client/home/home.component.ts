@@ -128,6 +128,12 @@ export class HomeComponent{
       }
     });
 
+    this.control.currentItem$.subscribe(item => {
+      if(this.mqtt && this.control.navigationMode !== 'secondary' && environment.mode === 'standalone') {
+        this.mqtt.unsafePublish(`mrc/item`, JSON.stringify(item), { qos: 1, retain: false });
+      }
+    });
+
     this.control.dialog$.subscribe(dialog => {
       if(dialog && this.control.navigationMode !== 'secondary'){
         if(dialog.action === 'open' ) {

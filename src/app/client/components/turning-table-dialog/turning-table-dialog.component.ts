@@ -21,7 +21,7 @@ export class TurningTableDialogComponent implements OnInit {
     const [urlName, roomName, uuid ] = next;
     console.log(next, urlName, roomName, uuid);
     this.coreService.getRoom(uuid, {
-      fields: ['slug', 'position', 'uuid']
+      fields: ['slug', 'position', 'uuid', 'light_pin']
     }).subscribe(room => {
       this.control.currentRoom = room;
     });

@@ -37,7 +37,6 @@ export class BaseRoomComponent extends HighlightableComponent implements OnInit,
 
   ngOnInit(): void {
     this.control.navigationMode$.subscribe(v => this.controlSetup());
-
   }
 
   ngAfterViewInit(): void {
@@ -46,6 +45,7 @@ export class BaseRoomComponent extends HighlightableComponent implements OnInit,
       this.coreService.getRoom(uuid, {
         fields: ["video", 'main_color']
       }).subscribe(room => {
+        this.control.currentItem = null;
         this.mainColor = room.mainColor;
         this.control.bgColor = this.mainColor;
         this.loading = false;

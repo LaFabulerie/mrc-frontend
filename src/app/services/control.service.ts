@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Room } from '../models/core';
+import { Item, Room } from '../models/core';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +37,11 @@ export class RemoteControlService {
   public currentRoomSubject: BehaviorSubject<Room|null> = new BehaviorSubject<Room|null>(null);
   public currentRoom$: Observable<Room|null> = this.currentRoomSubject.asObservable();
 
+  public currentItemSubject: BehaviorSubject<Item|null> = new BehaviorSubject<Item|null>(null);
+  public currentItem$: Observable<Item|null> = this.currentItemSubject.asObservable();
+
+  /// Setters
+
   set navBarEnabled(value: boolean) {
     this.navBarEnabledSubject.next(value);
   }
@@ -57,6 +62,9 @@ export class RemoteControlService {
     this.showExitButtonSubject.next(this.navigationMode === 'secondary' ? false : value);
   }
 
+  set navigationMode(value: string) {
+    this.navigationModeSubject.next(value);
+  }
 
   set bgColor(value: string) {
     this.bgColorSubject.next(value);
@@ -65,6 +73,12 @@ export class RemoteControlService {
   set currentRoom(value: any) {
     this.currentRoomSubject.next(value);
   }
+
+  set currentItem(value: any) {
+    this.currentItemSubject.next(value);
+  }
+
+  /// Getters
 
   get navBarEnabled() {
     return this.navBarEnabledSubject.value;
@@ -86,13 +100,11 @@ export class RemoteControlService {
     return this.showListButtonSubject.value;
   }
 
-  set navigationMode(value: string) {
-    this.navigationModeSubject.next(value);
-  }
-
   get navigationMode() {
     return this.navigationModeSubject.value;
   }
+
+  /// Actions
 
   navigate(url: string[], state?: any) {
     this.navigateToSubject.next({url: url, state: state || {}});

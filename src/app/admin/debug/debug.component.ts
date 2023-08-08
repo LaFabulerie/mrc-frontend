@@ -82,22 +82,18 @@ export class DebugComponent implements OnInit{
 
   switchRoomLight(room: Room) {
     console.log(room)
-    this.mqtt.unsafePublish(`mrc/nav`, JSON.stringify({
-      url: ['room', room.slug, room.uuid],
-      state : {
-        lightPin: room.lightPin,
-      }
+    this.mqtt.unsafePublish(`mrc/debug`, JSON.stringify({
+      action: 'room_light',
+      pin: room.lightPin,
     }
     ), { qos: 1, retain: false });
   }
 
   switchItemLight(item: Item) {
-    this.mqtt.unsafePublish(`mrc/nav`, JSON.stringify({
-      url: ['item', item.uuid],
-      state : {
-        lightCtrl: item.lightCtrl,
-        lightPin: item.lightPin,
-      }
+    this.mqtt.unsafePublish(`mrc/debug`, JSON.stringify({
+      action: 'item_light',
+      lightCtrl: item.lightCtrl,
+      lightPin: item.lightPin,
     }
     ), { qos: 1, retain: false });
   }

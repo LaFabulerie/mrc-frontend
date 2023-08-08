@@ -45,7 +45,7 @@ export class HomeComponent{
 
     this.control.navigationMode$.subscribe(modeValue => {
       if(this.mqtt && this.control.navigationMode !== 'secondary') {
-        this.mqtt.unsafePublish(`mrc/mode`, modeValue, { qos: 1, retain: true });
+        this.mqtt.unsafePublish(`mrc/mode`, modeValue, { qos: 1, retain: false });
         this.basket.refresh();
       }
     });
@@ -104,7 +104,7 @@ export class HomeComponent{
       if(navData && this.control.navigationMode !== 'secondary') {
         this.router.navigate(navData.url, {state: navData.state});
         if(this.mqtt) {
-          this.mqtt.unsafePublish(`mrc/nav`, JSON.stringify({url: navData.url, state: navData.state || {}}), { qos: 1, retain: true });
+          this.mqtt.unsafePublish(`mrc/nav`, JSON.stringify({url: navData.url, state: navData.state || {}}), { qos: 1, retain: false });
         }
         this.control.stopNavigate()
       }
@@ -112,19 +112,19 @@ export class HomeComponent{
 
     this.basket.basketSubject$.subscribe(basket => {
       if(this.mqtt && this.control.navigationMode !== 'secondary') {
-        this.mqtt.unsafePublish(`mrc/basket`, JSON.stringify(basket), { qos: 1, retain: true });
+        this.mqtt.unsafePublish(`mrc/basket`, JSON.stringify(basket), { qos: 1, retain: false });
       }
     });
 
     this.basket.printBasket$.subscribe(payload => {
       if(this.mqtt && this.control.navigationMode !== 'secondary' && environment.mode === 'standalone' && payload) {
-        this.mqtt.unsafePublish(`mrc/print`, JSON.stringify(payload), { qos: 1, retain: true });
+        this.mqtt.unsafePublish(`mrc/print`, JSON.stringify(payload), { qos: 1, retain: false });
       }
     });
 
     this.control.currentRoom$.subscribe(room => {
       if(this.mqtt && this.control.navigationMode !== 'secondary' && environment.mode === 'standalone' && room) {
-        this.mqtt.unsafePublish(`mrc/room`, JSON.stringify(room), { qos: 1, retain: true });
+        this.mqtt.unsafePublish(`mrc/room`, JSON.stringify(room), { qos: 1, retain: false });
       }
     });
 
@@ -137,7 +137,7 @@ export class HomeComponent{
         }
       }
       if(this.mqtt && this.isPrimary && dialog) {
-        this.mqtt.unsafePublish(`mrc/dialog`, JSON.stringify(dialog), { qos: 1, retain: true });
+        this.mqtt.unsafePublish(`mrc/dialog`, JSON.stringify(dialog), { qos: 1, retain: false });
       }
     });
   }
@@ -189,7 +189,7 @@ export class HomeComponent{
   goToBack() {
     this.location.back()
     if(this.mqtt && this.control.navigationMode !== 'secondary') {
-      this.mqtt.unsafePublish(`mrc/nav`, JSON.stringify({url: ['back'], state: {}}), { qos: 1, retain: true });
+      this.mqtt.unsafePublish(`mrc/nav`, JSON.stringify({url: ['back'], state: {}}), { qos: 1, retain: false });
     }
   }
 

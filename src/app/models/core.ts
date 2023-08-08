@@ -13,6 +13,7 @@ export type Room = {
   mainColor: string;
   video: string;
   position: number;
+  lightPin: string;
 }
 
 export type Item = {

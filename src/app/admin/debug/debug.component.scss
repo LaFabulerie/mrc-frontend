@@ -1,0 +1,10 @@
+::ng-deep {
+  .p-selectbutton {
+    .p-button {
+      padding: 0.5rem 0.5rem!important;
+      .p-button-label {
+          font-size: 0.70rem;
+      }
+    }
+  }
+}

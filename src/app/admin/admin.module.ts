@@ -5,6 +5,7 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ComponentsModule } from '../components/components.module';
 import { HomeComponent } from './home/home.component';
+import { DebugComponent } from './debug/debug.component';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { HomeComponent } from './home/home.component';
     HomeComponent,
     CatalogComponent,
     SettingsComponent,
+    DebugComponent,
   ],
   imports: [
     SharedModule,

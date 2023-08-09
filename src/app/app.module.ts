@@ -13,7 +13,6 @@ import { AuthService } from './services/auth.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
-import { ComponentsModule } from './components/components.module';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -52,7 +51,6 @@ if(environment.mode === 'standalone' && environment.mqttBrokenHost) {
     ReactiveFormsModule,
 
     AuthModule,
-    ComponentsModule,
     AdminModule,
     ClientModule,
 

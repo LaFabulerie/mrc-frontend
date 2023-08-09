@@ -9,7 +9,7 @@ import { MessageService } from 'primeng/api';
 import { EmailCheckComponent } from './email-check/email-check.component';
 import { ForgotPwdComponent } from './forgot-pwd/forgot-pwd.component';
 import { ResetPwdComponent } from './reset-pwd/reset-pwd.component';
-import { ComponentsModule } from 'src/app/components/components.module';
+import {WelcomeImageComponent} from "./welcome-image.component";
 
 @NgModule({
   declarations: [
@@ -17,13 +17,12 @@ import { ComponentsModule } from 'src/app/components/components.module';
     SignupComponent,
     EmailCheckComponent,
     ForgotPwdComponent,
-    ResetPwdComponent
+    ResetPwdComponent,
   ],
   imports: [
     SharedModule,
     AuthRoutingModule,
-    ComponentsModule
-
+    WelcomeImageComponent,
   ],
   providers: [
     MessageService

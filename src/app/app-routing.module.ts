@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', loadChildren: () => import('./client/client.module').then(m => m.ClientModule)},
 ];
 
-if(environment.mode === 'standalone') {
+if(environment.executionMode === 'standalone') {
   routes.push(
     { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canActivate: [AuthGuard] },
     { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },

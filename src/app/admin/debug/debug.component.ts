@@ -50,7 +50,6 @@ export class DebugComponent implements OnInit{
 
     this.mqtt.observe('mrc/position').subscribe((message: any) => {
       const data = JSON.parse(message.payload.toString());
-      console.log(data)
       this.canRotate = true;
       this.currentRoom = `${data.room} : ${data.current}`
     });
@@ -81,7 +80,6 @@ export class DebugComponent implements OnInit{
 
 
   switchRoomLight(room: Room) {
-    console.log(room)
     this.mqtt.unsafePublish(`mrc/debug`, JSON.stringify({
       action: 'room_light',
       pin: room.lightPin,
@@ -112,4 +110,9 @@ export class DebugComponent implements OnInit{
     }), { qos: 1, retain: false });
   }
 
+  resetClient() {
+    this.mqtt.unsafePublish(`mrc/debug`, JSON.stringify({
+      action: 'reset_client',
+    }), { qos: 1, retain: false });
+  }
 }

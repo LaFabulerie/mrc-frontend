@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { TurningTableDialogComponent } from '../components/turning-table-dialog/turning-table-dialog.component';
 import { VideoDialogComponent } from '../components/video-dialog/video-dialog.component';
 import { ExitDialogComponent } from '../components/exit-dialog/exit-dialog.component';
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-home',
@@ -18,11 +19,10 @@ import { ExitDialogComponent } from '../components/exit-dialog/exit-dialog.compo
 export class HomeComponent{
 
   basketCount = 0;
-  isPrimary = false;
-  mode = environment.mode;
+  executionMode = environment.executionMode;
 
-  private mqtt : MqttService | undefined
-  private currentOpennedDialogs: {[Key : string]: DynamicDialogRef} = {};
+  private readonly mqtt : MqttService | undefined
+  private currentOpenedDialogs: {[Key : string]: DynamicDialogRef} = {};
 
   constructor(
     public control: RemoteControlService,
@@ -31,42 +31,47 @@ export class HomeComponent{
     private router : Router,
     private location: Location,
     private dialogService: DialogService,
+    private messageService: MessageService,
     private injector: Injector,
   ) {
-    if(environment.mode === 'standalone' && environment.mqttBrokenHost) {
+    if(this.executionMode === 'standalone' && environment.mqttBrokenHost) {
       this.mqtt = <MqttService>this.injector.get(MqttService);
     }
   }
 
   ngAfterViewInit(): void {
-    this.control.bgColor$.subscribe(v => this.renderer.setStyle(document.body, 'background-color', v));
-    this.basket.basketSubject$.subscribe(_ => this.basketCount = this.basket.count());
-
-
-    this.control.navigationMode$.subscribe(modeValue => {
-      if(this.mqtt && this.control.navigationMode !== 'secondary') {
-        this.mqtt.unsafePublish(`mrc/mode`, modeValue, { qos: 1, retain: false });
-        this.basket.refresh();
-      }
-    });
 
     if(this.mqtt) {
       this.mqtt.observe('mrc/mode').subscribe((message: IMqttMessage) => {
-        const modeValue = message.payload.toString();
-        if(modeValue !== this.control.navigationMode) {
-          if(this.control.navigationMode === 'secondary' && modeValue === 'free') {
-            this.basket.clear();
+        const data = JSON.parse(message.payload.toString());
+        console.log("receive mqtt mrc/mode", data)
+        if(data.type === 'RESP')
+          if(data.uniqueId === this.control.uniqueId) {
+            if(data.value === 'OK') {
+              this.control.navigationMode = data.mode;
+              this.control.navigate(['door']);
+            } else { //data.value === 'KO'
+              this.messageService.add({
+                severity:'error',
+                summary:'Error',
+                detail: 'Un autre utilisateur utilise déjà la Maison (Re)Connecté en mode «libre».',
+              });
+            }
           }
-          this.control.navigationMode = modeValue === 'primary' ? 'secondary' : 'free';
-
-        }
+          else {//data.uniqueId !== this.control.uniqueId
+            if(data.value === 'OK' && data.mode === 'primary') {
+              this.control.navigationMode = 'secondary';
+              this.control.navigate(['door']);
+            }
+          }
       });
 
       this.mqtt.observe('mrc/nav').subscribe((message: IMqttMessage) => {
         if(this.control.navigationMode === 'secondary') { //to be sure but only secondary should receive this
           const nav = JSON.parse(message.payload.toString());
+          console.log("receive mqtt mrc/nav", nav)
 
-          if(nav.url === 'back') {
+          if(nav.url[0] === 'back') {
             this.location.back();
             return;
           }
@@ -100,6 +105,17 @@ export class HomeComponent{
       });
     }
 
+    this.control.bgColor$.subscribe(v => this.renderer.setStyle(document.body, 'background-color', v));
+
+    this.basket.basketSubject$.subscribe(_ => this.basketCount = this.basket.count());
+
+    // this.control.navigationMode$.subscribe(modeValue => {
+    //   if(this.mqtt && this.control.navigationMode !== 'secondary' && modeValue) {
+    //     this.mqtt.unsafePublish(`mrc/mode`, modeValue, { qos: 1, retain: false });
+    //     this.basket.refresh();
+    //   }
+    // });
+
     this.control.navigateTo$.subscribe(navData => {
       if(navData && this.control.navigationMode !== 'secondary') {
         this.router.navigate(navData.url, {state: navData.state});
@@ -117,19 +133,19 @@ export class HomeComponent{
     });
 
     this.basket.printBasket$.subscribe(payload => {
-      if(this.mqtt && this.control.navigationMode !== 'secondary' && environment.mode === 'standalone' && payload) {
+      if(this.mqtt && this.control.navigationMode !== 'secondary' && this.executionMode === 'standalone' && payload) {
         this.mqtt.unsafePublish(`mrc/print`, JSON.stringify(payload), { qos: 1, retain: false });
       }
     });
 
     this.control.currentRoom$.subscribe(room => {
-      if(this.mqtt && this.control.navigationMode !== 'secondary' && environment.mode === 'standalone' && room) {
+      if(this.mqtt && this.control.navigationMode !== 'secondary' && this.executionMode === 'standalone' && room) {
         this.mqtt.unsafePublish(`mrc/room`, JSON.stringify(room), { qos: 1, retain: false });
       }
     });
 
     this.control.currentItem$.subscribe(item => {
-      if(this.mqtt && this.control.navigationMode !== 'secondary' && environment.mode === 'standalone') {
+      if(this.mqtt && this.control.navigationMode !== 'secondary' && this.executionMode === 'standalone') {
         this.mqtt.unsafePublish(`mrc/item`, JSON.stringify(item), { qos: 1, retain: false });
       }
     });
@@ -141,10 +157,11 @@ export class HomeComponent{
         } else {
           this.closeDialog(dialog);
         }
+        if(this.mqtt) {
+          this.mqtt.unsafePublish(`mrc/dialog`, JSON.stringify(dialog), { qos: 1, retain: false });
+        }
       }
-      if(this.mqtt && this.isPrimary && dialog) {
-        this.mqtt.unsafePublish(`mrc/dialog`, JSON.stringify(dialog), { qos: 1, retain: false });
-      }
+
     });
   }
 
@@ -161,7 +178,7 @@ export class HomeComponent{
         break;
     }
     if(dialogClass){
-      this.currentOpennedDialogs[dialogClass.name] = this.dialogService.open(dialogClass, {
+      this.currentOpenedDialogs[dialogClass.name] = this.dialogService.open(dialogClass, {
         closable: false,
         maximizable: false,
         resizable: false,
@@ -173,9 +190,9 @@ export class HomeComponent{
   }
 
   private closeDialog(dialog: any) {
-    if(this.currentOpennedDialogs.hasOwnProperty(dialog.name)) {
-      this.currentOpennedDialogs[dialog.name].close(dialog.next);
-      delete this.currentOpennedDialogs[dialog.name];
+    if(this.currentOpenedDialogs.hasOwnProperty(dialog.name)) {
+      this.currentOpenedDialogs[dialog.name].close(dialog.next);
+      delete this.currentOpenedDialogs[dialog.name];
     }
     if(dialog.data.next) {
       this.control.navigate(dialog.data.next)
@@ -185,11 +202,6 @@ export class HomeComponent{
 
   goToBasket() {
     this.control.navigate(['basket']);
-  }
-
-  navigationModeChange(){
-    this.control.navigationMode = this.isPrimary ? 'primary' : 'free';
-    this.goToMap();
   }
 
   goToBack() {
@@ -211,6 +223,13 @@ export class HomeComponent{
       if(willExit) {
         this.basket.clear();
         this.control.navigate(['/']);
+        if(this.mqtt && this.control.navigationMode !== 'secondary') {
+          this.mqtt.unsafePublish(`mrc/mode`, JSON.stringify({
+            mode: this.control.navigationMode,
+            uniqueId: this.control.uniqueId,
+            type: 'RST',
+          }), { qos: 1, retain: false });
+        }
       }
     });
   }

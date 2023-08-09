@@ -14,11 +14,12 @@ import { KitchenComponent } from './rooms/kitchen/kitchen.component';
 import { LivingRoomComponent } from './rooms/living-room/living-room.component';
 import { environment } from 'src/environments/environment';
 import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
+import {navigationModeGuard} from "../common/navigation-mode.guard";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, children: [
-    { path: 'door', component: DoorComponent },
-    { path: 'map', component: MapComponent},
+    { path: 'door', component: DoorComponent, canActivate: [navigationModeGuard] },
+    { path: 'map', component: MapComponent, canActivate: [navigationModeGuard]},
     { path: 'room', children: [
       { path: 'salle-de-bain/:uuid', component: BathroomComponent},
       { path: 'chambre/:uuid', component: BedroomComponent},
@@ -26,16 +27,16 @@ const routes: Routes = [
       { path: 'garage/:uuid', component: GarageComponent},
       { path: 'cuisine/:uuid', component: KitchenComponent},
       { path: 'salon/:uuid', component: LivingRoomComponent},
-    ]},
-    { path: 'item/:uuid', component: ItemComponent},
-    { path: 'use/:uuid', component: DigitalUseComponent},
-    { path: 'basket', component: BasketComponent},
+    ], canActivate: [navigationModeGuard]},
+    { path: 'item/:uuid', component: ItemComponent, canActivate: [navigationModeGuard]},
+    { path: 'use/:uuid', component: DigitalUseComponent, canActivate: [navigationModeGuard]},
+    { path: 'basket', component: BasketComponent, canActivate: [navigationModeGuard]},
   ]},
 ];
 
-if(environment.mode === 'standalone'){
+if(environment.executionMode === 'standalone'){
   routes[0].children?.unshift(
-    { path: '', redirectTo: 'mode', pathMatch: 'full'},
+    { path: '', redirectTo: '/mode', pathMatch: 'full'},
     { path: 'mode', component: ModeSelectorComponent},
   );
 } else {

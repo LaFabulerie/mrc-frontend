@@ -7,26 +7,23 @@ import { Item, Room } from '../models/core';
 })
 export class RemoteControlService {
 
+  public uniqueId: string = "undefined"
+
   private navBarEnabledSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  public navBarEnabled$: Observable<boolean> = this.navBarEnabledSubject.asObservable();
 
   private showMapButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  public showMapButton$: Observable<boolean> = this.showMapButtonSubject.asObservable();
 
   private showBackButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  public showBackButton$: Observable<boolean> = this.showBackButtonSubject.asObservable();
 
   private showListButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  public showListButton$: Observable<boolean> = this.showListButtonSubject.asObservable();
 
   private showExitButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  public showExitButton$: Observable<boolean> = this.showExitButtonSubject.asObservable();
 
   private bgColorSubject: BehaviorSubject<string> = new BehaviorSubject<string>('bg-white');
   public bgColor$: Observable<string> = this.bgColorSubject.asObservable();
 
-  private navigationModeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('free');
-  public navigationMode$: Observable<string> = this.navigationModeSubject.asObservable();
+  private navigationModeSubject: BehaviorSubject<string|null> = new BehaviorSubject<string|null>(null);
+  public navigationMode$: Observable<string|null> = this.navigationModeSubject.asObservable();
 
   private navigateToSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public navigateTo$: Observable<any> = this.navigateToSubject.asObservable();
@@ -39,6 +36,15 @@ export class RemoteControlService {
 
   public currentItemSubject: BehaviorSubject<Item|null> = new BehaviorSubject<Item|null>(null);
   public currentItem$: Observable<Item|null> = this.currentItemSubject.asObservable();
+
+  constructor() {
+    const storedUniqueId = localStorage.getItem('uniqueId');
+    if(storedUniqueId){
+      this.uniqueId = storedUniqueId;
+    } else {
+      localStorage.setItem('uniqueId', 'mrc-client-' + Math.random().toString(36).slice(2, 9));
+    }
+  }
 
   /// Setters
 
@@ -62,7 +68,7 @@ export class RemoteControlService {
     this.showExitButtonSubject.next(this.navigationMode === 'secondary' ? false : value);
   }
 
-  set navigationMode(value: string) {
+  set navigationMode(value: string|null) {
     this.navigationModeSubject.next(value);
   }
 
@@ -96,11 +102,7 @@ export class RemoteControlService {
     return this.showBackButtonSubject.value;
   }
 
-  get showListButton() {
-    return this.showListButtonSubject.value;
-  }
-
-  get navigationMode() {
+  get navigationMode(): string|null {
     return this.navigationModeSubject.value;
   }
 
@@ -120,6 +122,10 @@ export class RemoteControlService {
 
   closeDialog(dialogClass: any, next?: string[]) {
     this.dialogSubject.next({action : 'close', name : dialogClass.name, data: {next: next}});
+  }
+
+  destroyUniqueID() {
+    localStorage.removeItem('uniqueId');
   }
 
 }

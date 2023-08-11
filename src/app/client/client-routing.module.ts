@@ -15,6 +15,7 @@ import { LivingRoomComponent } from './rooms/living-room/living-room.component';
 import { environment } from 'src/environments/environment';
 import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
 import {navigationModeGuard} from "../common/navigation-mode.guard";
+import {GardenComponent} from "./rooms/garden/garden.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, children: [
@@ -27,6 +28,7 @@ const routes: Routes = [
       { path: 'garage/:uuid', component: GarageComponent},
       { path: 'cuisine/:uuid', component: KitchenComponent},
       { path: 'salon/:uuid', component: LivingRoomComponent},
+      { path: 'jardin/:uuid', component: GardenComponent},
     ], canActivate: [navigationModeGuard]},
     { path: 'item/:uuid', component: ItemComponent, canActivate: [navigationModeGuard]},
     { path: 'use/:uuid', component: DigitalUseComponent, canActivate: [navigationModeGuard]},

@@ -16,6 +16,7 @@ import { ExitDialogComponent } from './components/exit-dialog/exit-dialog.compon
 import { LivingRoomComponent } from './rooms/living-room/living-room.component';
 import { HighlightableComponent } from './components/highlightable/highlightable.component';
 import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
+import { GardenComponent } from './rooms/garden/garden.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
     LivingRoomComponent,
     HighlightableComponent,
     ModeSelectorComponent,
+    GardenComponent,
   ],
   imports: [
     SharedModule,

@@ -16,9 +16,11 @@
         <div class="use-item text-lg py-2 pl-6 surface-200"
             [ngClass]="{'border-round-bottom-3xl' : last, 'border-bottom-1' : !last, 'activable cursor-pointer' : use != null}"
             [ngStyle]="{'border-color': '#1c096b'}"
-            *ngFor="let use of useList;let last=last">
+            *ngFor="let use of useList;let last=last"
+             (click)="goToDigitalUse(use.uuid)"
+        >
           <fa-icon [icon]="['fas', 'chevron-right']" class="mr-3" *ngIf="use"></fa-icon>
-          <span (click)="goToDigitalUse(use.uuid)" *ngIf="use">{{use.title}}</span>
+          <span  *ngIf="use">{{use.title}}</span>
           <span *ngIf="!use">&nbsp;</span>
         </div>
       </div>

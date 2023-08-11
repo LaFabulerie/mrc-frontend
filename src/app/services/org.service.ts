@@ -15,23 +15,23 @@ export class OrgService {
   ) { }
 
   getOrgs(): Observable<Organization[]> {
-    return this.http.get<Organization[]>(`${environment.apiHost}/api/orgs/`);
+    return this.http.get<Organization[]>(`${environment.apiHost}/orgs/`);
   }
 
   getOrg(orgId: number): Observable<Organization> {
-    return this.http.get<Organization>(`${environment.apiHost}/api/orgs/${orgId}/?expand=members,api_keys`);
+    return this.http.get<Organization>(`${environment.apiHost}/orgs/${orgId}/?expand=members,api_keys`);
   }
 
   createOrg(data: any): Observable<Organization> {
-    return this.http.post<Organization>(`${environment.apiHost}/api/orgs/`, data);
+    return this.http.post<Organization>(`${environment.apiHost}/orgs/`, data);
   }
 
   revokeApiKey(orgId: number, apiKeyId: number) {
     let key = encodeURIComponent(apiKeyId)
-    return this.http.delete(`${environment.apiHost}/api/orgs/${orgId}/revoke_key/?key=${key}`);
+    return this.http.delete(`${environment.apiHost}/orgs/${orgId}/revoke_key/?key=${key}`);
   }
 
   createApiKey(data:any): Observable<any> {
-    return this.http.post<any>(`${environment.apiHost}/api/orgs/${data.orgId}/create_key/`, data);
+    return this.http.post<any>(`${environment.apiHost}/orgs/${data.orgId}/create_key/`, data);
   }
 }

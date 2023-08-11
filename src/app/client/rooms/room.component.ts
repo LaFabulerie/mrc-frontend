@@ -51,7 +51,7 @@ export class BaseRoomComponent extends HighlightableComponent implements OnInit,
         this.loading = false;
         if(room.video) {
           this.control.openDialog(VideoDialogComponent, {
-            videoURL: `${environment.apiHost}${room.video}`
+            videoURL: `${environment.mediaHost}${room.video}`
           });
         }
       })

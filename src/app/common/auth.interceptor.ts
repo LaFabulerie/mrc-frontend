@@ -11,8 +11,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const user = this.authService.userValue;
-        // const isReadOnlyApiUrl = request.url.startsWith(`${environment.apiHost}/api/r/`);
-        // const isWriteApiUrl = request.url.startsWith(`${environment.apiHost}/api/w/`);
         if (user) {
             const token = this.authService.getToken('accessToken');
             request = request.clone({

@@ -43,7 +43,7 @@ export class ItemComponent implements OnInit {
         fields: ['name', 'uses', 'room.uuid', 'room.main_color', 'image', 'uuid', 'light_ctrl', 'light_pin']
       }).pipe(
         map(item => {
-          item.image = environment.apiHost + item.image;
+          item.image = environment.mediaHost + item.image;
           return item;
         })
       ).subscribe(item => {

@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, Injector, Renderer2 } from '@angular/core';
+import {Component, inject, Injector, Renderer2} from '@angular/core';
 import { Router } from '@angular/router';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -35,7 +35,7 @@ export class HomeComponent{
     private injector: Injector,
   ) {
     if(this.executionMode === 'standalone' && environment.mqttBrokenHost) {
-      this.mqtt = <MqttService>this.injector.get(MqttService);
+      this.mqtt = inject(MqttService);
     }
   }
 
@@ -44,7 +44,6 @@ export class HomeComponent{
     if(this.mqtt) {
       this.mqtt.observe('mrc/mode').subscribe((message: IMqttMessage) => {
         const data = JSON.parse(message.payload.toString());
-        console.log("receive mqtt mrc/mode", data)
         if(data.type === 'RESP')
           if(data.uniqueId === this.control.uniqueId) {
             if(data.value === 'OK') {
@@ -69,7 +68,6 @@ export class HomeComponent{
       this.mqtt.observe('mrc/nav').subscribe((message: IMqttMessage) => {
         if(this.control.navigationMode === 'secondary') { //to be sure but only secondary should receive this
           const nav = JSON.parse(message.payload.toString());
-          console.log("receive mqtt mrc/nav", nav)
 
           if(nav.url[0] === 'back') {
             this.location.back();

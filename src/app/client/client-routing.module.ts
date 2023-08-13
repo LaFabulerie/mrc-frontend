@@ -19,6 +19,8 @@ import {GardenComponent} from "./rooms/garden/garden.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, children: [
+    { path: '', redirectTo: 'mode', pathMatch: 'full'},
+    { path: 'mode', component: ModeSelectorComponent},
     { path: 'door', component: DoorComponent, canActivate: [navigationModeGuard] },
     { path: 'map', component: MapComponent, canActivate: [navigationModeGuard]},
     { path: 'room', children: [
@@ -35,17 +37,6 @@ const routes: Routes = [
     { path: 'basket', component: BasketComponent, canActivate: [navigationModeGuard]},
   ]},
 ];
-
-if(environment.executionMode === 'standalone'){
-  routes[0].children?.unshift(
-    { path: '', redirectTo: '/mode', pathMatch: 'full'},
-    { path: 'mode', component: ModeSelectorComponent},
-  );
-} else {
-  routes[0].children?.unshift(
-    { path: '', redirectTo: 'door', pathMatch: 'full'},
-  );
-}
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

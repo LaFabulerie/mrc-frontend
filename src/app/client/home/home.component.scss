@@ -24,11 +24,11 @@
 }
 
 
-::ng-deep .p-inputswitch {
-  &.p-inputswitch-checked .p-inputswitch-slider {
-    background-color: var(--orange-mrc)!important;
-  }
-  &.p-focus .p-inputswitch-slider {
-    box-shadow: none;
-  }
-}
+//::ng-deep .p-inputswitch {
+//  &.p-inputswitch-checked .p-inputswitch-slider {
+//    background-color: var(--orange-mrc)!important;
+//  }
+//  &.p-focus .p-inputswitch-slider {
+//    box-shadow: none;
+//  }
+//}

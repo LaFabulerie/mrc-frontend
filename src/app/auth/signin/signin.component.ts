@@ -20,7 +20,11 @@ export class SigninComponent implements OnInit{
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+  ) {
+    if(this.authService.currentUser){
+      this.router.navigate(['/admin']);
+    }
+  }
 
   ngOnInit(): void {
     this.errors = {};
@@ -39,7 +43,7 @@ export class SigninComponent implements OnInit{
   signin(){
     this.authService.signin(this.signinForm.value).subscribe({
       next: () => {
-        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/admin';
         this.router.navigate([returnUrl]);
       },
       error: (errorResp) => {

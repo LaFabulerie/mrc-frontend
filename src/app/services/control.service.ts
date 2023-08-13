@@ -116,8 +116,8 @@ export class RemoteControlService {
     this.navigateToSubject.next(null);
   }
 
-  openDialog(dialogClass: any, data: any) {
-    this.dialogSubject.next({action : 'open', name : dialogClass.name, data: data});
+  openDialog(dialogClassName: string, data: any) {
+    this.dialogSubject.next({action : 'open', name : dialogClassName, data: data});
   }
 
   closeDialog(dialogClass: any, next?: string[]) {

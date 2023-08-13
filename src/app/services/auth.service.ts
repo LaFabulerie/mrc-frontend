@@ -30,7 +30,7 @@ export class AuthService {
     return CryptoJS.AES.decrypt(txtToDecrypt, environment.cryptoKey).toString(CryptoJS.enc.Utf8);
   }
 
-  public get userValue() {
+  public get currentUser() {
     if (this.userSubject.value) {
       return this.userSubject.value;
     } else if (localStorage.getItem('user')) {
@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   updateCurrentUser(data: any) {
-    return this.http.patch<User>(`${environment.apiHost}/user/${this.userValue!.id}/`, data)
+    return this.http.patch<User>(`${environment.apiHost}/user/${this.currentUser!.id}/`, data)
     .pipe(
       map(userData => {
         localStorage.setItem('user', this.encrypt(JSON.stringify(userData)));
@@ -68,11 +68,11 @@ export class AuthService {
   private _processLogin(response: any) {
     const userData = response.user;
     localStorage.setItem('user', this.encrypt(JSON.stringify(userData)));
-    this.storeToken('refreshToken', response.refreshToken);
-    this.storeToken('accessToken', response.accessToken);
+    this.storeToken('refreshToken', response.refresh);
+    this.storeToken('accessToken', response.access);
     const user = new User(userData);
     this.userSubject.next(user);
-    this.startRefreshTokenTimer(response.accessToken);
+    this.startRefreshTokenTimer(response.access);
     return user;
   }
 
@@ -99,7 +99,7 @@ export class AuthService {
       map((resp) => {
         this.storeToken('accessToken', resp.access);
         this.startRefreshTokenTimer(resp.access);
-        return this.userValue;
+        return this.currentUser;
       })
     );
 }

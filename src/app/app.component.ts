@@ -4,6 +4,7 @@ import { AuthService } from './services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { User } from './models/user';
 import { Title } from '@angular/platform-browser';
+import {environment} from "../environments/environment";
 
 @Component({
   selector: 'app-root',
@@ -26,5 +27,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.primengConfig.ripple = true;
     this.translateService.setDefaultLang('fr');
+
+    console.warn("Execution mode: ", environment.executionMode);
   }
 }

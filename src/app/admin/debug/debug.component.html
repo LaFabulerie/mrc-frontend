@@ -1,5 +1,5 @@
-  <div class="flex flex-wrap justify-content-between p-4">
-    <div class="flex flex-column justify-content-between m-1 mb-2 p-2 lg:w-3 md:w-6 sm:full border-1 border-round border-400 shadow-5">
+  <div class="flex flex-wrap justify-content-between p-2">
+    <div class="flex flex-column justify-content-between m-1 mb-2 p-2 xl:w-3 lg:w-4 md:w-5 sm:w-full border-1 border-round border-400 shadow-5">
       <div class="flex justify-content-between align-items-center mb-3">
         <div class="flex  w-4 flex-column font-bold">
           <span>Moteur</span>
@@ -22,9 +22,9 @@
         <p-badge [value]="currentRoom.toString()" severity="success"></p-badge>
         <span (click)="resetPosition()">Reset</span>
       </div>
-      <div class="flex flex-wrap">
-        <div class="flex justify-content-between align-items-center mb-2 w-6 pl-2" *ngFor="let room of rooms" >
-          <div class="flex w-7 flex-column">
+      <div class="flex flex-wrap justify-content-around">
+        <div class="flex justify-content-between align-items-center mb-2 pl-2" *ngFor="let room of rooms" >
+          <div class="flex flex-column md:w-10rem xl:w-10rem">
             <span>{{room.name}}</span>
             <span class="text-xs">(Position : {{room.position}})</span>
           </div>
@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-column justify-content-start m-1  mb-2 p-2 lg:w-3 md:w-6 sm:full border-1 border-round border-400 shadow-5">
+    <div class="flex flex-column justify-content-start m-1  mb-2 p-2 xl:w-2 lg:w-4 md:w-5 sm:w-full border-1 border-round border-400 shadow-5">
       <div class="flex justify-content-between align-items-center mb-2 border-bottom-1 border-400 py-2">
         <div class="flex w-6 flex-column">
           <span>Reset client principal</span>
@@ -46,16 +46,16 @@
         <p-button icon="pi pi-print" (click)="print()"></p-button>
       </div>
     </div>
-    <div class="flex flex-column justify-content-start m-1  mb-2 p-2 lg:w-3 md:w-6 sm:full border-1 border-round border-400 shadow-5" *ngFor="let room of rooms" >
+    <div class="flex flex-column justify-content-start m-1  mb-2 p-2 xl:w-2 lg:w-4 md:w-5 sm:w-full border-1 border-round border-400 shadow-5" *ngFor="let room of rooms" >
       <div class="flex justify-content-between mb-3 border-bottom-1 border-400 pb-3">
-        <div class="flex w-3 flex-column" [ngClass]="{'font-bold' : room.lightPin != null}">
+        <div class="flex w-3 flex-column" [ngClass]="{'font-bold' : room.lightPin != null}" [ngStyle]="{'color' :  room.lightPin != null ? room.mainColor : 'inherit'}">
           <span>{{room.name}}</span>
           <span class="text-xs">(GPIO : {{room.lightPin || 'ND'}})</span>
         </div>
         <p-inputSwitch [(ngModel)]="lightValues[room.uuid]" (onChange)="switchRoomLight(room)" [disabled]="room.lightPin == null"></p-inputSwitch>
       </div>
       <div class="flex justify-content-between align-items-center mb-2" *ngFor="let item of room.items" >
-        <div class="flex w-7 flex-column">
+        <div class="flex w-7 flex-column" [ngStyle]="{'color' :  item.lightCtrl > 0 ?  'green' : 'var(--surface-300)'}">
           <span>{{item.name}}</span>
           <span class="text-xs">(Ctrl: #{{item.lightCtrl || 'ND'}} Pin : {{item.lightPin || 'ND'}})</span>
         </div>

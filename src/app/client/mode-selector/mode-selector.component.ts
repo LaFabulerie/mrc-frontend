@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { MqttService } from 'ngx-mqtt';
 import { RemoteControlService } from 'src/app/services/control.service';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-mode-selector',
@@ -9,11 +10,17 @@ import { RemoteControlService } from 'src/app/services/control.service';
 })
 export class ModeSelectorComponent implements OnInit {
 
+  private readonly mqtt : MqttService | undefined
+
   constructor(
     private control: RemoteControlService,
-    private mqtt: MqttService,
   ) {
-    this.controlSetup();
+    if(environment.executionMode === 'web') {
+      this.control.navigate(['door']);
+    } else {
+      this.mqtt = inject(MqttService);
+      this.controlSetup();
+    }
   }
 
   private controlSetup() {
@@ -30,12 +37,12 @@ export class ModeSelectorComponent implements OnInit {
   }
 
   start(mode: string) {
-    this.mqtt.unsafePublish('mrc/mode', JSON.stringify({
-      mode: mode,
-      uniqueId: this.control.uniqueId,
-      type: 'REQ'
-    }), { qos: 1, retain: false });
-    // this.control.navigationMode = mode;
-    // this.control.navigate(['door']);
+    if(this.mqtt){
+      this.mqtt.unsafePublish('mrc/mode', JSON.stringify({
+        mode: mode,
+        uniqueId: this.control.uniqueId,
+        type: 'REQ'
+      }), { qos: 1, retain: false });
+    }
   }
 }

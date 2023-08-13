@@ -19,11 +19,11 @@ import {WelcomeImageComponent} from "./welcome-image.component";
     ForgotPwdComponent,
     ResetPwdComponent,
   ],
-  imports: [
-    SharedModule,
-    AuthRoutingModule,
-    WelcomeImageComponent,
-  ],
+    imports: [
+        SharedModule,
+        AuthRoutingModule,
+        WelcomeImageComponent,
+    ],
   providers: [
     MessageService
   ],

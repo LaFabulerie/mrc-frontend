@@ -1,5 +1,5 @@
 :host {
-  background-color: inherit;
+  background-color: var(--surface-100);
   height: calc(100% - var(--navbar-height));
   display: flex;
   justify-content: center;

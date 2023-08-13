@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable} from 'rxjs';
 import { environment } from 'src/environments/environment';
-import  *  as CryptoJS from  'crypto-js';
 import jwt_decode from 'jwt-decode';
 import { User } from '../models/user';
 
@@ -22,19 +20,11 @@ export class AuthService {
     this.user$ = this.userSubject.asObservable();
   }
 
-  private encrypt(txt: string): string {
-    return CryptoJS.AES.encrypt(txt, environment.cryptoKey).toString();
-  }
-
-  private decrypt(txtToDecrypt: string) {
-    return CryptoJS.AES.decrypt(txtToDecrypt, environment.cryptoKey).toString(CryptoJS.enc.Utf8);
-  }
-
   public get currentUser() {
     if (this.userSubject.value) {
       return this.userSubject.value;
     } else if (localStorage.getItem('user')) {
-      const userData = JSON.parse(this.decrypt(localStorage.getItem('user')!));
+      const userData = JSON.parse(localStorage.getItem('user')!);
       const user = new User(userData);
       this.userSubject.next(user);
       return user;
@@ -46,7 +36,7 @@ export class AuthService {
     return this.http.patch<User>(`${environment.apiHost}/user/${this.currentUser!.id}/`, data)
     .pipe(
       map(userData => {
-        localStorage.setItem('user', this.encrypt(JSON.stringify(userData)));
+        localStorage.setItem('user', JSON.stringify(userData));
         const user = new User(userData);
         this.userSubject.next(user);
         return user;
@@ -55,19 +45,19 @@ export class AuthService {
   }
 
   private storeToken(tokenName: string, tokenValue: string) {
-    localStorage.setItem(tokenName, this.encrypt(tokenValue));
+    localStorage.setItem(tokenName, tokenValue);
   }
 
   getToken(tokenName: string) {
     if(localStorage.getItem(tokenName)) {
-      return this.decrypt(localStorage.getItem(tokenName)!);
+      return localStorage.getItem(tokenName)!;
     }
     return "";
   }
 
   private _processLogin(response: any) {
     const userData = response.user;
-    localStorage.setItem('user', this.encrypt(JSON.stringify(userData)));
+    localStorage.setItem('user', JSON.stringify(userData));
     this.storeToken('refreshToken', response.refresh);
     this.storeToken('accessToken', response.access);
     const user = new User(userData);

@@ -24,6 +24,9 @@ export class VideoDialogComponent {
 
   onPlayerReady(api:VgApiService) {
     this.api = api;
+    if(this.control.navigationMode === 'primary') {
+      this.api.volume = 0;
+    }
     this.api.play();
     this.api.getDefaultMedia().subscriptions.ended.subscribe(() => {
       this.control.closeDialog(VideoDialogComponent);

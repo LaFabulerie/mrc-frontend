@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiHost: 'http://mrc_backend/api',
-  mediaHost: 'http://mrc_backend',
+  apiHost: 'http://<PC_IP_ADDRESS>:8000/api',
+  mediaHost: 'http://<PC_IP_ADDRESS>:8000',
   apiKey: null,
   mqttBrokenHost: '<RASPBERRY_IP_ADRESS>',
   executionMode: 'standalone', // web | standalone

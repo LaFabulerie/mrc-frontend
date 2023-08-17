@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MqttService } from 'ngx-mqtt';
-import { SelectButtonOptionClickEvent } from 'primeng/selectbutton';
 import { Item, Room } from 'src/app/models/core';
 import { CoreService } from 'src/app/services/core.service';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-debug',
@@ -14,7 +14,6 @@ export class DebugComponent implements OnInit{
   rooms: Room[] = []
   lightValues: {[Key: string]: boolean} = {}
   motorValue = true
-  brakeValue = false
   canRotate = true
   position = '0'
   currentRoom = 'entrée : 0'
@@ -25,10 +24,27 @@ export class DebugComponent implements OnInit{
     { label: 'Forward', value: "on", direction: 1 },
   ];
 
+  showItemLightDialog = false;
+  showRoomPositionDialog = false;
+
+  itemLightForm: FormGroup
+  roomPositionForm: FormGroup
+  currentEditingItem: Item|null = null;
+
   constructor(
     private mqtt: MqttService,
     private coreService: CoreService,
-  ) { }
+    private fb: FormBuilder,
+  ) {
+    this.itemLightForm = this.fb.group({
+      lightCtrl: ['', [Validators.required]],
+      lightPin: ['', [Validators.required]]
+    });
+
+    this.roomPositionForm = this.fb.group({
+      position: ['', [Validators.required]]
+    });
+  }
 
   ngOnInit(): void {
     this.coreService.getRooms({
@@ -114,5 +130,47 @@ export class DebugComponent implements OnInit{
     this.mqtt.unsafePublish(`mrc/debug`, JSON.stringify({
       action: 'reset_client',
     }), { qos: 1, retain: false });
+  }
+
+  closeDialog() {
+    this.showItemLightDialog = false;
+    this.showRoomPositionDialog = false;
+    this.currentEditingItem = null;
+    this.itemLightForm.reset();
+    this.roomPositionForm.reset();
+  }
+
+  editItemConfig(item: Item) {
+    this.currentEditingItem = item;
+    this.showItemLightDialog = true;
+    this.itemLightForm.patchValue({
+      lightCtrl: item.lightCtrl,
+      lightPin: item.lightPin
+    })
+  }
+
+  saveLightItemConfig() {
+    if(this.currentEditingItem && this.itemLightForm.valid) {
+      this.coreService.updateItem(this.currentEditingItem.uuid, this.itemLightForm.value).subscribe((updatedItem: Item) => {
+        this.closeDialog();
+        console.log(updatedItem)
+      });
+    }
+  }
+
+  editRoomConfig(room: Room) {
+    this.showRoomPositionDialog = true;
+    this.roomPositionForm.patchValue({
+      position: room.position
+    });
+  }
+
+  saveRoomPosition(roomUuid: string) {
+    if(this.roomPositionForm.valid) {
+      this.coreService.updateRoom(roomUuid, this.roomPositionForm.value).subscribe((updatedRoom) => {
+        this.closeDialog();
+        console.log(updatedRoom);
+      })
+    }
   }
 }

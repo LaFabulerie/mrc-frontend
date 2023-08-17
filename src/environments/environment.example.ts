@@ -4,5 +4,5 @@ export const environment = {
   mediaHost: 'http://<PC_IP_ADDRESS>:8000',
   apiKey: null,
   mqttBrokenHost: '<RASPBERRY_IP_ADRESS>',
-  executionMode: 'standalone', // web | standalone
+  executionMode: 'standalone',
 };

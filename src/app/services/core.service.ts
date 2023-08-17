@@ -34,6 +34,11 @@ export class CoreService {
     return this.http.get<Room>(`${environment.apiHost}/r/rooms/${uuid}/?${queryParams.toString()}`);
   }
 
+  updateRoom(uuid:string, data:any): Observable<Room> {
+    return this.http.patch<Room>(`${environment.apiHost}/r/rooms/${uuid}/`, data);
+  }
+
+
   getDigitalUse(uuid: string, params?: any): Observable<DigitalUse> {
     const queryParams = new URLSearchParams(params);
     return this.http.get<DigitalUse>(`${environment.apiHost}/r/digital-uses/${uuid}/?${queryParams.toString()}`);
@@ -65,6 +70,10 @@ export class CoreService {
   getItem(uuid: string, params?: any) {
     const queryParams = new URLSearchParams(params);
     return this.http.get<Item>(`${environment.apiHost}/r/items/${uuid}/?${queryParams.toString()}`);
+  }
+
+  updateItem(uuid: string, data: any): Observable<Item> {
+    return this.http.patch<Item>(`${environment.apiHost}/w/items/${uuid}/`, data);
   }
 
   getTags(): Observable<string[]> {

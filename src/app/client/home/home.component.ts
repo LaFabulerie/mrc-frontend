@@ -44,7 +44,7 @@ export class HomeComponent{
     if(this.mqtt) {
       this.mqtt.observe('mrc/mode').subscribe((message: IMqttMessage) => {
         const data = JSON.parse(message.payload.toString());
-        if(data.type === 'RESP')
+        if(data.type === 'RESP') {
           if(data.uniqueId === this.control.uniqueId) {
             if(data.value === 'OK') {
               this.control.navigationMode = data.mode;
@@ -63,6 +63,9 @@ export class HomeComponent{
               this.control.navigate(['door']);
             }
           }
+        } else if(data.type === 'RST') {
+          this.control.navigationMode = null;
+        }
       });
 
       this.mqtt.observe('mrc/nav').subscribe((message: IMqttMessage) => {
@@ -150,7 +153,7 @@ export class HomeComponent{
 
     this.control.dialog$.subscribe(dialog => {
       if(dialog && this.control.navigationMode !== 'secondary'){
-        if(dialog.action === 'open' ) {
+        if(dialog.action === 'open') {
           this.openDialog(dialog);
         } else {
           this.closeDialog(dialog);
@@ -220,6 +223,7 @@ export class HomeComponent{
     ref.onClose.subscribe((willExit) => {
       if(willExit) {
         this.basket.clear();
+        this.control.navigationMode = null;
         this.control.navigate(['/']);
         if(this.mqtt && this.control.navigationMode !== 'secondary') {
           this.mqtt.unsafePublish(`mrc/mode`, JSON.stringify({

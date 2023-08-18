@@ -19,7 +19,7 @@
           <span>Position</span>
         </div>
         <p-badge [value]="position.toString()"  severity="info"></p-badge>
-        <p-badge [value]="currentRoom.toString()" severity="success"></p-badge>
+        <p-badge [value]="currentRoom.slug" severity="success"></p-badge>
         <span (click)="resetPosition()">Reset</span>
       </div>
       <div class="flex flex-wrap justify-content-around">

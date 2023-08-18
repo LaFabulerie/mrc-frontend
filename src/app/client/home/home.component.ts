@@ -11,6 +11,7 @@ import { VideoDialogComponent } from '../components/video-dialog/video-dialog.co
 import { ExitDialogComponent } from '../components/exit-dialog/exit-dialog.component';
 import {MessageService} from "primeng/api";
 import { CoreService } from 'src/app/services/core.service';
+import { Room } from 'src/app/models/core';
 
 @Component({
   selector: 'app-home',
@@ -146,7 +147,7 @@ export class HomeComponent implements OnInit{
 
     this.control.currentRoom$.subscribe(room => {
       if(this.mqtt && this.control.navigationMode !== 'secondary' && this.executionMode === 'standalone' && room) {
-        this.core.getDistanceBetweenRooms(this.currentRoom, room).subscribe(resp => {
+        this.core.getDistanceBetweenRooms(this.currentRoom!, room).subscribe((resp: any) => {
           this.mqtt!.unsafePublish(`mrc/rotate`, JSON.stringify({
             uuid: resp.uuid,
             slug: resp.slug,

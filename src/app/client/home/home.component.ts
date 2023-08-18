@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import {Component, inject, Injector, Renderer2} from '@angular/core';
+import {Component, inject, Injector, OnInit, Renderer2} from '@angular/core';
 import { Router } from '@angular/router';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -10,19 +10,22 @@ import { TurningTableDialogComponent } from '../components/turning-table-dialog/
 import { VideoDialogComponent } from '../components/video-dialog/video-dialog.component';
 import { ExitDialogComponent } from '../components/exit-dialog/exit-dialog.component';
 import {MessageService} from "primeng/api";
+import { CoreService } from 'src/app/services/core.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent{
+export class HomeComponent implements OnInit{
 
   basketCount = 0;
   executionMode = environment.executionMode;
 
   private readonly mqtt : MqttService | undefined
   private currentOpenedDialogs: {[Key : string]: DynamicDialogRef} = {};
+
+  currentRoom: Room|null = null;
 
   constructor(
     public control: RemoteControlService,
@@ -32,14 +35,16 @@ export class HomeComponent{
     private location: Location,
     private dialogService: DialogService,
     private messageService: MessageService,
-    private injector: Injector,
+    private core: CoreService,
   ) {
     if(this.executionMode === 'standalone' && environment.mqttBrokenHost) {
       this.mqtt = inject(MqttService);
     }
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
+
+    this.core.getRooms().subscribe(rooms => this.currentRoom = rooms.find(room => room.position == 0) || null);
 
     if(this.mqtt) {
       this.mqtt.observe('mrc/mode').subscribe((message: IMqttMessage) => {
@@ -141,7 +146,13 @@ export class HomeComponent{
 
     this.control.currentRoom$.subscribe(room => {
       if(this.mqtt && this.control.navigationMode !== 'secondary' && this.executionMode === 'standalone' && room) {
-        this.mqtt.unsafePublish(`mrc/room`, JSON.stringify(room), { qos: 1, retain: false });
+        this.core.getDistanceBetweenRooms(this.currentRoom, room).subscribe(resp => {
+          this.mqtt!.unsafePublish(`mrc/rotate`, JSON.stringify({
+            uuid: resp.uuid,
+            slug: resp.slug,
+            distance: resp.distance,
+          }), { qos: 1, retain: false });
+        });
       }
     });
 

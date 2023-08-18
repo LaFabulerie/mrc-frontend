@@ -29,6 +29,10 @@ export class CoreService {
     return this.http.get<Room[]>(`${environment.apiHost}/r/rooms/?${queryParams.toString()}`);
   }
 
+  getDistanceBetweenRooms(room1: Room, room2: Room): any {
+    return this.http.get(`${environment.apiHost}/r/rooms/distance/?from=${room1.uuid}&to=${room1.uuid}`);
+  }
+
   getRoom(uuid: string, params?: any): Observable<Room> {
     const queryParams = new URLSearchParams(params);
     return this.http.get<Room>(`${environment.apiHost}/r/rooms/${uuid}/?${queryParams.toString()}`);

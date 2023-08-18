@@ -16,7 +16,7 @@ export class DebugComponent implements OnInit{
   motorValue = true
   canRotate = true
   position = '0'
-  currentRoom = 'entrée : 0'
+  currentRoom: Room|null = null
 
   brakeOptions = [
     { label: 'Backward', value: "on", direction: -1 },
@@ -51,6 +51,7 @@ export class DebugComponent implements OnInit{
       expand: ['items'],
     }).subscribe(rooms => {
       this.rooms = rooms
+      this.currentRoom = this.rooms.find(room => room.position ==0) || null;
       this.rooms.forEach(room => {
         this.lightValues[room.uuid] = false
         room.items.forEach(item => this.lightValues[item.uuid] = false)
@@ -67,17 +68,19 @@ export class DebugComponent implements OnInit{
     this.mqtt.observe('mrc/position').subscribe((message: any) => {
       const data = JSON.parse(message.payload.toString());
       this.canRotate = true;
-      this.currentRoom = `${data.room} : ${data.current}`
+      this.currentRoom = this.rooms.find(room => room.slug === data.slug) || null;
     });
   }
 
   rotateTable(room: Room) {
     this.canRotate = false;
-    this.mqtt.unsafePublish(`mrc/room`, JSON.stringify({
-        uuid: room.uuid,
-        slug: room.slug,
-        position: room.position,
-    }), { qos: 1, retain: false });
+    this.coreService.getDistanceBetweenRooms(this.currentRoom!, room).subscribe((resp: any) => {
+      this.mqtt.unsafePublish(`mrc/rotate`, JSON.stringify({
+          uuid: resp.uuid,
+          slug: resp.slug,
+          distance: resp.distance,
+      }), { qos: 1, retain: false });
+    });
   }
 
   switchMotor() {

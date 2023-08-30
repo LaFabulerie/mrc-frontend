@@ -1,11 +1,11 @@
-<div class="p-4">
+<div class="p-4 pb-2 bg-white">
   <div *ngIf="basket.isEmpty()">
     <div class="flex justify-content-center align-items-center">
-      <p>Êtes-vous sûr de vouloir quitter la Maison Reconnectée ?</p>
+      <p class="font-xl">Êtes-vous sûr de vouloir quitter la Maison Reconnectée ?</p>
     </div>
     <div class="flex justify-content-around align-items-center">
-      <p-button styleClass="p-button-primary p-button-lg" label="Oui" (click)="exit(true)"></p-button>
       <p-button styleClass="p-button-secondary p-button-lg" label="Non" (click)="exit(false)"></p-button>
+      <p-button styleClass="p-button-orange-mrc p-button-lg" label="Oui" (click)="exit(true)"></p-button>
     </div>
   </div>
   <div *ngIf="!basket.isEmpty()">
@@ -14,8 +14,8 @@
     </div>
     <div class="flex justify-content-around align-items-center">
       <p-button styleClass="p-button-secondary p-button-lg" label="Annuler" (click)="exit(false)"></p-button>
-      <p-button styleClass="p-button-primary p-button-lg" label="Quitter" (click)="exit(true)"></p-button>
-      <p-button styleClass="p-button-primary p-button-lg" label="Voir le panier" (click)="goToBasket()"></p-button>
+      <p-button styleClass="p-button-orange-mrc p-button-lg mx-3" label="Quitter" (click)="exit(true)"></p-button>
+      <p-button styleClass="p-button-orange-mrc p-button-lg" label="Voir le panier" (click)="goToBasket()"></p-button>
     </div>
   </div>
 </div>

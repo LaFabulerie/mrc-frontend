@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DigitalService } from '../models/core';
+import {environment} from "../../environments/environment";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,9 @@ export class BasketService {
   public printBasket$: Observable<any[]|null> = this.printBasketSubject.asObservable();
 
 
-  constructor() {
+  constructor(
+    private http: HttpClient,
+  ) {
     this.refresh();
   }
 
@@ -67,20 +71,34 @@ export class BasketService {
     return this.count() == 0;
   }
 
-  get payload() {
+  payload(selectedServiceIds?: number[]) {
     if(this.isEmpty()) return null;
 
     let data: any[] = []
     this.basketSubject.getValue().forEach(service => {
-      data.push({
-        name: service.title,
-        url: service.url,
-      });
+      if(!selectedServiceIds || selectedServiceIds.length == 0 || selectedServiceIds.includes(service.id)){
+        data.push({
+          uuid: service.uuid,
+          name: service.title,
+          url: service.url,
+        });
+      }
     });
     return data
   }
 
-  print() {
-    this.printBasketSubject.next(this.payload);
+  print(selectedServiceIds: number[]) {
+    const filteredPayload = this.payload(selectedServiceIds);
+    this.printBasketSubject.next(filteredPayload);
+  }
+
+  sendByEmail(email: string, selectedServiceIds: number[]) {
+    const filteredPayload = this.payload(selectedServiceIds);
+    return this.http.post(`${environment.apiHost}/r/cart/email/`, {email: email, basket: filteredPayload})
+  }
+
+  downloadPDF(selectedServiceIds: number[]) {
+    const filteredPayload = this.payload(selectedServiceIds);
+    return this.http.post(`${environment.apiHost}/r/cart/pdf/`, {basket: filteredPayload}, {responseType: 'blob'})
   }
 }

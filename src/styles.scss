@@ -8,29 +8,28 @@
 
 :root {
   html {
-    height: -webkit-fill-available;
     font-size: 1rem;
   }
 
   body {
-    background-color: var(--surface-ground)!important;
+    background-color: var(--surface-ground);
     color: var(--text-color);
     padding: 0;
     margin: 0;
     height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-family-2);
 
   }
 
   --font-family-1: 'Open Sans', sans-serif;
   --font-family-2: 'Patrick Hand', cursive;
 
-  --blue-mrc: #2c28db;
-  --dark-blue-mrc: #1c096b;
+  --blue-mrc: #1C096B;
   --orange-mrc: #ff5738;
   --green-mrc: #01afad;
-  --blue-light-mrc: #8da6ff;
+  --blue-light-mrc: #3A34DA;
 
   --navbar-height: 100px;
 
@@ -48,17 +47,8 @@
       font-size: 0.8rem !important;
     }
     &.p-button-orange-mrc {
-      color: var(--orange-mrc);
-      background: white;
-      border: 1px solid var(--orange-mrc);
-      &:hover,
-      &:focus {
-        box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--orange-mrc), 0 1px 2px 0 black !important;
-      }
-    }
-    &.p-button-white-mrc {
-      // color: #ffffff;
-      background: white;
+      background: var(--orange-mrc);
+      color: white;
       border: 1px solid var(--orange-mrc);
       &:hover,
       &:focus {

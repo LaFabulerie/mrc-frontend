@@ -116,13 +116,6 @@ export class HomeComponent implements OnInit{
 
     this.basket.basketSubject$.subscribe(_ => this.basketCount = this.basket.count());
 
-    // this.control.navigationMode$.subscribe(modeValue => {
-    //   if(this.mqtt && this.control.navigationMode !== 'secondary' && modeValue) {
-    //     this.mqtt.unsafePublish(`mrc/mode`, modeValue, { qos: 1, retain: false });
-    //     this.basket.refresh();
-    //   }
-    // });
-
     this.control.navigateTo$.subscribe(navData => {
       if(navData && this.control.navigationMode !== 'secondary') {
         this.router.navigate(navData.url, {state: navData.state});
@@ -232,9 +225,10 @@ export class HomeComponent implements OnInit{
       draggable: false,
       showHeader: false,
     });
-    ref.onClose.subscribe((willExit) => {
-      if(willExit) {
+    ref.onClose.subscribe((resp) => {
+      if(resp === true) {
         this.basket.clear();
+        localStorage.clear();
         this.control.navigationMode = null;
         this.control.navigate(['/']);
         if(this.mqtt && this.control.navigationMode !== 'secondary') {
@@ -244,6 +238,8 @@ export class HomeComponent implements OnInit{
             type: 'RST',
           }), { qos: 1, retain: false });
         }
+      } else if(resp[0] === 'basket') {
+        this.control.navigate(['basket']);
       }
     });
   }

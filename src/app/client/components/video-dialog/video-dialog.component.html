@@ -1,6 +1,8 @@
 <div class="video-player-wrapper">
-  <button (click)="skip()" *ngIf="control.navigationMode !== 'secondary'">SKIP</button>
-  <vg-player (onPlayerReady)="onPlayerReady($event)" [style.width.px]="width" [style.height.px]="height">
+  <div class="inline-block bg-white p-3 border-circle mb-2 cursor-pointer" style="color:var(--orange-mrc)" (click)="skip()" *ngIf="control.navigationMode !== 'secondary'">
+    <fa-icon [icon]="['fas', 'forward']" size="2x"></fa-icon>
+  </div>
+  <vg-player (onPlayerReady)="onPlayerReady($event)" [style.width.px]="width" [style.height.px]="height" [style.border-radius.px]="6">
     <vg-overlay-play></vg-overlay-play>
     <video #media
         [vgMedia]="$any(media)"

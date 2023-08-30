@@ -36,10 +36,12 @@ export class BaseRoomComponent extends HighlightableComponent implements OnInit,
 
 
   ngOnInit(): void {
+    console.log('room init')
     this.control.navigationMode$.subscribe(v => this.controlSetup());
   }
 
   ngAfterViewInit(): void {
+    console.log('room after view init')
     this.activatedRoute.params.subscribe(params => {
       const uuid = params['uuid'];
       this.coreService.getRoom(uuid, {
@@ -49,9 +51,11 @@ export class BaseRoomComponent extends HighlightableComponent implements OnInit,
         this.mainColor = room.mainColor;
         this.control.bgColor = this.mainColor;
         this.loading = false;
-        if(room.video) {
+        let videoAlreadyViewed = localStorage.getItem(`video-room-${uuid}`) !== null
+        if(room.video && !videoAlreadyViewed) {
+          localStorage.setItem(`video-room-${uuid}`, 'true');
           this.control.openDialog("VideoDialogComponent", {
-            videoURL: `assets${room.video}`
+            videoURL: `${environment.mediaHost}/${room.video}`
           });
         }
       })

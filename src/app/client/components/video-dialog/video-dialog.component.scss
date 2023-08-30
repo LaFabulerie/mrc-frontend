@@ -1,11 +1,19 @@
-.video-player-wrapper {
-  margin: auto;
-  overflow: hidden;
-}
+
 
 ::ng-deep {
-  .p-dialog-content {
-    padding: 0!important;
-    overflow: hidden;
+  .p-dialog {
+    box-shadow: none;
+    .p-dialog-content {
+      background-color: transparent;
+      padding: 0!important;
+      overflow: hidden;
+    }
+    .video-player-wrapper {
+      margin: auto;
+      overflow: hidden;
+    }
   }
+
 }
+
+

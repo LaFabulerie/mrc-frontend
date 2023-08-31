@@ -46,6 +46,8 @@ export class HomeComponent implements OnInit{
   ngOnInit(): void {
 
     this.coreService.loadRooms();
+    this.coreService.loadItems();
+    this.coreService.loadDigitalUses();
 
     this.coreService.rooms$.subscribe(rooms => {
       this.currentRoom = rooms.find(room => room.position == 0) || null;

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Area, DigitalService, DigitalUse, Item, Room } from '../models/core';
 
@@ -12,15 +12,11 @@ export class CoreService {
   private roomsSubject = new BehaviorSubject<Room[]>([]);
   public rooms$ = this.roomsSubject.asObservable();
 
+  private itemsSubject = new BehaviorSubject<Item[]>([]);
+  public items$ = this.itemsSubject.asObservable();
 
   private digitalUsesSubject = new BehaviorSubject<DigitalUse[]>([]);
   public digitalUses$ = this.digitalUsesSubject.asObservable();
-
-
-  private defaultFlexFields = {
-    expand: ['items', 'items.room'],
-    omit : ['description', 'slug', 'tags', 'services', 'items.image', 'items.slug', 'items.room.video', 'items.room.description', 'items.room.items', 'items.room.uses.description']
-  }
 
   constructor(
     private http: HttpClient
@@ -41,11 +37,6 @@ export class CoreService {
   }
 
 
-  // getRooms(params?: any): Observable<Room[]> {
-  //   const queryParams = new URLSearchParams(params);
-  //   return this.http.get<Room[]>(`${environment.apiHost}/r/rooms/?${queryParams.toString()}`);
-  // }
-
   getDistanceBetweenRooms(room1: Room, room2: Room): any {
     return this.http.get(`${environment.apiHost}/r/rooms/distance/?from=${room1.uuid}&to=${room1.uuid}`);
   }
@@ -59,14 +50,16 @@ export class CoreService {
     return this.http.patch<Room>(`${environment.apiHost}/r/rooms/${uuid}/`, data);
   }
 
-
-  getDigitalUse(uuid: string, params?: any): Observable<DigitalUse> {
-    const queryParams = new URLSearchParams(params);
-    return this.http.get<DigitalUse>(`${environment.apiHost}/r/digital-uses/${uuid}/?${queryParams.toString()}`);
-  }
-
-  loadDigitalUses(params?: any) {
-    const queryParams = new URLSearchParams(params ? params : this.defaultFlexFields);
+  loadDigitalUses() {
+    const queryParams = new URLSearchParams({
+      expand: ['items', 'items.room', 'services.use'].join(','),
+      omit : ['slug',
+              'tags', 'services',
+              'item_ids', 'services.use_id',
+              'items.image', 'items.slug',
+              'items.room.video', 'items.room.description',
+              'items.room.items', 'items.room.uses.description'].join(',')
+    });
     this.http.get<DigitalUse[]>(`${environment.apiHost}/r/digital-uses/?${queryParams.toString()}`).subscribe((uses: DigitalUse[]) => {
       this.digitalUsesSubject.next(uses);
     });
@@ -88,9 +81,23 @@ export class CoreService {
     return this.digitalUsesSubject.value;
   }
 
-  getItem(uuid: string, params?: any) {
-    const queryParams = new URLSearchParams(params);
-    return this.http.get<Item>(`${environment.apiHost}/r/items/${uuid}/?${queryParams.toString()}`);
+
+  loadItems() {
+    console.log('loadItems')
+    const queryParams = new URLSearchParams({
+      expand: ['uses', 'room'].join(','),
+      fields: ['name', 'uses', 'room.uuid', 'room.main_color', 'image', 'uuid', 'light_ctrl', 'light_pin'].join(',')
+    });
+    this.http.get<Item[]>(`${environment.apiHost}/r/items/?${queryParams.toString()}`).pipe(
+      map(results => {
+        return results.map(item => {
+          item.image = `${environment.mediaHost}${item.image}` ;
+          return item;
+        })
+      }))
+    .subscribe((items: Item[]) => {
+      this.itemsSubject.next(items);
+    });
   }
 
   updateItem(uuid: string, data: any): Observable<Item> {

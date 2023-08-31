@@ -22,19 +22,9 @@ export class EditDigitalUseComponent implements OnInit {
     return this.use.uuid;
   }
   set useUuid(uuid: string) {
-    this.coreService
-      .getDigitalUse(uuid, {
-        expand: ['items', 'items.room', 'services', 'services.area'],
-        omit: [
-          'items.room.video',
-          'items.room.description',
-          'items.room.items',
-          'services.use',
-        ],
-      })
-      .subscribe((use: any) => {
-        this.use = use;
-      });
+    this.coreService.digitalUses$.subscribe((uses) => {
+      this.use = uses.find((use) => use.uuid === uuid)!;
+    });
   }
   user?: User | null;
 

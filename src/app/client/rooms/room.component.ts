@@ -61,9 +61,8 @@ export class BaseRoomComponent extends HighlightableComponent implements OnInit,
 
 
   goToItem(uuid: string){
-    this.coreService.getItem(uuid, {
-      fields: ['light_ctrl', 'light_pin']
-    }).subscribe(item => {
+    this.coreService.items$.subscribe(items => {
+      const item = items.find(item => item.uuid === uuid);
       this.control.navigate(['item', uuid], item);
     });
   }

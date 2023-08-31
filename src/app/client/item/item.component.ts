@@ -38,24 +38,16 @@ export class ItemComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
       const uuid = params['uuid'];
-      this.coreService.getItem(uuid, {
-        expand: ['uses', 'room'],
-        fields: ['name', 'uses', 'room.uuid', 'room.main_color', 'image', 'uuid', 'light_ctrl', 'light_pin']
-      }).pipe(
-        map(item => {
-          item.image = `${environment.mediaHost}${item.image}` ;
-          return item;
-        })
-      ).subscribe(item => {
-        this.item = item
-        this.control.currentItem= item;
-        this.useList = [...item.uses];
+      this.coreService.items$.subscribe(items => {
+        this.item = items.find(item => item.uuid === uuid);
+        this.control.currentItem= this.item;
+        this.useList = [...this.item!.uses];
         const limit = 10-this.useList.length
         for(let i=0; i<=limit; i++){
           this.useList.push(null);
         }
-        this.renderer.setStyle(document.body, 'background-color', item.room.mainColor);
-      })
+        this.renderer.setStyle(document.body, 'background-color', this.item!.room.mainColor);
+      });
     })
   }
 

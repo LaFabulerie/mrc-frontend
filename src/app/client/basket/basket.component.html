@@ -4,8 +4,8 @@
       <fa-icon [icon]="['fas', 'chevron-left']" size="2xl" class="mr-4"></fa-icon>
       <span class="text-4xl font-bold"> Fin de la visite</span>
     </div>
-    <div class="px-4" *ngIf="basket.services.length > 0">
-    <div class="flex justify-content-end align-items-center text-white py-3 my-3">
+    <div class="pl-3 pr-5" *ngIf="basket.services.length > 0">
+    <div class="flex justify-content-end align-items-center text-white py-3 my-3 text-lg">
       <div *ngIf="!basketEmpty"
            [ngStyle]="{
             'color': selectedServices.length > 0 ? 'var(--blue-mrc)' : 'grey',
@@ -42,7 +42,7 @@
         <div class="flex w-2 justify-content-center align-items-center">
           <p-checkbox [binary]="true" inputId="binary" (onChange)="selectionChanged($event, service)"></p-checkbox>
         </div>
-        <div class="flex flex-column w-10 p-3 ">
+        <div class="flex flex-column w-10 p-3  pr-4">
           <span class="my-1 font-bold">
             {{ service.title }}
             <span *ngIf="service.area">

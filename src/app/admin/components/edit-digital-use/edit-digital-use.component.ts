@@ -54,25 +54,7 @@ export class EditDigitalUseComponent implements OnInit {
     this.authService.user$.subscribe((x) => (this.user = x));
   }
   ngOnInit(): void {
-    this.coreService
-      .getRooms({
-        expand: ['items', 'items.room'],
-        omit: [
-          'slug',
-          'video',
-          'description',
-          'items.room.video',
-          'items.room.description',
-          'items.room.items',
-          'items.slug',
-          'items.room',
-          'items.image',
-          'items.uses.description',
-        ],
-      })
-      .subscribe((rooms: any) => {
-        this.allItems = rooms;
-      });
+    this.allItems = this.coreService.rooms;
   }
 
   saveItem() {

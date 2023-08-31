@@ -9,6 +9,9 @@ import { Area, DigitalService, DigitalUse, Item, Room } from '../models/core';
 })
 export class CoreService {
 
+  private roomsSubject = new BehaviorSubject<Room[]>([]);
+  public rooms$ = this.roomsSubject.asObservable();
+
 
   private digitalUsesSubject = new BehaviorSubject<DigitalUse[]>([]);
   public digitalUses$ = this.digitalUsesSubject.asObservable();
@@ -24,10 +27,24 @@ export class CoreService {
   ) {
   }
 
-  getRooms(params?: any): Observable<Room[]> {
-    const queryParams = new URLSearchParams(params);
-    return this.http.get<Room[]>(`${environment.apiHost}/r/rooms/?${queryParams.toString()}`);
+  get rooms(): Room[] {
+    return this.roomsSubject.value;
   }
+
+  loadRooms() {
+    const queryParams = new URLSearchParams({
+      expand : ['items', 'items.room'].join(','),
+    });
+    this.http.get<Room[]>(`${environment.apiHost}/r/rooms/?${queryParams.toString()}`).subscribe((rooms: Room[]) => {
+      this.roomsSubject.next(rooms);
+    });
+  }
+
+
+  // getRooms(params?: any): Observable<Room[]> {
+  //   const queryParams = new URLSearchParams(params);
+  //   return this.http.get<Room[]>(`${environment.apiHost}/r/rooms/?${queryParams.toString()}`);
+  // }
 
   getDistanceBetweenRooms(room1: Room, room2: Room): any {
     return this.http.get(`${environment.apiHost}/r/rooms/distance/?from=${room1.uuid}&to=${room1.uuid}`);

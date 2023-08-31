@@ -38,38 +38,21 @@ export class NewDigitalUseComponent implements OnInit {
 
     this.coreService.getTags().subscribe((tags: string[]) => this.tags = tags);
 
-    this.coreService.getRooms({
-      expand: ['items', 'items.room'],
-      omit: [
-        'slug',
-        'video',
-        'description',
-        'items.room.video',
-        'items.room.description',
-        'items.room.items',
-        'items.slug',
-        'items.room',
-        'items.image',
-        'items.uses.description',
-      ],
-    })
-    .subscribe((rooms: any) => {
-      this.allItems = rooms
+    this.allItems = this.coreService.rooms;
 
-
-      this.useForm.get('itemId')?.valueChanges.subscribe((value) => {
-        const item = this.allItems.find((room: any) => {
-          return room.items.find((item: any) => item.id === value);
-        })
-        if(item) {
-          this.currentRoom = item;
-        }
-      });
-
-      this.useForm.patchValue({
-        itemId: this.allItems[0].items[0].id,
+    this.useForm.get('itemId')?.valueChanges.subscribe((value) => {
+      const item = this.allItems.find((room: any) => {
+        return room.items.find((item: any) => item.id === value);
       })
+      if(item) {
+        this.currentRoom = item;
+      }
     });
+
+    this.useForm.patchValue({
+      itemId: this.allItems[0].items[0].id,
+    })
+
 
 
   }

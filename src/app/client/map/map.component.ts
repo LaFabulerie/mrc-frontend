@@ -4,6 +4,7 @@ import { RemoteControlService } from 'src/app/services/control.service';
 import { TurningTableDialogComponent } from '../components/turning-table-dialog/turning-table-dialog.component';
 import { environment } from 'src/environments/environment';
 import { HighlightableComponent } from '../components/highlightable/highlightable.component';
+import { CoreService } from 'src/app/services/core.service';
 
 @Component({
   selector: 'app-map',
@@ -18,6 +19,7 @@ export class MapComponent extends HighlightableComponent implements OnInit{
 
   constructor(
     private control: RemoteControlService,
+    private coreService: CoreService,
   ) {
     super();
     this.controlSetup();

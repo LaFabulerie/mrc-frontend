@@ -19,11 +19,7 @@ export class TurningTableDialogComponent implements OnInit {
   ngOnInit(): void {
     const next = this.config.data.next;
     const [urlName, roomName, uuid ] = next;
-    this.coreService.getRoom(uuid, {
-      fields: ['slug', 'position', 'uuid', 'light_pin']
-    }).subscribe(room => {
-      this.control.currentRoom = room;
-    });
+    this.control.currentRoom = this.coreService.rooms.find(room => room.uuid === uuid);
     // setTimeout(() => {
     //   this.control.closeDialog(TurningTableDialogComponent);//, next);
     // }, 3000);

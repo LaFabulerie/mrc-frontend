@@ -4,7 +4,7 @@
       <fa-icon [icon]="['fas', 'chevron-left']" size="2xl" class="mr-4"></fa-icon>
       <span class="text-4xl font-bold"> Fin de la visite</span>
     </div>
-    <div class="px-5" *ngIf="basket.services.length > 0">
+    <div class="px-4" *ngIf="basket.services.length > 0">
     <div class="flex justify-content-end align-items-center text-white py-3 my-3">
       <div *ngIf="!basketEmpty"
            [ngStyle]="{
@@ -64,13 +64,13 @@
       </div>
     </div>
 
-    <div *ngIf="basketEmpty" class="border-1 border-top-none  border-noround-top border-round p-2 w-full text-center">
+    <div *ngIf="basketEmpty" class="px-4 w-full text-center">
       <p>Votre liste est vide</p>
       <p>Pour collecter des fiches « service », visitez les différentes pièces de la Maison Reconnectée et découvrer les
         services liés aux objets présents dans ces pièces.</p>
     </div>
-    <div class="px-5 pb-4 flex justify-content-end">
-      <p-button styleClass="p-button-orange-mrc p-button" label="Continuer ma visite" (click)="1+1"></p-button>
+    <div class="px-4 pb-4 flex justify-content-end">
+      <p-button styleClass="p-button-orange-mrc p-button" label="Continuer ma visite" (click)="goToBack()"></p-button>
     </div>
   </div>
   <p-dialog [resizable]="false" [maximizable]="false" [(visible)]="showEmailDialog"

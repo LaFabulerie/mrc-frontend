@@ -76,4 +76,8 @@ export class BasketComponent implements OnInit{
     }
   }
 
+  goToBack() {
+    document.getElementById("backBtn")?.click();
+  }
+
 }

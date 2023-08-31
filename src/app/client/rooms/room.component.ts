@@ -9,7 +9,6 @@ import { HighlightableComponent } from '../components/highlightable/highlightabl
 @Component({
   selector: 'app-room',
   template: `<p>Room</p>`,
-  styleUrls: ['./room.component.scss']
 })
 export class BaseRoomComponent extends HighlightableComponent implements OnInit, AfterViewInit{
 
@@ -36,29 +35,27 @@ export class BaseRoomComponent extends HighlightableComponent implements OnInit,
 
 
   ngOnInit(): void {
-    console.log('room init')
     this.control.navigationMode$.subscribe(v => this.controlSetup());
   }
 
   ngAfterViewInit(): void {
-    console.log('room after view init')
     this.activatedRoute.params.subscribe(params => {
       const uuid = params['uuid'];
-      this.coreService.getRoom(uuid, {
-        fields: ["video", 'main_color']
-      }).subscribe(room => {
+      this.coreService.rooms$.subscribe(rooms => {
+        const room = rooms.find(room => room.uuid === uuid);
+
         this.control.currentItem = null;
-        this.mainColor = room.mainColor;
+        this.mainColor = room!.mainColor;
         this.control.bgColor = this.mainColor;
         this.loading = false;
         let videoAlreadyViewed = localStorage.getItem(`video-room-${uuid}`) !== null
-        if(room.video && !videoAlreadyViewed) {
+        if(room!.video && !videoAlreadyViewed) {
           localStorage.setItem(`video-room-${uuid}`, 'true');
           this.control.openDialog("VideoDialogComponent", {
-            videoURL: `${environment.mediaHost}/${room.video}`
+            videoURL: `${environment.mediaHost}${room!.video}`
           });
         }
-      })
+      });
     });
   }
 

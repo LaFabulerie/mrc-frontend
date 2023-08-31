@@ -3,7 +3,7 @@
     <span class="custom-button mr-3 cursor-pointer bg-white border-round p-2" (click)="goToMap()" *ngIf="control.showMapButton">
       <img src="assets/img/picto_home.svg" />
     </span>
-    <span class="custom-button cursor-pointer bg-white border-round p-2" (click)="goToBack()" *ngIf="control.showBackButton">
+    <span id="backBtn" class="custom-button cursor-pointer bg-white border-round p-2" (click)="goToBack()" *ngIf="control.showBackButton">
       <img src="assets/img/picto_back.svg" />
     </span>
     <span class="flex align-items-center p-2" *ngIf="executionMode === 'standalone' && control.navigationMode === 'secondary'">

@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit{
     private location: Location,
     private dialogService: DialogService,
     private messageService: MessageService,
-    private core: CoreService,
+    private coreService: CoreService,
   ) {
     if(this.executionMode === 'standalone' && environment.mqttBrokenHost) {
       this.mqtt = inject(MqttService);
@@ -45,7 +45,11 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
 
-    this.core.getRooms().subscribe(rooms => this.currentRoom = rooms.find(room => room.position == 0) || null);
+    this.coreService.loadRooms();
+
+    this.coreService.rooms$.subscribe(rooms => {
+      this.currentRoom = rooms.find(room => room.position == 0) || null;
+    });
 
     if(this.mqtt) {
       this.mqtt.observe('mrc/mode').subscribe((message: IMqttMessage) => {
@@ -140,7 +144,7 @@ export class HomeComponent implements OnInit{
 
     this.control.currentRoom$.subscribe(room => {
       if(this.mqtt && this.control.navigationMode !== 'secondary' && this.executionMode === 'standalone' && room) {
-        this.core.getDistanceBetweenRooms(this.currentRoom!, room).subscribe((resp: any) => {
+        this.coreService.getDistanceBetweenRooms(this.currentRoom!, room).subscribe((resp: any) => {
           this.mqtt!.unsafePublish(`mrc/rotate`, JSON.stringify({
             uuid: resp.uuid,
             slug: resp.slug,

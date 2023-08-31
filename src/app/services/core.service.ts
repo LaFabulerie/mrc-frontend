@@ -41,20 +41,14 @@ export class CoreService {
     return this.http.get(`${environment.apiHost}/r/rooms/distance/?from=${room1.uuid}&to=${room1.uuid}`);
   }
 
-  getRoom(uuid: string, params?: any): Observable<Room> {
-    const queryParams = new URLSearchParams(params);
-    return this.http.get<Room>(`${environment.apiHost}/r/rooms/${uuid}/?${queryParams.toString()}`);
-  }
-
   updateRoom(uuid:string, data:any): Observable<Room> {
     return this.http.patch<Room>(`${environment.apiHost}/r/rooms/${uuid}/`, data);
   }
 
   loadDigitalUses() {
     const queryParams = new URLSearchParams({
-      expand: ['items', 'items.room', 'services.use'].join(','),
+      expand: ['items', 'items.room', 'services.use', 'services.area'].join(','),
       omit : ['slug',
-              'tags', 'services',
               'item_ids', 'services.use_id',
               'items.image', 'items.slug',
               'items.room.video', 'items.room.description',

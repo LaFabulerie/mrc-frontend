@@ -42,6 +42,7 @@ export class BaseRoomComponent extends HighlightableComponent implements OnInit,
     this.activatedRoute.params.subscribe(params => {
       const uuid = params['uuid'];
       this.coreService.rooms$.subscribe(rooms => {
+        if(!rooms || rooms.length == 0) return;
         const room = rooms.find(room => room.uuid === uuid);
 
         this.control.currentItem = null;
@@ -62,6 +63,7 @@ export class BaseRoomComponent extends HighlightableComponent implements OnInit,
 
   goToItem(uuid: string){
     this.coreService.items$.subscribe(items => {
+      if(!items || items.length == 0) return;
       const item = items.find(item => item.uuid === uuid);
       this.control.navigate(['item', uuid], item);
     });

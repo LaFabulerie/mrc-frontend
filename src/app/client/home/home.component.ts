@@ -50,6 +50,7 @@ export class HomeComponent implements OnInit{
     this.coreService.loadDigitalUses();
 
     this.coreService.rooms$.subscribe(rooms => {
+      if(!rooms || rooms.length == 0) return;
       this.currentRoom = rooms.find(room => room.position == 0) || null;
     });
 

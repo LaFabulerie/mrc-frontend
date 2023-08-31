@@ -39,6 +39,7 @@ export class ItemComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       const uuid = params['uuid'];
       this.coreService.items$.subscribe(items => {
+        if(!items || items.length == 0) return;
         this.item = items.find(item => item.uuid === uuid);
         this.control.currentItem= this.item;
         this.useList = [...this.item!.uses];

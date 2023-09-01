@@ -71,12 +71,12 @@ export class BasketService {
     return this.count() == 0;
   }
 
-  payload(selectedServiceIds?: number[]) {
+  payload(selectedServiceUUIDs?: string[]) {
     if(this.isEmpty()) return null;
 
     let data: any[] = []
     this.basketSubject.getValue().forEach(service => {
-      if(!selectedServiceIds || selectedServiceIds.length == 0 || selectedServiceIds.includes(service.id)){
+      if(!selectedServiceUUIDs || selectedServiceUUIDs.length == 0 || selectedServiceUUIDs.includes(service.uuid)){
         data.push({
           uuid: service.uuid,
           name: service.title,
@@ -87,18 +87,18 @@ export class BasketService {
     return data
   }
 
-  print(selectedServiceIds: number[]) {
-    const filteredPayload = this.payload(selectedServiceIds);
+  print(selectedServiceUUIDs: string[]) {
+    const filteredPayload = this.payload(selectedServiceUUIDs);
     this.printBasketSubject.next(filteredPayload);
   }
 
-  sendByEmail(email: string, selectedServiceIds: number[]) {
-    const filteredPayload = this.payload(selectedServiceIds);
+  sendByEmail(email: string, selectedServiceUUIDs: string[]) {
+    const filteredPayload = this.payload(selectedServiceUUIDs);
     return this.http.post(`${environment.apiHost}/w/cart/email/`, {email: email, basket: filteredPayload})
   }
 
-  downloadPDF(selectedServiceIds: number[]) {
-    const filteredPayload = this.payload(selectedServiceIds);
+  downloadPDF(selectedServiceUUIDs: string[]) {
+    const filteredPayload = this.payload(selectedServiceUUIDs);
     return this.http.post(`${environment.apiHost}/w/cart/pdf/`, {basket: filteredPayload}, {responseType: 'blob'})
   }
 }

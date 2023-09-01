@@ -4,6 +4,7 @@ import { RemoteControlService } from 'src/app/services/control.service';
 import { environment } from 'src/environments/environment';
 import { DigitalService } from 'src/app/models/core';
 import { CheckboxChangeEvent } from 'primeng/checkbox';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-basket',
@@ -17,6 +18,10 @@ export class BasketComponent implements OnInit{
   email: string = "";
 
   selectedServices: DigitalService[] = [];
+
+  emailLoading: boolean = false;
+  printLoading: boolean = false;
+  downloadLoading: boolean = false;
 
   constructor(
     public basket: BasketService,
@@ -41,30 +46,39 @@ export class BasketComponent implements OnInit{
     })
   }
 
+  isSelected(service: DigitalService) {
+    return this.selectedServices.findIndex(s => s.uuid == service.uuid) != -1;
+  }
+
   print() {
-    const selectedServiceIds = this.selectedServices.map(s => s.id);
-    this.basket.print(selectedServiceIds);
+    if(this.printLoading) return;
+    this.printLoading = true;
+    const selectedServiceUUIDs = this.selectedServices.map(s => s.uuid);
+    this.basket.print(selectedServiceUUIDs);
+    this.printLoading = false;
   }
 
   download() {
-    const selectedServiceIds = this.selectedServices.map(s => s.id);
-    this.basket.downloadPDF(selectedServiceIds).subscribe(blob => {
+    if(this.downloadLoading) return;
+    this.downloadLoading = true;
+    const selectedServiceUUIDs = this.selectedServices.map(s => s.uuid);
+    this.basket.downloadPDF(selectedServiceUUIDs).subscribe(blob => {
       const downloadLink = document.createElement('a');
       downloadLink.href = URL.createObjectURL(blob);
       downloadLink.download = 'services.pdf';
       downloadLink.click();
+      this.downloadLoading = false;
     });
   }
 
-  isSelected(service: DigitalService) {
-    return this.selectedServices.findIndex(s => s.id == service.id) != -1;
-  }
-
   sendMail() {
-    const selectedServiceIds = this.selectedServices.map(s => s.id);
-    this.basket.sendByEmail(this.email, selectedServiceIds).subscribe(_ => {
+    if(this.emailLoading) return;
+    this.emailLoading = true;
+    const selectedServiceUUIDs = this.selectedServices.map(s => s.uuid);
+    this.basket.sendByEmail(this.email, selectedServiceUUIDs).subscribe(_ => {
       this.showEmailDialog = false;
       this.email = "";
+      this.emailLoading = false;
     });
   }
 
@@ -72,7 +86,7 @@ export class BasketComponent implements OnInit{
     if ($event.checked) {
       this.selectedServices.push(service);
     } else {
-      this.selectedServices = this.selectedServices.filter(s => s.id != service.id);
+      this.selectedServices = this.selectedServices.filter(s => s.uuid != service.uuid);
     }
   }
 

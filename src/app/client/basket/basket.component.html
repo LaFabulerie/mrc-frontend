@@ -8,16 +8,18 @@
     <div class="flex justify-content-end align-items-center text-white py-3 my-3 text-lg">
       <div *ngIf="!basketEmpty"
            [ngStyle]="{
-            'color': selectedServices.length > 0 ? 'var(--blue-mrc)' : 'grey',
-            'cursor' : selectedServices.length > 0 ? 'pointer' : 'default'
+            'color': selectedServices.length > 0 && !(downloadLoading || printLoading) ? 'var(--blue-mrc)' : 'grey',
+            'cursor' : selectedServices.length > 0 && !(downloadLoading || printLoading) ? 'pointer' : 'default'
            }"
            class="mr-4">
         <span *ngIf="mode === 'web'" (click)="download()">
-          <fa-icon [icon]="['fas', 'download']" class="mr-2"></fa-icon>
+          <fa-icon [icon]="['fas', 'download']" class="mr-2" *ngIf="!downloadLoading"></fa-icon>
+          <fa-icon [icon]="['fas', 'spinner']" class="mr-2" animation="spin" *ngIf="downloadLoading"></fa-icon>
           <span >Télécharger votre liste de services</span>
         </span>
         <span *ngIf="mode === 'standalone'" (click)="print()">
-          <fa-icon [icon]="['fas', 'print']" class="mr-2"></fa-icon>
+          <fa-icon [icon]="['fas', 'print']" class="mr-2" *ngIf="printLoading"></fa-icon>
+          <fa-icon [icon]="['fas', 'spinner']" class="mr-2" animation="spin" *ngIf="printLoading"></fa-icon>
           <span>Imprimer votre liste de services</span>
         </span>
       </div>
@@ -83,6 +85,10 @@
           aria-describedby="username-help">
         <small id="email-help">Votre adresse email ne sera pas enregistrée.</small>
       </div>
-      <button pButton label="Envoyer" icon="pi pi-envelope" (click)="sendMail()"></button>
+      <button pButton (click)="sendMail()" class="p-button-orange-mrc flex justify-content-center align-items-center" [disabled]="!email">
+        <fa-icon [icon]="['fas', 'envelope']" class="mr-2" *ngIf="!emailLoading"></fa-icon>
+        <fa-icon [icon]="['fas', 'spinner']" class="mr-2" animation="spin" *ngIf="emailLoading"></fa-icon>
+        <span class="ml-3">Envoyer</span>
+      </button>
     </div>
   </p-dialog>

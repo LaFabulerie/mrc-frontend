@@ -306,7 +306,9 @@
 		<path class="st19" d="M667.9,412.1c-1.4,2.7-2.6,5.8-2.4,8.4"/>
 		<path class="st19" d="M661.3,410.2c0,0,1.6,6.4,1.8,8.7"/>
 	</g>
-	<g id="btn">
+	<g id="btn"
+  style="cursor: pointer;" (mouseenter)="activate('door')"
+  >
 		<g>
 			<g>
 				<circle class="st21" cx="565.8" cy="170.5" r="37.4"/>
@@ -1046,7 +1048,8 @@
 </g>
 <g id="Bouton_x5F_Roll_x5F_On"
 style="cursor: pointer;"
-(mouseenter)="activate('doorbell')"
+[attr.display]="isActive('door') ? 'inline' : 'none'"
+(mouseleave)="release('door')"
 (click)="goToMap()"
 >
 	<g>

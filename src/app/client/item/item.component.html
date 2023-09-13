@@ -8,20 +8,24 @@
         <div class="header">
           <img src="assets/img/ring.svg" class="w-full h-full flex">
         </div>
-        <div class="text-2xl text-center py-2 border-bottom-1 surface-200"
-            [ngStyle]="{'color' : item.room.mainColor}"
-
-
-            >{{item.name}}</div>
-        <div class="use-item text-lg py-2 pl-6 surface-200"
-            [ngClass]="{'border-round-bottom-3xl' : last, 'border-bottom-1' : !last, 'activable cursor-pointer' : use != null}"
-            [ngStyle]="{'border-color': '#1c096b'}"
-            *ngFor="let use of useList;let last=last"
-             (click)="goToDigitalUse(use.uuid)"
-        >
-          <fa-icon [icon]="['fas', 'chevron-right']" class="mr-3" *ngIf="use"></fa-icon>
-          <span  *ngIf="use">{{use.title}}</span>
-          <span *ngIf="!use">&nbsp;</span>
+        <div class="surface-200">
+          <div class="text-2xl text-center py-2 border-bottom-1"
+              [ngStyle]="{'color' : item.room.mainColor}"
+          >
+              {{item.name}}
+          </div>
+          <div class="use-item text-lg py-2 pl-6"
+              [ngClass]="{'border-round-bottom-3xl' : last, 'border-bottom-1' : !last, 'cursor-pointer' : use != null}"
+              [ngStyle]="{'border-color': 'var(--blue-mrc)'}"
+              (mouseenter)="mouseEnterUse($event, use != null)"
+              (mouseleave)="mouseLeaveUse($event)"
+              *ngFor="let use of useList;let last=last"
+               (click)="goToDigitalUse(use.uuid)"
+          >
+            <fa-icon [icon]="['fas', 'chevron-right']" class="mr-3" *ngIf="use"></fa-icon>
+            <span  *ngIf="use">{{use.title}}</span>
+            <span *ngIf="!use">&nbsp;</span>
+          </div>
         </div>
       </div>
     </div>

@@ -1,10 +1,8 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
 import { Item } from 'src/app/models/core';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-item',
@@ -41,9 +39,10 @@ export class ItemComponent implements OnInit {
       this.coreService.items$.subscribe(items => {
         if(!items || items.length == 0) return;
         this.item = items.find(item => item.uuid === uuid);
+        console.log(this.item);
         this.control.currentItem= this.item;
         this.useList = [...this.item!.uses];
-        const limit = 10-this.useList.length
+        const limit = 10 - this.useList.length;
         for(let i=0; i<=limit; i++){
           this.useList.push(null);
         }
@@ -54,5 +53,16 @@ export class ItemComponent implements OnInit {
 
   goToDigitalUse(uuid: string){
     this.control.navigate(['use', uuid], { itemName: this.item?.name });
+  }
+
+  mouseEnterUse(event: any, activated: boolean){
+    if(activated){
+      // https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4
+      event.target.style.backgroundColor = this.item?.room.mainColor + '54';
+    }
+  }
+
+  mouseLeaveUse(event: any){
+    event.target.style.backgroundColor = 'transparent';
   }
 }

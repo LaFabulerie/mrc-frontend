@@ -35,6 +35,10 @@ export class MapComponent extends HighlightableComponent implements OnInit{
 
   ngOnInit(): void {
     this.control.navigationMode$.subscribe(v => this.controlSetup());
+
+    this.control.openDialog("VideoDialogComponent", {
+      videoURL: `${environment.mediaHost}/static/videos/welcome_mrc.mp4`
+    });
   }
 
   goToRoom(roomName: string, uuid: string){

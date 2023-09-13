@@ -34,13 +34,6 @@ export class DoorComponent extends HighlightableComponent implements OnInit{
     this.control.navigationMode$.subscribe(v => this.controlSetup());
   }
 
-  openWelcomeVideoDialog() {
-    // this.dialogService.open(WelcomeVideoDialogComponent, {
-    //   closeOnEscape: false,
-    //   closable: false,
-    // });
-  }
-
   goToMap(){
     this.control.navigate(['map']);
   }

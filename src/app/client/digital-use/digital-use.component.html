@@ -1,9 +1,14 @@
 <div class="surface-100 flex justify-content-center align-items-center w-full" *ngIf="use">
   <div class="bg-white w-8 overflow-auto">
-    <div class="text-4xl pl-6 py-4 block text-white" style="background-color: var(--blue-mrc);font-family: var(--font-family-2);">{{use.items[0].name}}</div>
+    <div class="text-4xl px-6 py-4 block text-white flex justify-content-between align-items-center"
+    style="font-family: var(--font-family-2);"
+    [ngStyle]="{backgroundColor: use.items[0].room.mainColor}"
+    >
+    <span>{{use.title}}</span>
+    <img [src]="use.items[0].image">
+    </div>
     <div class="px-6 py-3">
-      <span class="text-2xl" style="font-family: var(--font-family-2);">{{use.title}}</span>
-      <p class="line-height-2" [innerHtml]="use.description | safeHtml"></p>
+      <p class="line-height-3 pt-0 pb-2" [innerHtml]="use.description | safeHtml" style="font-family: var(--font-family-1);"></p>
       <div class="flex flex-wrap justify-content-between" style="font-family: var(--font-family-1);">
         <div class="flex flex-column border-2 mb-2 p-4 relative shadow-2"
              [ngStyle]="{

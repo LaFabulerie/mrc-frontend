@@ -49,8 +49,7 @@ export class CoreService {
     const queryParams = new URLSearchParams({
       expand: ['items', 'items.room', 'services.use', 'services.area'].join(','),
       omit : ['slug',
-              'item_ids', 'services.use_id',
-              'items.image', 'items.slug',
+              'item_ids', 'services.use_id', 'items.slug',
               'items.room.video', 'items.room.description',
               'items.room.items', 'items.room.uses.description'].join(',')
     });

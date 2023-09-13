@@ -7966,6 +7966,7 @@ xml:space="preserve">
     </g>
   </g>
   <g id="Lit_x5F_Bebe_x5F_Roll_x5F_On"
+  style="cursor: pointer;"
   [attr.display]="isActive('7cf7045f-d605-44fa-b4e6-bcc121624871') ? 'inline' : 'none'"
   (mouseleave)="release('7cf7045f-d605-44fa-b4e6-bcc121624871')"
   (click)="goToItem('7cf7045f-d605-44fa-b4e6-bcc121624871')"
@@ -8610,6 +8611,7 @@ xml:space="preserve">
     </g>
   </g>
   <g id="Console_x5F_Roll_x5F_On"
+  style="cursor: pointer;"
   [attr.display]="isActive('31262ece-a362-4847-be80-9373c7be63d9') ? 'inline' : 'none'"
   (mouseleave)="release('31262ece-a362-4847-be80-9373c7be63d9')"
   (click)="goToItem('31262ece-a362-4847-be80-9373c7be63d9')"
@@ -8681,6 +8683,7 @@ xml:space="preserve">
     </g>
   </g>
   <g id="Lit_x5F_Roll_x5F_On"
+  style="cursor: pointer;"
   [attr.display]="isActive('ee9a23e6-ed9b-4a09-ba2c-a6cdb3960f04') ? 'inline' : 'none'"
   (mouseleave)="release('ee9a23e6-ed9b-4a09-ba2c-a6cdb3960f04')"
   (click)="goToItem('ee9a23e6-ed9b-4a09-ba2c-a6cdb3960f04')"

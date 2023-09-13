@@ -17,7 +17,7 @@ export class BasketComponent implements OnInit{
   showEmailDialog: boolean = false;
   email: string = "";
 
-  selectedServices: DigitalService[] = [];
+  selectedServiceStates: { [id: string] : boolean; } = {};
 
   emailLoading: boolean = false;
   printLoading: boolean = false;
@@ -42,27 +42,38 @@ export class BasketComponent implements OnInit{
     this.control.navigationMode$.subscribe(v => this.controlSetup());
 
     this.basket.basketSubject$.subscribe(services => {
+      services.forEach((service: DigitalService) => this.selectedServiceStates[service.uuid] = true);
       this.basketEmpty = services.length == 0;
     })
   }
 
   isSelected(service: DigitalService) {
-    return this.selectedServices.findIndex(s => s.uuid == service.uuid) != -1;
+    return this.selectedServiceStates[service.uuid];
+  }
+
+  get selectedServices(): DigitalService[] {
+    return this.basket.services.filter(s => this.selectedServiceStates[s.uuid]);
+  }
+
+  get selectedServiceUUIDs(): string[] {
+    return this.selectedServices.map(s => s.uuid);
+  }
+
+  get selectedServicesCount(): number {
+    return this.selectedServices.length;
   }
 
   print() {
     if(this.printLoading) return;
     this.printLoading = true;
-    const selectedServiceUUIDs = this.selectedServices.map(s => s.uuid);
-    this.basket.print(selectedServiceUUIDs);
+    this.basket.print(this.selectedServiceUUIDs);
     this.printLoading = false;
   }
 
   download() {
     if(this.downloadLoading) return;
     this.downloadLoading = true;
-    const selectedServiceUUIDs = this.selectedServices.map(s => s.uuid);
-    this.basket.downloadPDF(selectedServiceUUIDs).subscribe(blob => {
+    this.basket.downloadPDF(this.selectedServiceUUIDs).subscribe(blob => {
       const downloadLink = document.createElement('a');
       downloadLink.href = URL.createObjectURL(blob);
       downloadLink.download = 'services.pdf';
@@ -74,21 +85,20 @@ export class BasketComponent implements OnInit{
   sendMail() {
     if(this.emailLoading) return;
     this.emailLoading = true;
-    const selectedServiceUUIDs = this.selectedServices.map(s => s.uuid);
-    this.basket.sendByEmail(this.email, selectedServiceUUIDs).subscribe(_ => {
+    this.basket.sendByEmail(this.email, this.selectedServiceUUIDs).subscribe(_ => {
       this.showEmailDialog = false;
       this.email = "";
       this.emailLoading = false;
     });
   }
 
-  selectionChanged($event: CheckboxChangeEvent, service: DigitalService) {
-    if ($event.checked) {
-      this.selectedServices.push(service);
-    } else {
-      this.selectedServices = this.selectedServices.filter(s => s.uuid != service.uuid);
-    }
-  }
+  // selectionChanged($event: CheckboxChangeEvent, service: DigitalService) {
+  //   if ($event.checked) {
+  //     this.selectedServices.push(service);
+  //   } else {
+  //     this.selectedServices = this.selectedServices.filter(s => s.uuid != service.uuid);
+  //   }
+  // }
 
   goToBack() {
     document.getElementById("backBtn")?.click();

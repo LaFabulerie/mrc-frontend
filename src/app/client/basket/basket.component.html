@@ -4,18 +4,15 @@
       <fa-icon [icon]="['fas', 'chevron-left']" size="2xl" class="mr-4"></fa-icon>
       <span class="text-4xl font-bold"> Fin de la visite</span>
     </div>
-    <div class="pl-3 pr-5" *ngIf="basket.services.length > 0">
-    <div class="flex justify-content-end align-items-center text-white py-3 my-3 text-lg">
-      <div *ngIf="!basketEmpty"
-           [ngStyle]="{
-            'color': selectedServices.length > 0 && !(downloadLoading || printLoading) ? 'var(--blue-mrc)' : 'grey',
-            'cursor' : selectedServices.length > 0 && !(downloadLoading || printLoading) ? 'pointer' : 'default'
-           }"
-           class="mr-4">
+    <div class="pl-3 pr-5 flex justify-content-end align-items-center text-white py-3 my-3 text-lg" *ngIf="basket.services.length > 0">
+      <div *ngIf="!basketEmpty" [ngStyle]="{
+          'color': selectedServices.length > 0 && !(downloadLoading || printLoading) ? 'var(--blue-mrc)' : 'grey',
+          'cursor' : selectedServices.length > 0 && !(downloadLoading || printLoading) ? 'pointer' : 'default'
+          }" class="mr-4">
         <span *ngIf="mode === 'web'" (click)="download()">
           <fa-icon [icon]="['fas', 'download']" class="mr-2" *ngIf="!downloadLoading"></fa-icon>
           <fa-icon [icon]="['fas', 'spinner']" class="mr-2" animation="spin" *ngIf="downloadLoading"></fa-icon>
-          <span >Télécharger votre liste de services</span>
+          <span>Télécharger votre liste de services</span>
         </span>
         <span *ngIf="mode === 'standalone'" (click)="print()">
           <fa-icon [icon]="['fas', 'print']" class="mr-2" *ngIf="printLoading"></fa-icon>
@@ -23,33 +20,29 @@
           <span>Imprimer votre liste de services</span>
         </span>
       </div>
-      <div *ngIf="!basketEmpty"
-          [ngStyle]="{
-            'color': selectedServices.length > 0 ? 'var(--blue-mrc)' : 'grey',
-            'cursor' : selectedServices.length > 0 ? 'pointer' : 'default'
-          }"
-      >
+      <div *ngIf="!basketEmpty" [ngStyle]="{
+          'color': selectedServices.length > 0 ? 'var(--blue-mrc)' : 'grey',
+          'cursor' : selectedServices.length > 0 ? 'pointer' : 'default'
+        }">
         <span (click)="showEmailDialog = true">
           <fa-icon [icon]="['fas', 'envelope']" class="mr-2"></fa-icon>
           <span>Envoyer votre liste de services par email</span>
         </span>
       </div>
     </div>
-
-
+    <div class="pl-3 pr-5" *ngIf="basket.services.length > 0" style="max-height: 400px;overflow-y: auto;">
       <div *ngFor="let service of basket.services" class="flex border-2 mb-3 relative shadow-2"
-            style="border-color:var(--orange-mrc);color:var(--blue-mrc)"
-            [ngStyle]="{'background-color': isSelected(service) ? '#fce2e1': 'white'}"
-        >
+        style="border-color:var(--orange-mrc);color:var(--blue-mrc)"
+        [ngStyle]="{'background-color': isSelected(service) ? '#fce2e1': 'white'}">
         <div class="flex w-2 justify-content-center align-items-center">
-          <p-checkbox [binary]="true" inputId="binary" (onChange)="selectionChanged($event, service)"></p-checkbox>
+          <p-checkbox [binary]="true" inputId="binary" [(ngModel)]="selectedServiceStates[service.uuid]"></p-checkbox>
         </div>
         <div class="flex flex-column w-10 p-3  pr-4">
           <span class="my-1 font-bold">
             {{ service.title }}
             <span *ngIf="service.area">
-            <i class="pi pi-map-marker ml-3"></i>
-            {{service.area.name}}
+              <i class="pi pi-map-marker ml-3"></i>
+              {{service.area.name}}
             </span>
           </span>
           <p [innerHtml]="service.description | safeHtml"></p>
@@ -59,10 +52,10 @@
           </span>
         </div>
 
-        <span class="p-2 border-round border-2 bg-white absolute cursor-pointer hover:text-red-600"
+        <!-- <span class="p-2 border-round border-2 bg-white absolute cursor-pointer hover:text-red-600"
           style="top: 50%; right: 0; transform: translate(50%, -50%);" (click)="basket.remove(service)">
           <fa-icon [icon]="['fas', 'trash']" size="2xl"></fa-icon>
-        </span>
+        </span> -->
       </div>
     </div>
 
@@ -71,12 +64,11 @@
       <p>Pour collecter des fiches « service », visitez les différentes pièces de la Maison Reconnectée et découvrer les
         services liés aux objets présents dans ces pièces.</p>
     </div>
-    <div class="px-4 pb-4 flex justify-content-end">
+    <div class="p-4 flex justify-content-end">
       <p-button styleClass="p-button-orange-mrc p-button" label="Continuer ma visite" (click)="goToBack()"></p-button>
     </div>
   </div>
-  <p-dialog [resizable]="false" [maximizable]="false" [(visible)]="showEmailDialog"
-    [draggable]="false">
+  <p-dialog [resizable]="false" [maximizable]="false" [(visible)]="showEmailDialog" [draggable]="false">
     <div class="flex flex-column">
       <div class="field">
         <label for="email">Adresse Email</label>
@@ -85,7 +77,8 @@
           aria-describedby="username-help">
         <small id="email-help">Votre adresse email ne sera pas enregistrée.</small>
       </div>
-      <button pButton (click)="sendMail()" class="p-button-orange-mrc flex justify-content-center align-items-center" [disabled]="!email">
+      <button pButton (click)="sendMail()" class="p-button-orange-mrc flex justify-content-center align-items-center"
+        [disabled]="!email">
         <fa-icon [icon]="['fas', 'envelope']" class="mr-2" *ngIf="!emailLoading"></fa-icon>
         <fa-icon [icon]="['fas', 'spinner']" class="mr-2" animation="spin" *ngIf="emailLoading"></fa-icon>
         <span class="ml-3">Envoyer</span>

@@ -49,8 +49,8 @@ export class BaseRoomComponent extends HighlightableComponent implements OnInit,
         this.mainColor = room!.mainColor;
         this.control.bgColor = this.mainColor;
         this.loading = false;
-        let videoAlreadyViewed = localStorage.getItem(`video-room-${uuid}`) !== null
-        if(room!.video && !videoAlreadyViewed) {
+        // let videoAlreadyViewed = localStorage.getItem(`video-room-${uuid}`) !== null
+        if(room!.video){ // && !videoAlreadyViewed) {
           localStorage.setItem(`video-room-${uuid}`, 'true');
           this.control.openDialog("VideoDialogComponent", {
             videoURL: `${environment.mediaHost}${room!.video}`

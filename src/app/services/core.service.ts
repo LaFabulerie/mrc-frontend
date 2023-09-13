@@ -53,7 +53,14 @@ export class CoreService {
               'items.room.video', 'items.room.description',
               'items.room.items', 'items.room.uses.description'].join(',')
     });
-    this.http.get<DigitalUse[]>(`${environment.apiHost}/r/digital-uses/?${queryParams.toString()}`).subscribe((uses: DigitalUse[]) => {
+    this.http.get<DigitalUse[]>(`${environment.apiHost}/r/digital-uses/?${queryParams.toString()}`).pipe(
+      map(results => {
+        return results.map(use => {
+          use.items[0].image = `${environment.mediaHost}${use.items[0].image}` ;
+          return use;
+        })
+      }))
+    .subscribe((uses: DigitalUse[]) => {
       this.digitalUsesSubject.next(uses);
     });
   }

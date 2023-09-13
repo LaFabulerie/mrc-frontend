@@ -5,7 +5,7 @@
     [ngStyle]="{backgroundColor: use.items[0].room.mainColor}"
     >
     <span>{{use.title}}</span>
-    <img [src]="use.items[0].image">
+    <img [src]="use.items[0].image" class="item-picture">
     </div>
     <div class="px-6 py-3">
       <p class="line-height-3 pt-0 pb-2" [innerHtml]="use.description | safeHtml" style="font-family: var(--font-family-1);"></p>

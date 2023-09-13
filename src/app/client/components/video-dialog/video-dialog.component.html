@@ -1,6 +1,9 @@
 <div class="video-player-wrapper">
-  <div class="inline-block bg-white p-3 border-circle mb-2 cursor-pointer" style="color:var(--orange-mrc)" (click)="skip()" *ngIf="control.navigationMode !== 'secondary'">
-    <fa-icon [icon]="['fas', 'forward']" size="2x"></fa-icon>
+  <div class="inline-block mb-2 cursor-pointer" style="color:var(--orange-mrc)" (click)="skip()" *ngIf="control.navigationMode !== 'secondary'">
+    <fa-stack>
+      <fa-icon [icon]="['fas', 'circle']" stackItemSize="2x"></fa-icon>
+      <fa-icon [icon]="['fas', 'times']"  [inverse]="true" stackItemSize="1x"></fa-icon>
+    </fa-stack>
   </div>
   <vg-player (onPlayerReady)="onPlayerReady($event)" [style.width.px]="width" [style.height.px]="height" [style.border-radius.px]="6">
     <vg-overlay-play></vg-overlay-play>

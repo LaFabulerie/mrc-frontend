@@ -11,8 +11,7 @@ import { RemoteControlService } from 'src/app/services/control.service';
 export class VideoDialogComponent {
 
   videoUrl?: string;
-  width = 960;
-  height = 540;
+  width = 60;
   api?: VgApiService;
 
   constructor(

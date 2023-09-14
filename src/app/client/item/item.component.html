@@ -1,20 +1,21 @@
 
-<div class="content flex justify-content-center align-items-center" *ngIf="item">
-    <div class="w-6 flex justify-content-center align-items-center">
-      <img class="item-picture" [src]="item.image">
+<div class="content flex flex-wrap justify-content-center align-items-center" *ngIf="item">
+    <div class="w-full md:w-6 text-center hidden md:block ">
+      <img class="md:w-4 mx-auto" [src]="item.image">
     </div>
-    <div class="w-6 flex justify-content-center align-items-center  border-round-bottom-3xl">
-      <div class="w-8 use-list flex flex-column border-round-bottom-3xl">
+    <div class="w-full md:w-6">
+      <div class="w-11 md:w-8 use-list flex flex-column border-round-bottom-3xl mx-auto">
         <div class="header">
           <img src="assets/img/ring.svg" class="w-full h-full flex">
         </div>
         <div class="surface-200 border-round-bottom-3xl">
-          <div class="text-3xl text-center py-2 border-bottom-1"
+          <div class="text-3xl flex align-items-center justify-content-center text-center py-2 border-bottom-1"
               [ngStyle]="{'color' : item.room.mainColor}"
           >
-              {{item.name}}
+              <img class="md:hidden inline w-1 mr-4" [src]="item.image">
+              <span>{{item.name}}</span>
           </div>
-          <div class="use-item text-lg py-2 pl-6"
+          <div class="use-item text-lg py-2 pl-4 md:pl-6"
               [ngClass]="{'border-round-bottom-3xl' : last, 'border-bottom-1' : !last, 'cursor-pointer' : use != null}"
               [ngStyle]="{'border-color': 'var(--blue-mrc)'}"
               (mouseenter)="mouseEnterUse($event, use != null)"

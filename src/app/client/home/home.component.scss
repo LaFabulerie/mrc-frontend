@@ -1,10 +1,8 @@
 .navbar {
-  height: var(--navbar-height);
+  min-height: var(--navbar-height);
 
-
-
-  img {
-    width: 200px;
+  .mrc-logo {
+    width: 12rem;
   }
   .custom-button {
     img, i {
@@ -21,14 +19,16 @@
       transform: translateX(-10%);
     }
   }
+  @media screen and (max-width: 600px) {
+    .mrc-logo {
+      width: 9rem;
+    }
+    .custom-button {
+      img, i {
+        width: 3rem;
+        height: 3rem;
+      }
+    }
+  }
 }
 
-
-//::ng-deep .p-inputswitch {
-//  &.p-inputswitch-checked .p-inputswitch-slider {
-//    background-color: var(--orange-mrc)!important;
-//  }
-//  &.p-focus .p-inputswitch-slider {
-//    box-shadow: none;
-//  }
-//}

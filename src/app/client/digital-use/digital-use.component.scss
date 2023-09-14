@@ -1,13 +1,15 @@
 :host {
-  background-color: var(--surface-100);
   height: calc(100% - var(--navbar-height));
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
   color: var(--blue-mrc);
+}
 
+.item-picture {
+  width:  3rem;
+}
+
+@media screen and (max-width: 600px) {
   .item-picture {
-    max-height: 6rem;
-    max-width: 6rem;
+    width:  2rem;
   }
 }
+

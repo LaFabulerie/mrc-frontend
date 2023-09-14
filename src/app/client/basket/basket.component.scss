@@ -1,13 +1,15 @@
 :host {
   background-color: inherit;
   height: calc(100% - var(--navbar-height));
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-
 }
 
 ::ng-deep {
+
+  .email-dialog {
+    background-color: white!important;
+    padding: 1rem!important;
+    width: 40%!important;
+  }
 
   .p-checkbox {
     width: 40px !important;

@@ -1,28 +1,30 @@
-<div class="navbar flex p-3 w-full align-items-center bg-white" *ngIf="control.navBarEnabled">
-  <div class="w-4 flex justify-content-start">
-    <span class="custom-button mr-3 cursor-pointer bg-white border-round p-2" (click)="goToMap()" *ngIf="control.showMapButton">
-      <img src="assets/img/picto_home.svg" />
-    </span>
-    <span id="backBtn" class="custom-button cursor-pointer bg-white border-round p-2" (click)="goToBack()" *ngIf="control.showBackButton">
-      <img src="assets/img/picto_back.svg" />
-    </span>
-    <span class="flex align-items-center p-2" *ngIf="executionMode === 'standalone' && control.navigationMode === 'secondary'">
-      <!-- <p-inputSwitch [(ngModel)]="isPrimary" (onChange)="navigationModeChange()" styleClass="mr-2" *ngIf="control.navigationMode !== 'secondary'"></p-inputSwitch>
-      ({{mode}} : {{ control.navigationMode }}) -->
-      <fa-icon [icon]="['fas', 'lock']" size="4x"  [style]="{color: 'var(--orange-mrc)'}"></fa-icon>
-    </span>
+<div class="navbar flex flex-wrap p-3 w-full align-items-center bg-white" *ngIf="control.navBarEnabled">
+  <div class="w-full md:w-6 text-center flex-order-1 md:flex-order-2">
+    <img class="mrc-logo" src="assets/img/logo_mrc.svg"/>
   </div>
-  <div class="w-4 flex justify-content-center">
-    <img src="assets/img/logo_mrc.svg"/>
+  <div class="w-6 md:w-3 flex-order-2 md:flex-order-1">
+    <div class="flex justify-content-around md:justify-content-start">
+      <span class="custom-button md:mr-3 cursor-pointer bg-white border-round p-2" (click)="goToMap()" *ngIf="control.showMapButton">
+        <img src="assets/img/picto_home.svg" />
+      </span>
+      <span id="backBtn" class="custom-button cursor-pointer bg-white border-round p-2" (click)="goToBack()" *ngIf="control.showBackButton">
+        <img src="assets/img/picto_back.svg" />
+      </span>
+      <span class="flex align-items-center p-2" *ngIf="executionMode === 'standalone' && control.navigationMode === 'secondary'">
+        <fa-icon [icon]="['fas', 'lock']" size="4x"  [style]="{color: 'var(--orange-mrc)'}"></fa-icon>
+      </span>
+    </div>
   </div>
-  <div class="w-4 flex justify-content-end">
-    <span class="custom-button relative flex cursor-pointer bg-white border-round p-2" (click)="goToBasket()">
-      <img src="assets/img/picto_list.svg" />
-      <span class="badge font-bold border-2 border-circle flex justify-content-center align-items-center absolute bg-white border-round p-2" *ngIf="basketCount">{{ basketCount }}</span>
-    </span>
-    <span class="custom-button ml-3 cursor-pointer bg-white border-round p-2" (click)="exit()" *ngIf="control.showExitButton">
-      <img src="assets/img/picto_exit.svg" />
-    </span>
+  <div class="md:w-3 flex-order-3" [ngClass]="{'w-6' : control.showMapButton || control.showBackButton, 'w-full': !control.showMapButton && !control.showBackButton}">
+    <div class="flex justify-content-around md:justify-content-end">
+      <span class="custom-button relative flex cursor-pointer bg-white border-round p-2" (click)="goToBasket()">
+        <img src="assets/img/picto_list.svg" />
+        <span class="badge font-bold border-2 border-circle flex justify-content-center align-items-center absolute bg-white border-round p-2" *ngIf="basketCount">{{ basketCount }}</span>
+      </span>
+      <span class="custom-button md:ml-3 cursor-pointer bg-white border-round p-2" (click)="exit()" *ngIf="control.showExitButton">
+        <img src="assets/img/picto_exit.svg" />
+      </span>
+    </div>
   </div>
 </div>
 <router-outlet></router-outlet>

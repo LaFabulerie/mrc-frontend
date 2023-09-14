@@ -2,11 +2,7 @@
 :host {
   font-family: var(--font-family-2)!important;
   .content {
-    height: calc(100% - var(--navbar-height));
-    .item-picture {
-      max-height: 40rem;
-      max-width: 40rem;
-    }
+    height: calc(95% - var(--navbar-height));
     .border-bottom-1 {
       border-color: #1c096b;
     }
@@ -16,6 +12,5 @@
         color: var(--blue-mrc);
       }
     }
-
   }
 }

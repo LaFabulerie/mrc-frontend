@@ -26,6 +26,7 @@ export class DigitalUseComponent {
     this.control.showBackButton = true;
     this.control.showListButton = true;
     this.control.showExitButton = true;
+    this.control.bgColor = '#EEEEEE';
   }
 
   ngOnInit(): void {

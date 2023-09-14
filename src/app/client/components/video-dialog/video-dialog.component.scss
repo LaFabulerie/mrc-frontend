@@ -2,6 +2,7 @@
 
 ::ng-deep {
   .p-dialog {
+    width: 60%;
     box-shadow: none;
     .p-dialog-content {
       background-color: transparent;
@@ -11,6 +12,12 @@
     .video-player-wrapper {
       margin: auto;
       overflow: hidden;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .p-dialog{
+      width: 90%;
     }
   }
 

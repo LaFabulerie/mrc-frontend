@@ -83,7 +83,6 @@ export class CoreService {
 
 
   loadItems() {
-    console.log('loadItems')
     const queryParams = new URLSearchParams({
       expand: ['uses', 'room'].join(','),
       fields: ['name', 'uses', 'room.uuid', 'room.main_color', 'image', 'uuid', 'light_ctrl', 'light_pin'].join(',')

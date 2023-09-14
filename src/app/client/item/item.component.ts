@@ -39,7 +39,6 @@ export class ItemComponent implements OnInit {
       this.coreService.items$.subscribe(items => {
         if(!items || items.length == 0) return;
         this.item = items.find(item => item.uuid === uuid);
-        console.log(this.item);
         this.control.currentItem= this.item;
         this.useList = [...this.item!.uses];
         const limit = 10 - this.useList.length;

@@ -5,7 +5,7 @@
       <fa-icon [icon]="['fas', 'times']"  [inverse]="true" stackItemSize="1x"></fa-icon>
     </fa-stack>
   </div>
-  <vg-player (onPlayerReady)="onPlayerReady($event)" [style.width.px]="width" [style.height.px]="height" [style.border-radius.px]="6">
+  <vg-player (onPlayerReady)="onPlayerReady($event)" [style.border-radius.px]="6">
     <vg-overlay-play></vg-overlay-play>
     <video #media
         [vgMedia]="$any(media)"

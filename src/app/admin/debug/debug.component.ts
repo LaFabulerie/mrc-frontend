@@ -152,7 +152,6 @@ export class DebugComponent implements OnInit{
     if(this.currentEditingItem && this.itemLightForm.valid) {
       this.coreService.updateItem(this.currentEditingItem.uuid, this.itemLightForm.value).subscribe((updatedItem: Item) => {
         this.closeDialog();
-        console.log(updatedItem)
       });
     }
   }
@@ -168,7 +167,6 @@ export class DebugComponent implements OnInit{
     if(this.roomPositionForm.valid) {
       this.coreService.updateRoom(roomUuid, this.roomPositionForm.value).subscribe((updatedRoom) => {
         this.closeDialog();
-        console.log(updatedRoom);
       })
     }
   }

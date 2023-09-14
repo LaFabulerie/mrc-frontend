@@ -10,17 +10,17 @@
     <div class="px-6 py-3">
       <p class="line-height-3 pt-0 pb-2" [innerHtml]="use.description | safeHtml" style="font-family: var(--font-family-1);"></p>
       <div class="flex flex-wrap justify-content-between" style="font-family: var(--font-family-1);">
-        <div class="flex flex-column border-2 mb-2 p-4 relative shadow-2"
+        <div class="flex flex-column border-2 mb-4 p-4 relative shadow-2"
              [ngStyle]="{
               'border-color': basket.contains(service) ? 'var(--surface-700)' : 'var(--orange-mrc)',
               'opacity': basket.contains(service) ? '0.5' : '1.0',
             }"
-             style="width: 49%"
+             style="width: 46%"
             *ngFor="let service of use.services" >
           <span class="mt-1 font-bold">{{ service.title }} <span *ngIf="service.area"><i class="pi pi-map-marker mx-1"></i>{{service.area.name}}</span></span>
           <p class="mt-0 text-sm line-height-2" [innerHtml]="service.description | safeHtml"></p>
           <!-- <i class="pi pi-globe mr-2"></i> -->
-          <a href="{{service.url}}" style="color:inherit;word-break: break-all;" target="_blank" class="text-sm font-italic">{{ service.url }}</a>
+          <a href="{{service.url}}" style="color:inherit;word-break: break-all;" target="_blank" class="text-sm font-italic font-bold">{{ service.url }}</a>
 
           <span class="bg-white absolute cursor-pointer" style="top: 50%; right: 0; transform: translate(50%, -50%);"
                 (click)="basket.add(service)"

@@ -197,6 +197,7 @@ export class HomeComponent implements OnInit{
         resizable: false,
         draggable: false,
         showHeader: false,
+        styleClass: 'large-dialog',
         data: dialog.data,
       });
     }

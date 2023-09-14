@@ -2,7 +2,7 @@
 :host {
   font-family: var(--font-family-2)!important;
   .content {
-    height: calc(95% - var(--navbar-height));
+    height: calc(100% - var(--navbar-height));
     .border-bottom-1 {
       border-color: #1c096b;
     }

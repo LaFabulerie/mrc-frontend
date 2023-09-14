@@ -20,8 +20,9 @@ export class TurningTableDialogComponent implements OnInit {
     const next = this.config.data.next;
     const [urlName, roomName, uuid ] = next;
     this.control.currentRoom = this.coreService.rooms.find(room => room.uuid === uuid);
+
     // setTimeout(() => {
-    //   this.control.closeDialog(TurningTableDialogComponent);//, next);
+    //   this.control.closeDialog(TurningTableDialogComponent, next);
     // }, 3000);
   }
 

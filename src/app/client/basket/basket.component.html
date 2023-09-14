@@ -14,7 +14,7 @@
         <span>Télécharger votre liste de services</span>
       </span>
       <span *ngIf="mode === 'standalone'" (click)="print()">
-        <fa-icon [icon]="['fas', 'print']" class="mr-2" *ngIf="printLoading"></fa-icon>
+        <fa-icon [icon]="['fas', 'print']" class="mr-2" *ngIf="!printLoading"></fa-icon>
         <fa-icon [icon]="['fas', 'spinner']" class="mr-2" animation="spin" *ngIf="printLoading"></fa-icon>
         <span>Imprimer votre liste de services</span>
       </span>

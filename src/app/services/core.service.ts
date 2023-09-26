@@ -38,7 +38,7 @@ export class CoreService {
 
 
   getDistanceBetweenRooms(room1: Room, room2: Room): any {
-    return this.http.get(`${environment.apiHost}/r/rooms/distance/?from=${room1.uuid}&to=${room1.uuid}`);
+    return this.http.get(`${environment.apiHost}/r/rooms/distance/?from=${room1.uuid}&to=${room2.uuid}`);
   }
 
   updateRoom(uuid:string, data:any): Observable<Room> {

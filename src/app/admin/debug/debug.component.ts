@@ -47,11 +47,13 @@ export class DebugComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.rooms = this.coreService.rooms;
-    this.currentRoom = this.rooms.find(room => room.position ==0) || null;
-    this.rooms.forEach(room => {
-      this.lightValues[room.uuid] = false
-      room.items.forEach(item => this.lightValues[item.uuid] = false)
+    this.coreService.rooms$.subscribe((rooms: Room[]) => {
+      this.rooms = rooms;
+      this.currentRoom = this.rooms.find(room => room.position ==0) || null;
+      this.rooms.forEach(room => {
+        this.lightValues[room.uuid] = false
+        room.items.forEach(item => this.lightValues[item.uuid] = false)
+      });
     });
 
     this.mqtt.observe('mrc/debug').subscribe((message: any) => {

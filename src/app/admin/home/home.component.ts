@@ -24,6 +24,8 @@ export class HomeComponent{
   ) {
     this.authService.user$.subscribe((x) => (this.user = x));
     this.coreService.loadDigitalUses();
+    this.coreService.loadRooms();
+    this.coreService.loadItems();
 
   }
 

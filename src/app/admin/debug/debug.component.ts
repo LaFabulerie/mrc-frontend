@@ -66,7 +66,7 @@ export class DebugComponent implements OnInit{
     this.mqtt.observe('mrc/position').subscribe((message: any) => {
       const data = JSON.parse(message.payload.toString());
       this.canRotate = true;
-      this.currentRoom = this.rooms.find(room => room.slug === data.slug) || null;
+      this.currentRoom = this.rooms.find(room => room.uuid === data.uuid) || null;
     });
   }
 

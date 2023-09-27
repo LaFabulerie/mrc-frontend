@@ -15,7 +15,6 @@ export class DebugComponent implements OnInit{
   lightValues: {[Key: string]: boolean} = {}
   motorValue = true
   canRotate = true
-  position = '0'
   currentRoom: Room|null = null
 
   brakeOptions = [
@@ -25,10 +24,8 @@ export class DebugComponent implements OnInit{
   ];
 
   showItemLightDialog = false;
-  showRoomPositionDialog = false;
 
   itemLightForm: FormGroup
-  roomPositionForm: FormGroup
   currentEditingItem: Item|null = null;
 
   constructor(
@@ -40,27 +37,16 @@ export class DebugComponent implements OnInit{
       lightCtrl: ['', [Validators.required]],
       lightPin: ['', [Validators.required]]
     });
-
-    this.roomPositionForm = this.fb.group({
-      position: ['', [Validators.required]]
-    });
   }
 
   ngOnInit(): void {
     this.coreService.rooms$.subscribe((rooms: Room[]) => {
       this.rooms = rooms;
-      this.currentRoom = this.rooms.find(room => room.position ==0) || null;
+      this.currentRoom = this.rooms.find(room => room.slug == 'jardin') || null;
       this.rooms.forEach(room => {
         this.lightValues[room.uuid] = false
         room.items.forEach(item => this.lightValues[item.uuid] = false)
       });
-    });
-
-    this.mqtt.observe('mrc/debug').subscribe((message: any) => {
-      const data = JSON.parse(message.payload.toString());
-      if(data.hasOwnProperty('position')) {
-        this.position = data.position.toString()
-      }
     });
 
     this.mqtt.observe('mrc/position').subscribe((message: any) => {
@@ -73,10 +59,19 @@ export class DebugComponent implements OnInit{
   rotateTable(room: Room) {
     this.canRotate = false;
     this.coreService.getDistanceBetweenRooms(this.currentRoom!, room).subscribe((resp: any) => {
+      let dist = resp.distance;
+      const coeff = dist < 0 ? 1 : -1
+      // if (this.currentRoom!.slug === 'jardin' ) {
+      //   dist = dist + coeff;
+      // }
+
+      console.log(this.currentRoom!.slug, room.slug, dist)
+
       this.mqtt.unsafePublish(`mrc/rotate`, JSON.stringify({
           uuid: resp.uuid,
           slug: resp.slug,
-          distance: resp.distance,
+          distance: dist,
+          reverse: coeff > 0,
       }), { qos: 1, retain: false });
     });
   }
@@ -122,8 +117,12 @@ export class DebugComponent implements OnInit{
   }
 
   resetPosition() {
-    this.mqtt.unsafePublish(`mrc/debug`, JSON.stringify({
-      action: 'reset_position',
+    const garden = this.rooms.find(room => room.slug === 'jardin');
+
+    this.mqtt.unsafePublish(`mrc/rotate`, JSON.stringify({
+      uuid: garden!.uuid,
+      slug: garden!.slug,
+      distance: 0,
     }), { qos: 1, retain: false });
   }
 
@@ -135,10 +134,8 @@ export class DebugComponent implements OnInit{
 
   closeDialog() {
     this.showItemLightDialog = false;
-    this.showRoomPositionDialog = false;
     this.currentEditingItem = null;
     this.itemLightForm.reset();
-    this.roomPositionForm.reset();
   }
 
   editItemConfig(item: Item) {
@@ -155,21 +152,6 @@ export class DebugComponent implements OnInit{
       this.coreService.updateItem(this.currentEditingItem.uuid, this.itemLightForm.value).subscribe((updatedItem: Item) => {
         this.closeDialog();
       });
-    }
-  }
-
-  editRoomConfig(room: Room) {
-    this.showRoomPositionDialog = true;
-    this.roomPositionForm.patchValue({
-      position: room.position
-    });
-  }
-
-  saveRoomPosition(roomUuid: string) {
-    if(this.roomPositionForm.valid) {
-      this.coreService.updateRoom(roomUuid, this.roomPositionForm.value).subscribe((updatedRoom) => {
-        this.closeDialog();
-      })
     }
   }
 }

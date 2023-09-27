@@ -1,93 +1,80 @@
-  <div class="flex flex-wrap justify-content-between p-2">
-    <div class="flex flex-column justify-content-between m-1 mb-2 p-2 xl:w-3 lg:w-4 md:w-5 sm:w-full border-1 border-round border-400 shadow-5">
-      <div class="flex justify-content-between align-items-center mb-3">
-        <div class="flex  w-4 flex-column font-bold">
-          <span>Moteur</span>
-          <span class="text-xs">(GPIO : 25)</span>
-        </div>
-        <p-inputSwitch [(ngModel)]="motorValue" (onChange)="switchMotor()"></p-inputSwitch>
+<div class="flex flex-wrap justify-content-between p-2">
+  <div class="flex flex-column justify-content-between m-1 mb-2 p-2 xl:w-3 lg:w-4 md:w-5 sm:w-full border-1 border-round border-400 shadow-5">
+    <div class="flex justify-content-between align-items-center mb-3">
+      <div class="flex  w-4 flex-column font-bold">
+        <span>Moteur</span>
+        <span class="text-xs">(GPIO : 25)</span>
       </div>
-      <div class="flex justify-content-between align-items-center mb-3">
-        <div class="flex w-4 flex-column font-bold">
-          <span>Frein</span>
-          <span class="text-xs">(GPIO : 23)</span>
-        </div>
-        <p-selectButton [options]="brakeOptions" [multiple]="false" optionLabel="label" (onChange)="switchBrake($event)" styleClass="p-button-sm"></p-selectButton>
-      </div>
-      <div class="flex justify-content-between align-items-center mb-3">
-        <div class="flex w-4 flex-column font-bold">
-          <span>Position</span>
-        </div>
-        <p-badge [value]="position.toString()"  severity="info"></p-badge>
-        <p-badge [value]="currentRoom.slug" severity="success" *ngIf="currentRoom"></p-badge>
-        <span (click)="resetPosition()">Reset</span>
-      </div>
-      <div class="flex flex-wrap justify-content-around">
-        <div class="flex justify-content-between align-items-center mb-2 pl-2" *ngFor="let room of rooms" >
-          <div class="flex flex-column md:w-10rem xl:w-10rem">
-            <span>{{room.name}}</span>
-            <span class="text-xs">(Position : {{room.position}} <fa-icon [icon]="['fas', 'pen']" size="1x" class="cursor-pointer my-2" (click)="editRoomConfig(room)"></fa-icon>)</span>
-          </div>
-          <p-button label="Go" (click)="rotateTable(room)" styleClass="p-button-sm" [disabled]="!canRotate"></p-button>
-        </div>
-      </div>
+      <p-inputSwitch [(ngModel)]="motorValue" (onChange)="switchMotor()"></p-inputSwitch>
     </div>
-    <div class="flex flex-column justify-content-start m-1  mb-2 p-2 xl:w-2 lg:w-4 md:w-5 sm:w-full border-1 border-round border-400 shadow-5">
-      <div class="flex justify-content-between align-items-center mb-2 border-bottom-1 border-400 py-2">
-        <div class="flex w-6 flex-column">
-          <span>Reset client principal</span>
-        </div>
-        <span (click)="resetClient()">Reset</span>
+    <div class="flex justify-content-between align-items-center mb-3">
+      <div class="flex w-4 flex-column font-bold">
+        <span>Frein</span>
+        <span class="text-xs">(GPIO : 23)</span>
       </div>
-      <div class="flex justify-content-between align-items-center mb-2 border-bottom-1 border-400 py-2">
-        <div class="flex w-3 flex-column">
-          <span>Imprimer</span>
-        </div>
-        <p-button icon="pi pi-print" (click)="print()"></p-button>
-      </div>
+      <p-selectButton [options]="brakeOptions" [multiple]="false" optionLabel="label" (onChange)="switchBrake($event)" styleClass="p-button-sm"></p-selectButton>
     </div>
-    <div class="flex flex-column justify-content-start m-1  mb-2 p-2 xl:w-2 lg:w-4 md:w-5 sm:w-full border-1 border-round border-400 shadow-5" *ngFor="let room of rooms" >
-      <!--<div class="flex justify-content-between mb-3 border-bottom-1 border-400 pb-3">
-        <div class="flex flex-column" [ngClass]="{'font-bold' : room.lightPin != null}" [ngStyle]="{'color' :  room.lightPin != null ? room.mainColor : 'inherit'}">
+    <div class="flex justify-content-between align-items-center mb-3">
+      <div class="flex w-4 flex-column font-bold">
+        <span>Position</span>
+      </div>
+      <p-badge [value]="currentRoom.slug" severity="success" *ngIf="currentRoom"></p-badge>
+      <span class="cursor-pointer" (click)="resetPosition()">Reset</span>
+    </div>
+    <div class="flex flex-wrap justify-content-around">
+      <div class="flex justify-content-between align-items-center mb-2 pl-2" *ngFor="let room of rooms" >
+        <div class="flex flex-column md:w-10rem xl:w-10rem">
           <span>{{room.name}}</span>
-          <span class="text-xs">(GPIO : {{room.lightPin || 'ND'}})</span>
         </div>
-        <p-inputSwitch [(ngModel)]="lightValues[room.uuid]" (onChange)="switchRoomLight(room)" [disabled]="room.lightPin == null"></p-inputSwitch>
-      </div>-->
-      <div class="flex justify-content-between mb-3 border-bottom-1 border-400 pb-3">
-        <div class="m-1 font-bold">
-          {{room.name}}
-        </div>
-      </div>
-      <div class="flex justify-content-between align-items-center mb-2" *ngFor="let item of room.items" >
-        <div class="flex w-7 flex-column" [ngStyle]="{'color' :  item.lightCtrl > 0 ?  'green' : 'var(--surface-300)'}">
-          <span>{{item.name}}</span>
-          <span class="text-xs">(Ctrl: #{{item.lightCtrl || 'ND'}} Pin : {{item.lightPin || 'ND'}} <fa-icon [icon]="['fas', 'pen']" size="1x" class="cursor-pointer my-2" (click)="editItemConfig(item)"></fa-icon> )</span>
-        </div>
-        <p-inputSwitch [(ngModel)]="lightValues[item.uuid]" (onChange)="switchItemLight(item)" [disabled]="item.lightCtrl == null"></p-inputSwitch>
+        <p-button label="Go" (click)="rotateTable(room)" styleClass="p-button-sm" [disabled]="!canRotate"></p-button>
       </div>
     </div>
   </div>
-
-  <p-dialog [(visible)]="showItemLightDialog" [style]="{width: '50vw'}" (onHide)="closeDialog()">
-    <form [formGroup]="itemLightForm" (ngSubmit)="saveLightItemConfig()">
-      <div class="field">
-          <label for="lightCtrl">Numéro de contrôle</label>
-          <input id="lightCtrl" type="text" formControlName="lightCtrl" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+  <div class="flex flex-column justify-content-start m-1  mb-2 p-2 xl:w-2 lg:w-4 md:w-5 sm:w-full border-1 border-round border-400 shadow-5">
+    <div class="flex justify-content-between align-items-center mb-2 border-bottom-1 border-400 py-2">
+      <div class="flex w-6 flex-column">
+        <span>Reset client principal</span>
       </div>
-      <div class="field">
-          <label for="lightPin">Numéro de broche</label>
-          <input id="lightPin" type="text" formControlName="lightPin" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+      <span (click)="resetClient()">Reset</span>
+    </div>
+    <div class="flex justify-content-between align-items-center mb-2 border-bottom-1 border-400 py-2">
+      <div class="flex w-3 flex-column">
+        <span>Imprimer</span>
       </div>
-      <button pButton label="Annuler" (click)="closeDialog()"></button>
-      <button pButton label="Enregistrer" type="submit"></button>
+      <p-button icon="pi pi-print" (click)="print()"></p-button>
+    </div>
+  </div>
+  <div class="flex flex-column justify-content-start m-1  mb-2 p-2 xl:w-2 lg:w-4 md:w-5 sm:w-full border-1 border-round border-400 shadow-5" *ngFor="let room of rooms" >
+    <div class="flex justify-content-between mb-3 border-bottom-1 border-400 pb-3">
+      <div class="m-1 font-bold">
+        {{room.name}}
+      </div>
+    </div>
+    <div class="flex justify-content-between align-items-center mb-2" *ngFor="let item of room.items" >
+      <div class="flex w-7 flex-column" [ngStyle]="{'color' :  item.lightCtrl > 0 ?  'green' : 'var(--surface-300)'}">
+        <span>{{item.name}}</span>
+        <span class="text-xs">(Ctrl: #{{item.lightCtrl || 'ND'}} Pin : {{item.lightPin || 'ND'}} <fa-icon [icon]="['fas', 'pen']" size="1x" class="cursor-pointer my-2" (click)="editItemConfig(item)"></fa-icon> )</span>
+      </div>
+      <p-inputSwitch [(ngModel)]="lightValues[item.uuid]" (onChange)="switchItemLight(item)" [disabled]="item.lightCtrl == null"></p-inputSwitch>
+    </div>
+  </div>
+</div>
 
-    </form>
+<p-dialog [(visible)]="showItemLightDialog" [style]="{width: '50vw'}" (onHide)="closeDialog()">
+  <form [formGroup]="itemLightForm" (ngSubmit)="saveLightItemConfig()">
+    <div class="field">
+        <label for="lightCtrl">Numéro de contrôle</label>
+        <input id="lightCtrl" type="text" formControlName="lightCtrl" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+    <div class="field">
+        <label for="lightPin">Numéro de broche</label>
+        <input id="lightPin" type="text" formControlName="lightPin" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+    <button pButton label="Annuler" (click)="closeDialog()"></button>
+    <button pButton label="Enregistrer" type="submit"></button>
 
-  </p-dialog>
+  </form>
 
-  <p-dialog  [(visible)]="showRoomPositionDialog" [style]="{width: '50vw'}" (onHide)="closeDialog()">
-
-  </p-dialog>
+</p-dialog>
 
 

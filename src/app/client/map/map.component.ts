@@ -42,7 +42,7 @@ export class MapComponent extends HighlightableComponent implements OnInit{
   }
 
   goToRoom(roomName: string, uuid: string){
-    if(environment.executionMode === 'standalone'){
+    if(environment.executionMode === 'standalone' && roomName != 'jardin'){
       this.control.openDialog("TurningTableDialogComponent", {
         next: ['room', roomName, uuid]
       });

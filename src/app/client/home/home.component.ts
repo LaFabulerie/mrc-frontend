@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit{
 
     this.coreService.rooms$.subscribe(rooms => {
       if(!rooms || rooms.length == 0) return;
-      this.currentRoom = rooms.find(room => room.position == 0) || null;
+      this.currentRoom = rooms.find(room => room.slug == 'jardin') || null;
     });
 
     if(this.mqtt) {
@@ -150,17 +150,12 @@ export class HomeComponent implements OnInit{
       if(this.mqtt && this.control.navigationMode !== 'secondary' && this.executionMode === 'standalone' && room) {
         this.coreService.getDistanceBetweenRooms(this.currentRoom!, room).subscribe((resp: any) => {
           let dist = resp.distance;
-          if(room.slug !== 'jardin') {
-            this.mqtt!.unsafePublish(`mrc/rotate`, JSON.stringify({
-              uuid: resp.uuid,
-              slug: resp.slug,
-              distance: dist,
-              reverse: dist < 0,
-            }), { qos: 1, retain: false });
-          }
-          else {
-            this.control.closeDialog(TurningTableDialogComponent, ['room', resp.room, resp.uuid]);
-          }
+          this.mqtt!.unsafePublish(`mrc/rotate`, JSON.stringify({
+            uuid: resp.uuid,
+            slug: resp.slug,
+            distance: dist,
+            reverse: dist < 0,
+          }), { qos: 1, retain: false });
         });
       }
     });
@@ -246,6 +241,7 @@ export class HomeComponent implements OnInit{
         this.basket.clear();
         localStorage.clear();
         this.control.navigationMode = null;
+        this.currentRoom = this.coreService.rooms.find(room => room.slug == 'jardin') || null;
         this.control.navigate(['/']);
         if(this.mqtt && this.control.navigationMode !== 'secondary') {
           this.mqtt.unsafePublish(`mrc/mode`, JSON.stringify({

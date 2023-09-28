@@ -114,6 +114,7 @@ export class HomeComponent implements OnInit{
       this.mqtt.observe('mrc/position').subscribe((message: IMqttMessage) => {
         if(this.control.navigationMode !== 'secondary') {
           const resp = JSON.parse(message.payload.toString());
+          this.currentRoom = this.coreService.rooms.find(room => room.uuid === resp.uuid) || null;
           this.control.closeDialog(TurningTableDialogComponent, ['room', resp.room, resp.uuid]);
         }
       });

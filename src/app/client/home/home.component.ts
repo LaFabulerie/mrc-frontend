@@ -244,6 +244,8 @@ export class HomeComponent implements OnInit{
         this.currentRoom = this.coreService.rooms.find(room => room.slug == 'jardin') || null;
         this.control.navigate(['/']);
         if(this.mqtt && this.control.navigationMode !== 'secondary') {
+          this.mqtt.unsafePublish('mrc/reset', '', { qos: 1, retain: false })
+
           this.mqtt.unsafePublish(`mrc/mode`, JSON.stringify({
             mode: this.control.navigationMode,
             uniqueId: this.control.uniqueId,

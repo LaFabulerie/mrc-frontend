@@ -150,13 +150,17 @@ export class HomeComponent implements OnInit{
       if(this.mqtt && this.control.navigationMode !== 'secondary' && this.executionMode === 'standalone' && room) {
         this.coreService.getDistanceBetweenRooms(this.currentRoom!, room).subscribe((resp: any) => {
           let dist = resp.distance;
-          console.log('rotate', this.currentRoom, room, dist)
-          this.mqtt!.unsafePublish(`mrc/rotate`, JSON.stringify({
-            uuid: resp.uuid,
-            slug: resp.slug,
-            distance: dist,
-            reverse: dist < 0,
-          }), { qos: 1, retain: false });
+          if(room.slug !== 'jardin') {
+            this.mqtt!.unsafePublish(`mrc/rotate`, JSON.stringify({
+              uuid: resp.uuid,
+              slug: resp.slug,
+              distance: dist,
+              reverse: dist < 0,
+            }), { qos: 1, retain: false });
+          }
+          else {
+            this.control.closeDialog(TurningTableDialogComponent, ['room', resp.room, resp.uuid]);
+          }
         });
       }
     });

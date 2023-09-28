@@ -149,12 +149,12 @@ export class HomeComponent implements OnInit{
       if(this.mqtt && this.control.navigationMode !== 'secondary' && this.executionMode === 'standalone' && room) {
         this.coreService.getDistanceBetweenRooms(this.currentRoom!, room).subscribe((resp: any) => {
           let dist = resp.distance;
-          const coeff = dist < 0 ? 1 : -1
+          console.log('rotate', this.currentRoom, room, dist)
           this.mqtt!.unsafePublish(`mrc/rotate`, JSON.stringify({
             uuid: resp.uuid,
             slug: resp.slug,
             distance: dist,
-            reverse: coeff > 0,
+            reverse: dist < 0,
           }), { qos: 1, retain: false });
         });
       }

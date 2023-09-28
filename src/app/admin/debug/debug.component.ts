@@ -60,18 +60,12 @@ export class DebugComponent implements OnInit{
     this.canRotate = false;
     this.coreService.getDistanceBetweenRooms(this.currentRoom!, room).subscribe((resp: any) => {
       let dist = resp.distance;
-      const coeff = dist < 0 ? 1 : -1
-      // if (this.currentRoom!.slug === 'jardin' ) {
-      //   dist = dist + coeff;
-      // }
-
-      console.log(this.currentRoom!.slug, room.slug, dist)
 
       this.mqtt.unsafePublish(`mrc/rotate`, JSON.stringify({
           uuid: resp.uuid,
           slug: resp.slug,
           distance: dist,
-          reverse: coeff > 0,
+          reverse: dist < 0,
       }), { qos: 1, retain: false });
     });
   }
@@ -123,6 +117,7 @@ export class DebugComponent implements OnInit{
       uuid: garden!.uuid,
       slug: garden!.slug,
       distance: 0,
+      reverse: false,
     }), { qos: 1, retain: false });
   }
 

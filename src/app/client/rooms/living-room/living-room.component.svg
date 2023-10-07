@@ -11150,6 +11150,7 @@ style="cursor: pointer;" (mouseenter)="activate('1fdde539-1bb3-48b2-8d8e-80e5069
 	</g>
 </g>
 <g id="canape_x5F_Roll_x5F_On"
+style="cursor: pointer;"
 [attr.display]="isActive('1fdde539-1bb3-48b2-8d8e-80e5069aeba5') ? 'inline' : 'none'"
 (mouseleave)="release('1fdde539-1bb3-48b2-8d8e-80e5069aeba5')"
 (click)="goToItem('1fdde539-1bb3-48b2-8d8e-80e5069aeba5')">
@@ -11364,6 +11365,7 @@ style="cursor: pointer;"
 	<path class="st12" d="M283.7,315.1c0,0.9-3.7,1.6-8.3,1.6s-8.3-0.7-8.3-1.6s3.7-1.6,8.3-1.6S283.7,314.2,283.7,315.1z"/>
 </g>
 <g id="biblio_x5F_Roll_x5F_On"
+style="cursor: pointer;"
 [attr.display]="isActive('eb7299ee-aafd-41be-b33e-915fa71825be') ? 'inline' : 'none'"
 (mouseleave)="release('eb7299ee-aafd-41be-b33e-915fa71825be')"
 (click)="goToItem('eb7299ee-aafd-41be-b33e-915fa71825be')">

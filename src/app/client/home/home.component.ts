@@ -201,6 +201,7 @@ export class HomeComponent implements OnInit{
         draggable: false,
         showHeader: false,
         styleClass: 'large-dialog',
+        maskStyleClass: 'dark-dialog-mask',
         data: dialog.data,
       });
     }

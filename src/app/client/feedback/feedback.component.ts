@@ -55,20 +55,20 @@ export class FeedbackComponent implements OnInit {
     console.log('feedback init');
     this.control.navigationMode$.subscribe(v => this.controlSetup());
 
-    this.feedbackService.createFeedback().subscribe(feedback => {
-      this.feedbackId = feedback.id;
-      this.feedbackService.getQuestions().subscribe(questions => {
-        console.log('questions', questions);
-        this.questions = questions;
-        this.currentQuestionIndex = 0;
-        this.currentQuestion = questions[this.currentQuestionIndex];
+    this.feedbackService.questions$.subscribe(questions => {
+      this.questions = questions;
+      this.currentQuestionIndex = 0;
+      this.currentQuestion = questions[this.currentQuestionIndex];
+      this.answerForm.patchValue({
+        questionId: this.currentQuestion.id,
+      });
+      this.feedbackService.createFeedback().subscribe(feedback => {
+        this.feedbackId = feedback.id;
         this.answerForm.patchValue({
           feedbackId: this.feedbackId,
-          questionId: this.currentQuestion.id,
         });
       });
     });
-
   }
 
   answerValid() {

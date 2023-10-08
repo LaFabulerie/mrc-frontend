@@ -9,6 +9,9 @@ import { Answer, Question } from '../models/feedback';
 })
 export class FeedbackService {
 
+  private questionsSubject: BehaviorSubject<Question[]> = new BehaviorSubject<Question[]>([]);
+  public questions$: Observable<Question[]> = this.questionsSubject.asObservable();
+
 
   constructor(
     private http: HttpClient,
@@ -19,8 +22,10 @@ export class FeedbackService {
     return this.http.post<{id: string}>(`${environment.apiHost}/feedback/feedbacks/`, {});
   }
 
-  getQuestions(): Observable<Question[]> {
-    return this.http.get<Question[]>(`${environment.apiHost}/feedback/questions`)
+  loadQuestions() {
+    this.http.get<Question[]>(`${environment.apiHost}/feedback/questions`).subscribe(questions => {
+      this.questionsSubject.next(questions);
+    })
   }
 
   createAnswer(answer: Answer): any {

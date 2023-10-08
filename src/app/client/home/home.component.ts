@@ -13,6 +13,7 @@ import {MessageService} from "primeng/api";
 import { CoreService } from 'src/app/services/core.service';
 import { Room } from 'src/app/models/core';
 import { FeedbackComponent } from '../feedback/feedback.component';
+import { FeedbackService } from 'src/app/services/feedback.service';
 
 @Component({
   selector: 'app-home',
@@ -38,6 +39,7 @@ export class HomeComponent implements OnInit{
     private dialogService: DialogService,
     private messageService: MessageService,
     private coreService: CoreService,
+    private feedbackService: FeedbackService,
   ) {
     if(this.executionMode === 'standalone' && environment.mqttBrokenHost) {
       this.mqtt = inject(MqttService);
@@ -49,6 +51,7 @@ export class HomeComponent implements OnInit{
     this.coreService.loadRooms();
     this.coreService.loadItems();
     this.coreService.loadDigitalUses();
+    this.feedbackService.loadQuestions();
 
     this.coreService.rooms$.subscribe(rooms => {
       if(!rooms || rooms.length == 0) return;

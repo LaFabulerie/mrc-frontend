@@ -23,6 +23,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import {RippleModule} from "primeng/ripple";
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -62,6 +63,7 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering'
     SafeHtmlPipe,
     SelectButtonModule,
     CheckboxModule,
+    RadioButtonModule,
     InputSwitchModule,
     RippleModule,
 

@@ -17,6 +17,7 @@ import { LivingRoomComponent } from './rooms/living-room/living-room.component';
 import { HighlightableComponent } from './components/highlightable/highlightable.component';
 import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
 import { GardenComponent } from './rooms/garden/garden.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { GardenComponent } from './rooms/garden/garden.component';
     HighlightableComponent,
     ModeSelectorComponent,
     GardenComponent,
+    FeedbackComponent,
   ],
   imports: [
     SharedModule,

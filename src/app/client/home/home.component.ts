@@ -12,6 +12,7 @@ import { ExitDialogComponent } from '../components/exit-dialog/exit-dialog.compo
 import {MessageService} from "primeng/api";
 import { CoreService } from 'src/app/services/core.service';
 import { Room } from 'src/app/models/core';
+import { FeedbackComponent } from '../feedback/feedback.component';
 
 @Component({
   selector: 'app-home',
@@ -177,7 +178,12 @@ export class HomeComponent implements OnInit{
           this.mqtt.unsafePublish(`mrc/dialog`, JSON.stringify(dialog), { qos: 1, retain: false });
         }
       }
+    });
 
+    this.control.forceExit$.subscribe(force => {
+      if(force) {
+        this.resetApp();
+      }
     });
   }
 
@@ -229,6 +235,23 @@ export class HomeComponent implements OnInit{
     }
   }
 
+  private resetApp() {
+    this.basket.clear();
+    localStorage.clear();
+    this.control.navigationMode = null;
+    this.currentRoom = this.coreService.rooms.find(room => room.slug == 'jardin') || null;
+    this.control.navigate(['/']);
+    if(this.mqtt && this.control.navigationMode !== 'secondary') {
+      this.mqtt.unsafePublish('mrc/reset', '', { qos: 1, retain: false })
+
+      this.mqtt.unsafePublish(`mrc/mode`, JSON.stringify({
+        mode: this.control.navigationMode,
+        uniqueId: this.control.uniqueId,
+        type: 'RST',
+      }), { qos: 1, retain: false });
+    }
+  }
+
   exit() {
     let ref = this.dialogService.open(ExitDialogComponent, {
       closable: false,
@@ -239,19 +262,10 @@ export class HomeComponent implements OnInit{
     });
     ref.onClose.subscribe((resp) => {
       if(resp === true) {
-        this.basket.clear();
-        localStorage.clear();
-        this.control.navigationMode = null;
-        this.currentRoom = this.coreService.rooms.find(room => room.slug == 'jardin') || null;
-        this.control.navigate(['/']);
-        if(this.mqtt && this.control.navigationMode !== 'secondary') {
-          this.mqtt.unsafePublish('mrc/reset', '', { qos: 1, retain: false })
-
-          this.mqtt.unsafePublish(`mrc/mode`, JSON.stringify({
-            mode: this.control.navigationMode,
-            uniqueId: this.control.uniqueId,
-            type: 'RST',
-          }), { qos: 1, retain: false });
+        if(this.control.navigationMode !== 'secondary' && this.control.navigationMode !== 'primary') {
+          this.router.navigate(['feedback']);
+        } else {
+          this.resetApp();
         }
       } else if(resp[0] === 'basket') {
         this.control.navigate(['basket']);

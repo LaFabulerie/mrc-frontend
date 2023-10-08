@@ -16,6 +16,7 @@ import { environment } from 'src/environments/environment';
 import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
 import {navigationModeGuard} from "../common/navigation-mode.guard";
 import {GardenComponent} from "./rooms/garden/garden.component";
+import { FeedbackComponent } from './feedback/feedback.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, children: [
@@ -23,6 +24,7 @@ const routes: Routes = [
     { path: 'mode', component: ModeSelectorComponent},
     { path: 'door', component: DoorComponent, canActivate: [navigationModeGuard] },
     { path: 'map', component: MapComponent, canActivate: [navigationModeGuard]},
+    { path: 'feedback', component: FeedbackComponent, canActivate: [navigationModeGuard]},
     { path: 'room', children: [
       { path: 'salle-de-bain/:uuid', component: BathroomComponent},
       { path: 'chambre/:uuid', component: BedroomComponent},

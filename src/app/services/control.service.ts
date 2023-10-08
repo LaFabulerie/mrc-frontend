@@ -37,6 +37,9 @@ export class RemoteControlService {
   public currentItemSubject: BehaviorSubject<Item|null> = new BehaviorSubject<Item|null>(null);
   public currentItem$: Observable<Item|null> = this.currentItemSubject.asObservable();
 
+  public forceExitSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public forceExit$: Observable<boolean> = this.forceExitSubject.asObservable();
+
   constructor() {
     const storedUniqueId = localStorage.getItem('uniqueId');
     if(storedUniqueId){
@@ -94,6 +97,10 @@ export class RemoteControlService {
     return this.showExitButtonSubject.value;
   }
 
+  get showListButton() {
+    return this.showListButtonSubject.value;
+  }
+
   get showMapButton() {
     return this.showMapButtonSubject.value;
   }
@@ -126,6 +133,10 @@ export class RemoteControlService {
 
   destroyUniqueID() {
     localStorage.removeItem('uniqueId');
+  }
+
+  forceExit() {
+    this.forceExitSubject.next(true);
   }
 
 }

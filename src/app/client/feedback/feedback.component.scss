@@ -1,0 +1,27 @@
+::ng-deep {
+
+  .choice-selected {
+    background-color: var(--blue-mrc) ;
+    color: white;
+  }
+
+  p-checkbox, p-radiobutton {
+    display: none!important;
+  }
+
+  textarea {
+    resize: none;
+    border: solid 3px var(--orange-mrc);
+
+    font-size: 1.5rem;
+    font-family: var(--font-family-1);
+    color: var(--blue-mrc);
+
+    &:focus {
+      outline: none;
+      border: solid 4px var(--orange-mrc);
+    }
+  }
+
+
+}

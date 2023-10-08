@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Room } from 'src/app/models/core';
 import { RemoteControlService } from 'src/app/services/control.service';
-import { TurningTableDialogComponent } from '../components/turning-table-dialog/turning-table-dialog.component';
 import { environment } from 'src/environments/environment';
-import { HighlightableComponent } from '../components/highlightable/highlightable.component';
-import { CoreService } from 'src/app/services/core.service';
+import { HighlightableComponent } from '../components/highlightable/highlightable.component';;
 
 @Component({
   selector: 'app-map',
@@ -14,12 +12,9 @@ import { CoreService } from 'src/app/services/core.service';
 export class MapComponent extends HighlightableComponent implements OnInit{
 
   rooms: Room[] = [];
-  showBathroom: boolean = false;
-  showBedroom: boolean = false;
 
   constructor(
     private control: RemoteControlService,
-    private coreService: CoreService,
   ) {
     super();
     this.controlSetup();

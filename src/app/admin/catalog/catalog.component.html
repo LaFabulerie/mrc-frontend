@@ -2,9 +2,24 @@
   <div class="flex-1 px-2 border-right-2" style="border-color: var(--green-mrc);">
     <div class="w-full my-3 flex justify-content-between align-items-center">
       <div>
-        <span class="mr-3 header">Catalogue des fiches usages</span>
+        <span class="mr-3 header">Liste des usages</span>
       </div>
-      <p-button icon="pi pi-plus" label="Ajouter un usage" styleClass="p-button-outlined p-button-primary p-button-sm" (click)="newDigitalUse()"></p-button>
+      <span class="flex align-items-center">
+        <p-button icon="pi pi-plus" label="Ajouter un usage" size="small" severity="primary" (click)="newDigitalUse()"></p-button>
+          <p-fileUpload mode="basic"
+          #fileUpload
+          name="import[]"
+          [url]="uploadUrl"
+          accept="text/csv" [maxFileSize]="1000000"
+          (onUpload)="onUpload($event)"
+          (onError)="onUploadError($event)"
+          [auto]="true"
+          chooseIcon="pi pi-file-import"
+          chooseLabel="Importer"></p-fileUpload>
+        <p-button icon="pi pi-file-export" label="Exporter" size="small" severity="primary" (click)="export()"></p-button>
+
+      </span>
+
     </div>
     <div class="p-input w-full">
       <div class="p-inputgroup">
@@ -50,7 +65,7 @@
       <div *ngIf="digitalUseCreation">
         <span class="mr-3 header ">Nouvel usage</span>
       </div>
-      <p-button icon="pi pi-trash" label="Supprimer" styleClass="p-button-outlined p-button-danger p-button-sm" (click)="removeDigitalUse($event)"  *ngIf="selectedNode"></p-button>
+      <p-button icon="pi pi-trash" size="small" severity="danger" [outlined]="true" (click)="removeDigitalUse($event)"  *ngIf="selectedNode"></p-button>
     </div>
     <div>
       <app-edit-digital-use [useUuid]="selectedNode.data" (onSave)="useSaved($event)" *ngIf="selectedNode"></app-edit-digital-use>

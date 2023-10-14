@@ -8,7 +8,10 @@ import {EditDigitalUseComponent} from "./components/edit-digital-use/edit-digita
 import {NewDigitalUseComponent} from "./components/new-digital-use/new-digital-use.component";
 import {TagPickerDialogComponent} from "./components/tag-picker-dialog/tag-picker-dialog.component";
 import {DigitalServiceFormDialogComponent} from "./components/digital-service-form-dialog/digital-service-form-dialog.component";
-
+import { MenubarModule } from 'primeng/menubar';
+import { ImportExportDialogComponent } from './components/import-export-dialog/import-export-dialog.component';
+import { TreeSelectModule } from 'primeng/treeselect';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   declarations: [
@@ -19,10 +22,14 @@ import {DigitalServiceFormDialogComponent} from "./components/digital-service-fo
     NewDigitalUseComponent,
     TagPickerDialogComponent,
     DigitalServiceFormDialogComponent,
+    ImportExportDialogComponent,
   ],
   imports: [
     SharedModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    MenubarModule,
+    TreeSelectModule,
+    FileUploadModule,
   ]
 })
 export class AdminModule { }

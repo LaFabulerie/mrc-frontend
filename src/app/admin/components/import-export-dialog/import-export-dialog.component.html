@@ -1,0 +1,39 @@
+<div *ngIf="action === 'export'">
+  <p-treeSelect
+    class="md:w-20rem w-full"
+    containerStyleClass="w-full"
+    [(ngModel)]="selectedNodes"
+    [options]="nodes"
+    placeholder="Sélectionner les services"
+    [filter]="true"
+    [filterInputAutoFocus]="true"
+    filterBy="label"
+    appendTo="body"
+    selectionMode="checkbox"
+    (onNodeSelect)="updateCount()"
+    (onNodeUnselect)="updateCount()"
+    >
+  </p-treeSelect>
+
+  <p-button
+  styleClass="mt-4"
+    icon="pi pi-file-export"
+    [label]="getButtonLabel()"
+    size="small" severity="primary"
+    (click)="performAction()"
+    [disabled]="waiting || (selectedUseCount ===0 && selectedServiceCount ===0)"></p-button>
+
+  <ul>
+    <ng-container *ngFor="let selectedNode of selectedNodes">
+      <li *ngIf="selectedNode.type === 'use'">
+        {{selectedNode.label}}
+        <ul *ngIf="selectedNode.children">
+          <li *ngFor="let selectedService of selectedNode.children">
+            {{selectedService.label}}
+          </li>
+        </ul>
+      </li>
+    </ng-container>
+  </ul>
+</div>
+

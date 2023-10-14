@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ConfirmationService, TreeNode } from 'primeng/api';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { DigitalUse, Item } from 'src/app/models/core';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { CoreService } from 'src/app/services/core.service';
+import { ImportExportDialogComponent } from '../components/import-export-dialog/import-export-dialog.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { environment } from 'src/environments/environment';
+import { FileUpload } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-catalog',
@@ -11,6 +15,8 @@ import { CoreService } from 'src/app/services/core.service';
   styleUrls: ['./catalog.component.scss']
 })
 export class CatalogComponent implements OnInit{
+
+  @ViewChild('fileUpload') fileUpload!: FileUpload;
 
   user?: User | null;
 
@@ -26,10 +32,14 @@ export class CatalogComponent implements OnInit{
   newCreatedUse: DigitalUse | null = null;
   updatedUse: DigitalUse | null = null;
 
+  uploadUrl = `${environment.apiHost}/w/import/`
+
   constructor(
     private coreService: CoreService,
     private confirmationService: ConfirmationService,
     private authService: AuthService,
+    private dialogService: DialogService,
+    private messageService: MessageService,
   ) {
     this.authService.user$.subscribe((x) => (this.user = x));
   }
@@ -46,17 +56,17 @@ export class CatalogComponent implements OnInit{
           leaf: true
         }
         use.items.forEach((item: Item) => {
-          let room = this.data.find((node: TreeNode) => node.type === 'room' && node.data === item.room.id)
+          let room = this.data.find((node: TreeNode) => node.type === 'room' && node.data === item.room.uuid)
           if(!room) {
             this.data.push({
               label: item.room.name,
-              data: item.room.id,
+              data: item.room.uuid,
               type: 'room',
               expandedIcon: 'pi pi-folder-open',
               collapsedIcon: 'pi pi-folder',
               children: [{
                 label: item.name,
-                data: item.id,
+                data: item.uuid,
                 type: 'item',
                 expandedIcon: 'pi pi-folder-open',
                 collapsedIcon: 'pi pi-folder',
@@ -64,11 +74,11 @@ export class CatalogComponent implements OnInit{
               }]
             });
           } else {
-            let _item = room.children!.find((node: TreeNode) => node.type === 'item' && node.data === item.id);
+            let _item = room.children!.find((node: TreeNode) => node.type === 'item' && node.data === item.uuid);
             if(!_item) {
               room.children!.push({
                 label: item.name,
-                data: item.id,
+                data: item.uuid,
                 type: 'item',
                 expandedIcon: 'pi pi-folder-open',
                 collapsedIcon: 'pi pi-folder',
@@ -85,10 +95,10 @@ export class CatalogComponent implements OnInit{
         this._selectFirstUseNode(this.data);
         this.firstLoad = false;
       } else if(this.newCreatedUse) {
-        this._selectNodeById(this.data, this.newCreatedUse.id);
+        this._selectNodeById(this.data, this.newCreatedUse.uuid);
         this.newCreatedUse = null;
       } else if(this.updatedUse) {
-        this._selectNodeById(this.data, this.updatedUse.id);
+        this._selectNodeById(this.data, this.updatedUse.uuid);
         this.updatedUse = null;
       }
     })
@@ -110,13 +120,13 @@ export class CatalogComponent implements OnInit{
     return false;
   }
 
-  private _selectNodeById(nodes: TreeNode[], id: number) {
+  private _selectNodeById(nodes: TreeNode[], uuid: string) {
     for(let i = 0; i < nodes.length; i++) {
-      if(nodes[i].type === 'use' && nodes[i].data === id) {
+      if(nodes[i].type === 'use' && nodes[i].data === uuid) {
         this.selectedNode = nodes[i];
         return true;
       } else if(nodes[i].children) {
-        const res = this._selectNodeById(nodes[i].children!, id);
+        const res = this._selectNodeById(nodes[i].children!, uuid);
         if(res) {
           nodes[i].expanded = true;
           return true;
@@ -150,7 +160,7 @@ export class CatalogComponent implements OnInit{
   }
 
   onSuggestionSelect(use: DigitalUse){
-    this._selectNodeById(this.data, use.id);
+    this._selectNodeById(this.data, use.uuid);
   }
 
 
@@ -198,6 +208,60 @@ export class CatalogComponent implements OnInit{
       this.newCreatedUse = use;
       this.coreService.loadDigitalUses();
     });
+  }
+
+  import(){
+    const ref = this.dialogService.open(ImportExportDialogComponent, {
+      header: 'Importer',
+      width: '70%',
+      contentStyle: { 'max-height': '500px', overflow: 'auto' },
+      baseZIndex: 10000,
+      position: "top",
+      data: {
+        action: 'import'
+      }
+    });
+    ref.onClose.subscribe(_ => {
+      this.coreService.loadDigitalUses();
+    });
+  }
+
+  export(){
+    const ref = this.dialogService.open(ImportExportDialogComponent, {
+      header: 'Exporter',
+      width: '70%',
+      contentStyle: { 'max-height': '500px', overflow: 'auto' },
+      baseZIndex: 10000,
+      position: "top",
+      data: {
+        action: 'export'
+      }
+    });
+    ref.onClose.subscribe(_ => {
+      this.coreService.loadDigitalUses();
+    });
+  }
+
+  onUpload($event: any){
+    this.messageService.add({ severity: 'success', summary: 'Import réussi', detail: 'Le fichier a bien été importé' });
+    this.fileUpload.clear();
+    this.coreService.loadDigitalUses();
+  }
+
+  onUploadError($event: any){
+    if($event.error.status === 500) {
+      this.messageService.add({ severity: 'error', summary: 'Erreur d\'import', detail: 'Une erreur est survenue lors de l\'import.\n\
+       Veuillez vérifier le format de votre fichier d\'import et réessayer' });
+    }
+    else if($event.error.error.messages && $event.error.error.messages.length > 5) {
+      this.messageService.add({ severity: 'error', summary: 'Erreur d\'import', detail: 'Plus de 5 services existent déjà.\n\
+       Veuillez vérifier votre fichier d\'import et/ou supprimer les services que vous souhaitez ré-impoter' });
+    } else {
+      for(let msg of $event.error.error.messages) {
+        this.messageService.add({ severity: 'error', summary: 'Erreur d\'import', detail: msg, sticky: true });
+      }
+    }
+    this.fileUpload.clear();
   }
 
 }

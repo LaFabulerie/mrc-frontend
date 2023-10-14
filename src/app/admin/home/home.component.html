@@ -1,36 +1,18 @@
 
-<div class="pt-2 pb-3 px-6 flex align-items-center justify-content-between relative lg:static" style="background-color: var(--green-mrc);">
+<div class="pt-2 pb-3 px-6 flex align-items-center justify-content-between surface-ground">
   <img src="assets/img/logo_mrc.svg" alt="Image" class="mr-0 lg:mr-4 border-round-md  md:w-1">
   <a pRipple class="cursor-pointer block lg:hidden text-700" pStyleClass="@next" enterClass="hidden" leaveToClass="hidden" [hideOnOutsideClick]="true">
       <i class="pi pi-bars text-4xl"></i>
   </a>
   <div class="hidden lg:flex absolute lg:static left-0 top-100 z-1 shadow-2 lg:shadow-none w-full">
-      <ul class="list-none p-0 m-0 flex">
-          <li>
-              <a routerLink="/admin/catalogue"  pRipple class="text-gray-100 flex px-6 p-3 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150">
-                  <fa-icon [icon]="['fas', 'rectangle-list']" class="mr-2"></fa-icon>
-                  <span>Le catalogue</span>
-              </a>
-          </li>
-          <li class="lg:relative">
-            <a routerLink="/admin/configuration"  pRipple class="text-gray-100 flex px-6 p-3 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150">
-              <fa-icon [icon]="['fas', 'gears']" class="mr-2"></fa-icon>
-              <span>Configuration</span>
-            </a>
-          </li>
-          <li class="lg:relative">
-            <a routerLink="/admin/debug" pRipple class="text-gray-100 flex px-6 p-3 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150">
-              <fa-icon [icon]="['fas', 'gears']" class="mr-2"></fa-icon>
-              <span>Debug</span>
-            </a>
-          </li>
-      </ul>
-  </div>
-  <div class="flex w-2 justify-content-end  align-items-center text-gray-100" *ngIf="user">
-    {{user.firstName}} {{user.lastName}}
-    <i class="pi pi-sign-out cursor-pointer ml-2" (click)="signout()"></i>
+    <p-menubar [model]="menuItems" class="w-full" styleClass="border-none surface-ground">
+      <ng-template pTemplate="end">
+        <p-button icon="pi pi-fw pi-sign-out" (click)="signout()" size="small" severity="secondary" [outlined]="true"></p-button>
+      </ng-template>
+    </p-menubar>
   </div>
 </div>
-<div class="surface-section">
+<div class="surface-section px-2">
   <router-outlet></router-outlet>
 </div>
+<p-toast></p-toast>

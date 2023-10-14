@@ -2,5 +2,10 @@
   height: calc(100% - var(--navbar-height));
   display: flex;
   justify-content: center;
+
   //DO NOT USE ALIGN-ITEMS: CENTER, IT WILL BREAK THE LAYOUT
+
+  svg {
+    height: 100%!important;
+  }
 }

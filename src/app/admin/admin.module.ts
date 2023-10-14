@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from '../common/shared.module';
 import { CatalogComponent } from './catalog/catalog.component';
-import { SettingsComponent } from './settings/settings.component';
 import { HomeComponent } from './home/home.component';
 import { DebugComponent } from './debug/debug.component';
 import {EditDigitalUseComponent} from "./components/edit-digital-use/edit-digital-use.component";
@@ -15,7 +14,6 @@ import {DigitalServiceFormDialogComponent} from "./components/digital-service-fo
   declarations: [
     HomeComponent,
     CatalogComponent,
-    SettingsComponent,
     DebugComponent,
     EditDigitalUseComponent,
     NewDigitalUseComponent,

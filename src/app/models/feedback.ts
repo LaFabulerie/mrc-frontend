@@ -7,7 +7,7 @@ export type Choice = {
 
 
 export type Question = {
-  id: string;
+  id?: string;
   text: string;
   allowComment: boolean;
   type: 'text' | 'radio' | 'checkbox';

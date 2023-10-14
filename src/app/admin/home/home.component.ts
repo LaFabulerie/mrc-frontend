@@ -5,6 +5,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { CoreService } from 'src/app/services/core.service';
+import { FeedbackService } from 'src/app/services/feedback.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -25,12 +26,13 @@ export class HomeComponent implements OnInit{
     private authService: AuthService,
     private coreService: CoreService,
     private router: Router,
-    private dialogService: DialogService,
+    private feedbackService: FeedbackService,
   ) {
     this.authService.user$.subscribe((x) => (this.user = x));
     this.coreService.loadDigitalUses();
     this.coreService.loadRooms();
     this.coreService.loadItems();
+    this.feedbackService.loadQuestions();
   }
 
   ngOnInit(): void {
@@ -47,12 +49,12 @@ export class HomeComponent implements OnInit{
           {
             label: 'Questions',
             icon: 'pi pi-fw pi-question',
-            routerLink: ['/admin/feebdack/questions'],
+            routerLink: ['/admin/feedback/questions'],
           },
           {
             label: 'Retours usagers',
             icon: 'pi pi-fw pi-thumbs-up',
-            routerLink: ['/admin/feebdack/aswers'],
+            routerLink: ['/admin/feedback/answers'],
           },
         ],
       },

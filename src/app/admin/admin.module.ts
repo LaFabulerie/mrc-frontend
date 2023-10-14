@@ -12,7 +12,11 @@ import { MenubarModule } from 'primeng/menubar';
 import { ImportExportDialogComponent } from './components/import-export-dialog/import-export-dialog.component';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { FileUploadModule } from 'primeng/fileupload';
-
+import { AnswersComponent } from './feedback/answers/answers.component';
+import { QuestionsComponent } from './feedback/questions/questions.component';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InplaceModule } from 'primeng/inplace';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -23,6 +27,9 @@ import { FileUploadModule } from 'primeng/fileupload';
     TagPickerDialogComponent,
     DigitalServiceFormDialogComponent,
     ImportExportDialogComponent,
+    QuestionsComponent,
+    AnswersComponent,
+    AnswersComponent,
   ],
   imports: [
     SharedModule,
@@ -30,6 +37,9 @@ import { FileUploadModule } from 'primeng/fileupload';
     MenubarModule,
     TreeSelectModule,
     FileUploadModule,
+    InputNumberModule,
+    ConfirmDialogModule,
+    InplaceModule,
   ]
 })
 export class AdminModule { }

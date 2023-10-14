@@ -4,6 +4,7 @@ import { Item, Room } from 'src/app/models/core';
 import { CoreService } from 'src/app/services/core.service';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-debug',
@@ -33,10 +34,13 @@ export class DebugComponent implements OnInit{
   constructor(
     private coreService: CoreService,
     private fb: FormBuilder,
+    private router: Router,
   ) {
-    if(environment.mqttBrokerHost) {
-      this.mqtt = inject(MqttService);
+    if(!environment.mqttBrokerHost || environment.houseless) {
+      this.router.navigate(['/admin']);
     }
+
+    this.mqtt = inject(MqttService);
     this.itemLightForm = this.fb.group({
       lightCtrl: ['', [Validators.required]],
       lightPin: ['', [Validators.required]]

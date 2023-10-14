@@ -1,0 +1,57 @@
+<div class="flex">
+  <div class="flex-1 px-2 border-right-2" style="border-color: var(--green-mrc);">
+    <div class="w-full my-3 flex justify-content-between align-items-center">
+      <span class="mr-3 text-4xl">Liste des questions</span>
+      <p-button icon="pi pi-plus" label="Ajouter" (click)="newQuestion()"></p-button>
+    </div>
+    <div class="p-3 text-2xl cursor-pointer surface-100 mb-2 border-round" *ngFor="let question of questions"
+      [class.text-900]="currentQuestion?.id == question.id" [class.surface-400]="currentQuestion?.id === question.id"
+      (click)="setCurrentQuestion(question)">
+      {{ question.order }}. {{ question.text }}
+    </div>
+  </div>
+  <div class="flex-1 px-2" *ngIf="currentQuestion">
+    <div class="w-full my-3 flex justify-content-between align-items-center">
+      <input type="number" min="0" pInputText [(ngModel)]="currentQuestion.order" class="w-1"
+        (ngModelChange)="updateOrder()" />
+      <input type="text" pInputText [(ngModel)]="currentQuestion.text" class="w-9" (ngModelChange)="updateText()"
+        placeholder="Intitulé de votre question" />
+      <p-button icon="pi pi-trash" label="Supprimer" severity="danger" (click)="removeCurrentQuestion($event)"
+        *ngIf="currentQuestion.id"></p-button>
+      <p-button icon="pi pi-trash" label="Enregister" severity="success" (click)="saveNewQuestion()"
+        *ngIf="!currentQuestion.id" [disabled]="currentQuestion.text === ''"></p-button>
+    </div>
+    <div class="w-full my-3 flex align-items-center">
+      <p-dropdown [options]="questionTypes" [(ngModel)]="currentType" optionValue="value" optionLabel="label"
+        (onChange)="updateType()"></p-dropdown>
+      <div class="ml-3 pl-3 flex align-items-center">
+        <label class="mr-3 text-xl">Accepter les commentaires</label>
+        <p-selectButton [options]="allowCommentChoices" [(ngModel)]="currentQuestion.allowComment"
+          [disabled]="currentType==='text'" (onChange)="updateAllowComment()">
+        </p-selectButton>
+      </div>
+    </div>
+    <div class="w-full mt-5 mb-2 flex align-items-center" *ngIf="currentQuestion.type !== 'text' && currentQuestion.id">
+      <input type="text" placeholder="Ajouter un nouveau choix de question" pInputText [(ngModel)]="newQuestionChoice"
+        class="w-6 mr-2" />
+      <p-button icon="pi pi-check" (click)="addAnswerChoice()"></p-button>
+    </div>
+    <div *ngFor="let choice of currentQuestion.choices">
+      <div class="p-2 surface-100 mb-1 border-round flex justify-content-between align-items-center">
+
+        <p-inplace [closable]="true" closeIcon="pi pi-check" (onDeactivate)="updateAnswerChoiceText(choice)">
+          <ng-template pTemplate="display">
+            <span class="mr-3 text-xl">{{ choice.text }}</span>
+          </ng-template>
+          <ng-template pTemplate="content">
+            <input type="text" [(ngModel)]="choice.text" pInputText class="mr-2" />
+          </ng-template>
+        </p-inplace>
+        <p-button icon="pi pi-times" [rounded]="true" size="small" severity="danger" [outlined]="true"
+          (click)="removeAnswerChoice(choice, $event)"></p-button>
+      </div>
+    </div>
+  </div>
+</div>
+<p-confirmDialog key="confirmDialog" [style]="{width: '30vw'}"></p-confirmDialog>
+<p-confirmPopup key="confirmPopup"></p-confirmPopup>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Room } from 'src/app/models/core';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { environment } from 'src/environments/environment';
-import { HighlightableComponent } from '../components/highlightable/highlightable.component';;
+import { HighlightableComponent } from '../components/highlightable/highlightable.component';
 
 @Component({
   selector: 'app-map',

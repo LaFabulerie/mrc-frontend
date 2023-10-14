@@ -113,7 +113,6 @@ export class EditDigitalUseComponent implements OnInit {
       if(!data) return;
       this.coreService
         .updateDigitalService(service.id, data, {
-          expand: ['area'],
           omit: ['use'],
         })
         .subscribe((serv) => {
@@ -135,7 +134,6 @@ export class EditDigitalUseComponent implements OnInit {
       closable: true,
       data: {
         useId: this.use.id,
-        areaId: this.user?.org?.area.id,
         service: null,
       },
     });
@@ -144,7 +142,7 @@ export class EditDigitalUseComponent implements OnInit {
       if(!data) return;
       data['useId'] = this.use.id;
       this.coreService
-        .createDigitalService(data, { expand: ['area'], omit: ['use'] })
+        .createDigitalService(data, { omit: ['use'] })
         .subscribe((serv) => {
           this.use.services.push(serv);
         });

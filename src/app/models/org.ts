@@ -1,4 +1,3 @@
-import { Area } from "./core";
 import { User } from "./user";
 
 export type ApiKey = {
@@ -14,7 +13,6 @@ export type ApiKey = {
 export type Organization = {
   id: number;
   name: string;
-  area: Area;
 
   members: User[];
   apiKeys: ApiKey[]

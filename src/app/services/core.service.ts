@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Area, DigitalService, DigitalUse, Item, Room } from '../models/core';
+import { DigitalService, DigitalUse, Item, Room } from '../models/core';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,7 @@ export class CoreService {
 
   loadDigitalUses() {
     const queryParams = new URLSearchParams({
-      expand: ['items', 'items.room', 'services.use', 'services.area'].join(','),
+      expand: ['items', 'items.room', 'services.use'].join(','),
       omit : ['slug',
               'services.use_id', 'items.slug',
               'items.room.video', 'items.room.description',
@@ -107,14 +107,6 @@ export class CoreService {
     return this.http.get<string[]>(`${environment.apiHost}/r/tags/`);
   }
 
-  getAreas() : Observable<Area[]> {
-    return this.http.get<Area[]>(`${environment.apiHost}/r/areas/`);
-  }
-
-  createArea(data: any): Observable<Area> {
-    return this.http.post<Area>(`${environment.apiHost}/w/areas/`, data);
-  }
-
   deleteDigitalService(serviceId: number) {
     return this.http.delete(`${environment.apiHost}/w/digital-services/${serviceId}/`);
   }
@@ -127,5 +119,9 @@ export class CoreService {
   createDigitalService(data: any, params?: any): Observable<DigitalService> {
     const queryParams = new URLSearchParams(params);
     return this.http.post<DigitalService>(`${environment.apiHost}/w/digital-services/?${queryParams.toString()}`, data);
+  }
+
+  exportServices(uuids: string[]): Observable<Blob> {
+    return this.http.post(`${environment.apiHost}/r/export/`, {uuids : uuids} ,{responseType: 'blob'});
   }
 }

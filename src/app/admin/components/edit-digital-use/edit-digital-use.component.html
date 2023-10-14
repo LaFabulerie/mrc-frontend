@@ -1,6 +1,5 @@
 <div *ngIf="use">
   <input type="text" pInputText [(ngModel)]="use.title" class="mb-2 w-full" (ngModelChange)="saveTitle()"/>
-  <h2>{{use.title}}</h2>
   <div class="flex justify-content-start align-items-center my-3 ">
     <span><i class="pi pi-folder-open mr-2" style="font-size: 1.5rem"></i></span>
     <span>{{use.items[0].room.name}}</span>
@@ -48,7 +47,7 @@
 
   <div class="border-1 border-round-md mb-3 surface-border" *ngFor="let service of use.services">
     <div class="flex justify-content-between p-2 border-bottom-1 surface-border" style="background-color: #f8f9fa;">
-      <h4 class="my-1">{{ service.title }} <span *ngIf="service.area"><i class="pi pi-map-marker mx-1"></i>{{service.area.name}}</span></h4>
+      <h4 class="my-1">{{ service.title }} <span *ngIf="service.scope"><i class="pi pi-map-marker mx-1"></i>{{service.scope}}</span></h4>
       <div>
         <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-small mr-1" (click)="editService(service)"></p-button>
         <p-button icon="pi pi-trash" styleClass="p-button-rounded  p-button-danger p-button-small" (click)="removeService($event, service)"></p-button>
@@ -57,6 +56,7 @@
     <div class="p-2">
       <span class="text-600"><i class="pi pi-globe mr-2"></i><a href="{{service.url}}" target="_blank" class="text-700">{{ service.url }}</a></span>
       <p [innerHtml]="service.description | safeHtml"></p>
+      <span class="text-600" *ngIf="service.contact"><i class="pi pi-envelope mr-2"></i><p [innerHtml]="service.contact | safeHtml" class="inline-block"></p></span>
     </div>
   </div>
   <p *ngIf="use.services.length === 0" class="m-0">Aucun service n'a été lié à cet usage</p>

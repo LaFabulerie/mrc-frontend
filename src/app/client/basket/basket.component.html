@@ -39,9 +39,9 @@
       <div class="flex flex-column w-10 p-3  pr-4">
         <span class="my-1 font-bold">
           {{ service.title }}
-          <span *ngIf="service.area">
+          <span *ngIf="service.scope">
             <i class="pi pi-map-marker ml-3"></i>
-            {{service.area.name}}
+            {{service.scope}}
           </span>
         </span>
         <p [innerHtml]="service.description | safeHtml"></p>

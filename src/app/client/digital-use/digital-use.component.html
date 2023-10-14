@@ -14,8 +14,8 @@
             }"
             [ngClass]="{'w-11' : !basket.contains(service), 'w-12' : basket.contains(service)}"
             *ngFor="let service of use.services">
-        <span class="mt-1 font-bold">{{ service.title }} <span *ngIf="service.area"><i
-              class="pi pi-map-marker mx-1"></i>{{service.area.name}}</span></span>
+        <span class="mt-1 font-bold">{{ service.title }} <span *ngIf="service.scope"><i
+              class="pi pi-map-marker mx-1"></i>{{service.scope}}</span></span>
         <p class="mt-0 text-sm line-height-2" [innerHtml]="service.description | safeHtml"></p>
         <!-- <i class="pi pi-globe mr-2"></i> -->
         <a href="{{service.url}}" style="color:inherit;word-break: break-all;" target="_blank"

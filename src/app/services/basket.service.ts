@@ -94,11 +94,11 @@ export class BasketService {
 
   sendByEmail(email: string, selectedServiceUUIDs: string[]) {
     const filteredPayload = this.payload(selectedServiceUUIDs);
-    return this.http.post(`${environment.apiHost}/w/cart/email/`, {email: email, basket: filteredPayload})
+    return this.http.post(`${environment.serverHost}/api/w/cart/email/`, {email: email, basket: filteredPayload})
   }
 
   downloadPDF(selectedServiceUUIDs: string[]) {
     const filteredPayload = this.payload(selectedServiceUUIDs);
-    return this.http.post(`${environment.apiHost}/w/cart/pdf/`, {basket: filteredPayload}, {responseType: 'blob'})
+    return this.http.post(`${environment.serverHost}/api/w/cart/pdf/`, {basket: filteredPayload}, {responseType: 'blob'})
   }
 }

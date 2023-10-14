@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit{
       },
     ];
 
-    if(environment.mqttBrokenHost){
+    if(environment.mqttBrokerHost && !environment.houseless){
       this.menuItems.push({
         label: 'Debug',
         icon: 'pi pi-fw pi-sliders-h',

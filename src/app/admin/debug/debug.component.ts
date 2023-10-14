@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MqttService } from 'ngx-mqtt';
 import { Item, Room } from 'src/app/models/core';
 import { CoreService } from 'src/app/services/core.service';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-debug',
@@ -16,6 +17,7 @@ export class DebugComponent implements OnInit{
   motorValue = true
   canRotate = true
   currentRoom: Room|null = null
+  mqtt?: MqttService;
 
   brakeOptions = [
     { label: 'Backward', value: "on", direction: -1 },
@@ -29,10 +31,12 @@ export class DebugComponent implements OnInit{
   currentEditingItem: Item|null = null;
 
   constructor(
-    private mqtt: MqttService,
     private coreService: CoreService,
     private fb: FormBuilder,
   ) {
+    if(environment.mqttBrokerHost) {
+      this.mqtt = inject(MqttService);
+    }
     this.itemLightForm = this.fb.group({
       lightCtrl: ['', [Validators.required]],
       lightPin: ['', [Validators.required]]
@@ -49,11 +53,14 @@ export class DebugComponent implements OnInit{
       });
     });
 
-    this.mqtt.observe('mrc/position').subscribe((message: any) => {
-      const data = JSON.parse(message.payload.toString());
-      this.canRotate = true;
-      this.currentRoom = this.rooms.find(room => room.uuid === data.uuid) || null;
-    });
+
+    if(this.mqtt){
+      this.mqtt.observe('mrc/position').subscribe((message: any) => {
+        const data = JSON.parse(message.payload.toString());
+        this.canRotate = true;
+        this.currentRoom = this.rooms.find(room => room.uuid === data.uuid) || null;
+      });
+    }
   }
 
   rotateTable(room: Room) {
@@ -61,7 +68,7 @@ export class DebugComponent implements OnInit{
     this.coreService.getDistanceBetweenRooms(this.currentRoom!, room).subscribe((resp: any) => {
       let dist = resp.distance;
 
-      this.mqtt.unsafePublish(`mrc/rotate`, JSON.stringify({
+      this.mqtt!.unsafePublish(`mrc/rotate`, JSON.stringify({
           uuid: resp.uuid,
           slug: resp.slug,
           distance: dist,
@@ -71,13 +78,13 @@ export class DebugComponent implements OnInit{
   }
 
   switchMotor() {
-    this.mqtt.unsafePublish(`mrc/debug`, JSON.stringify({
+    this.mqtt!.unsafePublish(`mrc/debug`, JSON.stringify({
       action: 'motor', value: this.motorValue ? 'on' : 'off'
     }), { qos: 1, retain: false });
   }
 
   switchBrake($event: any) {
-    this.mqtt.unsafePublish(`mrc/debug`, JSON.stringify({
+    this.mqtt!.unsafePublish(`mrc/debug`, JSON.stringify({
       action: 'brake',
       value: $event.value.value,
       direction: $event.value.direction,
@@ -86,7 +93,7 @@ export class DebugComponent implements OnInit{
 
 
   switchRoomLight(room: Room) {
-    this.mqtt.unsafePublish(`mrc/debug`, JSON.stringify({
+    this.mqtt!.unsafePublish(`mrc/debug`, JSON.stringify({
       action: 'room_light',
       pin: room.lightPin,
     }
@@ -94,7 +101,7 @@ export class DebugComponent implements OnInit{
   }
 
   switchItemLight(item: Item) {
-    this.mqtt.unsafePublish(`mrc/debug`, JSON.stringify({
+    this.mqtt!.unsafePublish(`mrc/debug`, JSON.stringify({
       action: 'item_light',
       lightCtrl: item.lightCtrl,
       lightPin: item.lightPin,
@@ -103,7 +110,7 @@ export class DebugComponent implements OnInit{
   }
 
   print() {
-    this.mqtt.unsafePublish(`mrc/print`, JSON.stringify([
+    this.mqtt!.unsafePublish(`mrc/print`, JSON.stringify([
       { name: 'test', url: 'https://test.com' },
       { name: 'test2', url: 'https://test.com' },
     ])
@@ -113,7 +120,7 @@ export class DebugComponent implements OnInit{
   resetPosition() {
     const garden = this.rooms.find(room => room.slug === 'jardin');
 
-    this.mqtt.unsafePublish(`mrc/rotate`, JSON.stringify({
+    this.mqtt!.unsafePublish(`mrc/rotate`, JSON.stringify({
       uuid: garden!.uuid,
       slug: garden!.slug,
       distance: 0,
@@ -122,7 +129,7 @@ export class DebugComponent implements OnInit{
   }
 
   resetClient() {
-    this.mqtt.unsafePublish(`mrc/debug`, JSON.stringify({
+    this.mqtt!.unsafePublish(`mrc/debug`, JSON.stringify({
       action: 'reset_client',
     }), { qos: 1, retain: false });
   }

@@ -19,17 +19,17 @@ export class FeedbackService {
 
 
   createFeedback() {
-    return this.http.post<{id: string}>(`${environment.apiHost}/feedback/feedbacks/`, {});
+    return this.http.post<{id: string}>(`${environment.serverHost}/api/feedback/feedbacks/`, {});
   }
 
   loadQuestions() {
-    this.http.get<Question[]>(`${environment.apiHost}/feedback/questions`).subscribe(questions => {
+    this.http.get<Question[]>(`${environment.serverHost}/api/feedback/questions`).subscribe(questions => {
       this.questionsSubject.next(questions);
     })
   }
 
   createAnswer(answer: Answer): any {
-    return this.http.post(`${environment.apiHost}/feedback/answers/`, answer);
+    return this.http.post(`${environment.serverHost}/api/feedback/answers/`, answer);
   }
 
 }

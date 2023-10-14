@@ -10,7 +10,7 @@
       <span id="backBtn" class="custom-button cursor-pointer bg-white border-round p-2" (click)="goToBack()" *ngIf="control.showBackButton">
         <img src="assets/img/picto_back.svg" />
       </span>
-      <span class="flex align-items-center p-2" *ngIf="executionMode === 'standalone' && control.navigationMode === 'secondary'">
+      <span class="flex align-items-center p-2" *ngIf="isStandalone && control.navigationMode === 'secondary'">
         <fa-icon [icon]="['fas', 'lock']" size="4x"  [style]="{color: 'var(--orange-mrc)'}"></fa-icon>
       </span>
     </div>

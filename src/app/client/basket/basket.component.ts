@@ -35,7 +35,6 @@ export class BasketComponent implements OnInit{
     this.control.showListButton = true;
     this.control.showExitButton = true;
     this.control.bgColor = '#FFFFFF';
-    this.mode = environment.executionMode;
   }
 
   ngOnInit(): void {

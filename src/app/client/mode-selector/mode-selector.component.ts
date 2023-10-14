@@ -15,12 +15,13 @@ export class ModeSelectorComponent implements OnInit {
   constructor(
     private control: RemoteControlService,
   ) {
-    if(environment.executionMode === 'web') {
-      this.control.navigate(['door']);
-    } else {
+    if(environment.mqttBrokerHost && !environment.houseless){
       this.mqtt = inject(MqttService);
       this.controlSetup();
+    } else {
+      this.control.navigate(['door']);
     }
+
   }
 
   private controlSetup() {

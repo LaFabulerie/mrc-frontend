@@ -32,7 +32,7 @@ export class CatalogComponent implements OnInit{
   newCreatedUse: DigitalUse | null = null;
   updatedUse: DigitalUse | null = null;
 
-  uploadUrl = `${environment.apiHost}/w/import/`
+  uploadUrl = `${environment.serverHost}/api/w/import/`
 
   constructor(
     private coreService: CoreService,

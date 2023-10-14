@@ -42,13 +42,13 @@ export class MapComponent extends HighlightableComponent implements OnInit{
     if(!videoAlreadyViewed) {
       localStorage.setItem(`video-intro`, 'true');
       this.control.openDialog("VideoDialogComponent", {
-        videoURL: `${environment.mediaHost}/static/videos/intro.mp4`
+        videoURL: `${environment.serverHost}/static/videos/intro.mp4`
       });
     }
   }
 
   goToRoom(roomName: string, uuid: string){
-    if(environment.executionMode === 'standalone' && roomName != 'jardin'){
+    if(!environment.houseless && environment.mqttBrokerHost !== null && roomName != 'jardin'){
       this.control.openDialog("TurningTableDialogComponent", {
         next: ['room', roomName, uuid]
       });

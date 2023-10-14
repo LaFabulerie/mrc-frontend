@@ -26,10 +26,10 @@ import { environment } from 'src/environments/environment';
 
 let clientExtraModules = [];
 
-if(environment.executionMode === 'standalone' && environment.mqttBrokenHost) {
+if(environment.mqttBrokerHost) {
   clientExtraModules.push(
     MqttModule.forRoot({
-      hostname: environment.mqttBrokenHost,
+      hostname: environment.mqttBrokerHost,
       port: 9001,
       path: '/mqtt',
     })

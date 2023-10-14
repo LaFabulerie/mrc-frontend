@@ -31,18 +31,18 @@ export class CoreService {
     const queryParams = new URLSearchParams({
       expand : ['items', 'items.room'].join(','),
     });
-    this.http.get<Room[]>(`${environment.apiHost}/r/rooms/?${queryParams.toString()}`).subscribe((rooms: Room[]) => {
+    this.http.get<Room[]>(`${environment.serverHost}/api/r/rooms/?${queryParams.toString()}`).subscribe((rooms: Room[]) => {
       this.roomsSubject.next(rooms);
     });
   }
 
 
   getDistanceBetweenRooms(room1: Room, room2: Room): any {
-    return this.http.get(`${environment.apiHost}/r/rooms/distance/?from=${room1.uuid}&to=${room2.uuid}`);
+    return this.http.get(`${environment.serverHost}/api/r/rooms/distance/?from=${room1.uuid}&to=${room2.uuid}`);
   }
 
   updateRoom(uuid:string, data:any): Observable<Room> {
-    return this.http.patch<Room>(`${environment.apiHost}/r/rooms/${uuid}/`, data);
+    return this.http.patch<Room>(`${environment.serverHost}/api/r/rooms/${uuid}/`, data);
   }
 
   loadDigitalUses() {
@@ -53,10 +53,10 @@ export class CoreService {
               'items.room.video', 'items.room.description',
               'items.room.items', 'items.room.uses.description'].join(',')
     });
-    this.http.get<DigitalUse[]>(`${environment.apiHost}/r/digital-uses/?${queryParams.toString()}`).pipe(
+    this.http.get<DigitalUse[]>(`${environment.serverHost}/api/r/digital-uses/?${queryParams.toString()}`).pipe(
       map(results => {
         return results.map(use => {
-          use.items[0].image = `${environment.mediaHost}${use.items[0].image}` ;
+          use.items[0].image = `${environment.serverHost}${use.items[0].image}` ;
           return use;
         })
       }))
@@ -66,15 +66,15 @@ export class CoreService {
   }
 
   createDigitalUse(data: any): Observable<DigitalUse> {
-    return this.http.post<DigitalUse>(`${environment.apiHost}/w/digital-uses/`, data);
+    return this.http.post<DigitalUse>(`${environment.serverHost}/api/w/digital-uses/`, data);
   }
 
   updateDigitalUse(useId: number, data: any): Observable<DigitalUse> {
-    return this.http.patch<DigitalUse>(`${environment.apiHost}/w/digital-uses/${useId}/`, data);
+    return this.http.patch<DigitalUse>(`${environment.serverHost}/api/w/digital-uses/${useId}/`, data);
   }
 
   deleteDigitalUse(useId: number) {
-    return this.http.delete(`${environment.apiHost}/w/digital-uses/${useId}/`);
+    return this.http.delete(`${environment.serverHost}/api/w/digital-uses/${useId}/`);
   }
 
   get digitalUses(): DigitalUse[] {
@@ -87,10 +87,10 @@ export class CoreService {
       expand: ['uses', 'room'].join(','),
       fields: ['name', 'uses', 'room.uuid', 'room.main_color', 'image', 'uuid', 'light_ctrl', 'light_pin'].join(',')
     });
-    this.http.get<Item[]>(`${environment.apiHost}/r/items/?${queryParams.toString()}`).pipe(
+    this.http.get<Item[]>(`${environment.serverHost}/api/r/items/?${queryParams.toString()}`).pipe(
       map(results => {
         return results.map(item => {
-          item.image = `${environment.mediaHost}${item.image}` ;
+          item.image = `${environment.serverHost}${item.image}` ;
           return item;
         })
       }))
@@ -100,28 +100,28 @@ export class CoreService {
   }
 
   updateItem(uuid: string, data: any): Observable<Item> {
-    return this.http.patch<Item>(`${environment.apiHost}/w/items/${uuid}/`, data);
+    return this.http.patch<Item>(`${environment.serverHost}/api/w/items/${uuid}/`, data);
   }
 
   getTags(): Observable<string[]> {
-    return this.http.get<string[]>(`${environment.apiHost}/r/tags/`);
+    return this.http.get<string[]>(`${environment.serverHost}/api/r/tags/`);
   }
 
   deleteDigitalService(serviceId: number) {
-    return this.http.delete(`${environment.apiHost}/w/digital-services/${serviceId}/`);
+    return this.http.delete(`${environment.serverHost}/api/w/digital-services/${serviceId}/`);
   }
 
   updateDigitalService(serviceId: number, data: any, params?: any): Observable<DigitalService> {
     const queryParams = new URLSearchParams(params);
-    return this.http.patch<DigitalService>(`${environment.apiHost}/w/digital-services/${serviceId}/?${queryParams.toString()}`, data);
+    return this.http.patch<DigitalService>(`${environment.serverHost}/api/w/digital-services/${serviceId}/?${queryParams.toString()}`, data);
   }
 
   createDigitalService(data: any, params?: any): Observable<DigitalService> {
     const queryParams = new URLSearchParams(params);
-    return this.http.post<DigitalService>(`${environment.apiHost}/w/digital-services/?${queryParams.toString()}`, data);
+    return this.http.post<DigitalService>(`${environment.serverHost}/api/w/digital-services/?${queryParams.toString()}`, data);
   }
 
   exportServices(uuids: string[]): Observable<Blob> {
-    return this.http.post(`${environment.apiHost}/r/export/`, {uuids : uuids} ,{responseType: 'blob'});
+    return this.http.post(`${environment.serverHost}/api/r/export/`, {uuids : uuids} ,{responseType: 'blob'});
   }
 }

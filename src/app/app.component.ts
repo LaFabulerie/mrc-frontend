@@ -33,7 +33,5 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.primengConfig.ripple = true;
     this.translateService.setDefaultLang('fr');
-
-    console.warn("Execution mode: ", environment.executionMode);
   }
 }

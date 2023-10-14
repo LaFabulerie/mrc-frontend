@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import {Component, inject, Injector, OnInit, Renderer2} from '@angular/core';
+import {Component, inject, Injector, isStandalone, OnInit, Renderer2} from '@angular/core';
 import { Router } from '@angular/router';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -23,7 +23,7 @@ import { FeedbackService } from 'src/app/services/feedback.service';
 export class HomeComponent implements OnInit{
 
   basketCount = 0;
-  executionMode = environment.executionMode;
+  isStandalone = environment.mqttBrokerHost !== null;
 
   private readonly mqtt : MqttService | undefined
   private currentOpenedDialogs: {[Key : string]: DynamicDialogRef} = {};
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit{
     private coreService: CoreService,
     private feedbackService: FeedbackService,
   ) {
-    if(this.executionMode === 'standalone' && environment.mqttBrokenHost) {
+    if(environment.mqttBrokerHost) {
       this.mqtt = inject(MqttService);
     }
   }
@@ -145,13 +145,13 @@ export class HomeComponent implements OnInit{
     });
 
     this.basket.printBasket$.subscribe(payload => {
-      if(this.mqtt && this.control.navigationMode !== 'secondary' && this.executionMode === 'standalone' && payload) {
+      if(this.mqtt && this.control.navigationMode !== 'secondary' && payload) {
         this.mqtt.unsafePublish(`mrc/print`, JSON.stringify(payload), { qos: 1, retain: false });
       }
     });
 
     this.control.currentRoom$.subscribe(room => {
-      if(this.mqtt && this.control.navigationMode !== 'secondary' && this.executionMode === 'standalone' && room) {
+      if(this.mqtt && this.control.navigationMode !== 'secondary' && room) {
         this.coreService.getDistanceBetweenRooms(this.currentRoom!, room).subscribe((resp: any) => {
           let dist = resp.distance;
           this.mqtt!.unsafePublish(`mrc/rotate`, JSON.stringify({
@@ -165,7 +165,7 @@ export class HomeComponent implements OnInit{
     });
 
     this.control.currentItem$.subscribe(item => {
-      if(this.mqtt && this.control.navigationMode !== 'secondary' && this.executionMode === 'standalone') {
+      if(this.mqtt && this.control.navigationMode !== 'secondary') {
         this.mqtt.unsafePublish(`mrc/item`, JSON.stringify(item), { qos: 1, retain: false });
       }
     });

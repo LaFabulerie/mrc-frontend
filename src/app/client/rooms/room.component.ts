@@ -53,7 +53,7 @@ export class BaseRoomComponent extends HighlightableComponent implements OnInit,
         if(room!.video && !videoAlreadyViewed) {
           localStorage.setItem(`video-room-${uuid}`, 'true');
           this.control.openDialog("VideoDialogComponent", {
-            videoURL: `${environment.mediaHost}${room!.video}`
+            videoURL: `${environment.serverHost}${room!.video}`
           });
         }
       });

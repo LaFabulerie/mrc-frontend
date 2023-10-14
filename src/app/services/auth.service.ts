@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   updateCurrentUser(data: any) {
-    return this.http.patch<User>(`${environment.apiHost}/user/${this.currentUser!.id}/`, data)
+    return this.http.patch<User>(`${environment.serverHost}/api/user/${this.currentUser!.id}/`, data)
     .pipe(
       map(userData => {
         localStorage.setItem('user', JSON.stringify(userData));
@@ -67,7 +67,7 @@ export class AuthService {
   }
 
   signin(data: any): Observable<any> {
-    return this.http.post<any>(`${environment.apiHost}/auth/login/`, data)
+    return this.http.post<any>(`${environment.serverHost}/api/auth/login/`, data)
     .pipe(
       map(resp => this._processLogin(resp))
     );
@@ -84,7 +84,7 @@ export class AuthService {
 
   refreshToken() {
     const refresh = this.getToken('refreshToken');
-    return this.http.post<any>(`${environment.apiHost}/auth/token/refresh/`, {refresh: refresh})
+    return this.http.post<any>(`${environment.serverHost}/api/auth/token/refresh/`, {refresh: refresh})
     .pipe(
       map((resp) => {
         this.storeToken('accessToken', resp.access);
@@ -95,35 +95,35 @@ export class AuthService {
 }
 
   signup(data: any): Observable<any> {
-    return this.http.post(`${environment.apiHost}/auth/signup/`, data).pipe(
+    return this.http.post(`${environment.serverHost}/api/auth/signup/`, data).pipe(
         map(resp => this._processLogin(resp))
       );
   }
 
   verifyEmail(key: string): Observable<any> {
     return this.http.post(
-      `${environment.apiHost}/auth/signup/verify-email/`,
+      `${environment.serverHost}/api/auth/signup/verify-email/`,
       { key: key }
     );
   }
 
   resendVerificationEmail(email: string): Observable<any> {
     return this.http.post(
-      `${environment.apiHost}/auth/signup/resend-email/`,
+      `${environment.serverHost}/api/auth/signup/resend-email/`,
       { email: email }
     );
   }
 
   resetPwd(email: string): Observable<any> {
     return this.http.post(
-      `${environment.apiHost}/auth/password/reset/`,
+      `${environment.serverHost}/api/auth/password/reset/`,
       { email: email }
     );
   }
 
   resetPwdConfirm(data: any): Observable<any> {
     return this.http.post(
-      `${environment.apiHost}/auth/password/reset/confirm/`,
+      `${environment.serverHost}/api/auth/password/reset/confirm/`,
       data
     );
   }

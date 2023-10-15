@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Answer, Choice, Question } from '../models/feedback';
+import { Answer, Choice, Feedback, Question } from '../models/feedback';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +17,16 @@ export class FeedbackService {
     private http: HttpClient,
     ) { }
 
+  getFeedbacks() {
+    return this.http.get<Feedback[]>(`${environment.serverHost}/api/feedback/feedbacks`);
+  }
 
   createFeedback() {
     return this.http.post<{id: string}>(`${environment.serverHost}/api/feedback/feedbacks/`, {});
+  }
+
+  deleteFeedback(id: string) {
+    return this.http.delete(`${environment.serverHost}/api/feedback/feedbacks/${id}/`);
   }
 
   loadQuestions() {

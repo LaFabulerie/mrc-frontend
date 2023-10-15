@@ -1,3 +1,10 @@
+export type Feedback = {
+  id: string;
+  repr: string;
+  answers: Answer[];
+}
+
+
 
 export type Choice = {
   id: string;
@@ -18,6 +25,8 @@ export type Question = {
 export class Answer {
   feedbackId: string = '';
   questionId: string = '';
+  question?: Question;
+  question_text?: string = '';
   choice: string = '';
   text: string = '';
 

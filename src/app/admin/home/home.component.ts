@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit{
       {
         label: 'Catalogues',
         icon: 'pi pi-fw pi-list',
-        routerLink: ['/admin/catalog'],
+        routerLink: ['/admin/catalogue'],
       },
       {
         label: 'Retours d\'expérience',

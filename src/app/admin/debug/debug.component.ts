@@ -95,15 +95,6 @@ export class DebugComponent implements OnInit{
     }), { qos: 1, retain: false });
   }
 
-
-  switchRoomLight(room: Room) {
-    this.mqtt!.unsafePublish(`mrc/debug`, JSON.stringify({
-      action: 'room_light',
-      pin: room.lightPin,
-    }
-    ), { qos: 1, retain: false });
-  }
-
   switchItemLight(item: Item) {
     this.mqtt!.unsafePublish(`mrc/debug`, JSON.stringify({
       action: 'item_light',

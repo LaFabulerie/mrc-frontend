@@ -7,8 +7,6 @@ export type Room = {
   items: Item[];
   mainColor: string;
   video: string;
-  position: number;
-  lightPin: string;
 }
 
 export type Item = {

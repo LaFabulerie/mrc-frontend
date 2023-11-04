@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import {Component, inject, Injector, isStandalone, OnInit, Renderer2} from '@angular/core';
+import {Component, inject, OnInit, Renderer2} from '@angular/core';
 import { Router } from '@angular/router';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -12,7 +12,6 @@ import { ExitDialogComponent } from '../components/exit-dialog/exit-dialog.compo
 import {MessageService} from "primeng/api";
 import { CoreService } from 'src/app/services/core.service';
 import { Room } from 'src/app/models/core';
-import { FeedbackComponent } from '../feedback/feedback.component';
 import { FeedbackService } from 'src/app/services/feedback.service';
 
 @Component({
@@ -242,11 +241,15 @@ export class HomeComponent implements OnInit{
     this.basket.clear();
     localStorage.clear();
     this.control.navigationMode = null;
-    this.currentRoom = this.coreService.rooms.find(room => room.slug == 'jardin') || null;
+    this.currentRoom = this.coreService.rooms.find(room => room.slug == 'jardin') || null;;
     this.control.navigate(['/']);
     if(this.mqtt && this.control.navigationMode !== 'secondary') {
-      this.mqtt.unsafePublish('mrc/reset', '', { qos: 1, retain: false })
-
+      this.mqtt!.unsafePublish(`mrc/rotate`, JSON.stringify({
+        uuid: this.currentRoom!.uuid,
+        slug: this.currentRoom!.slug,
+        distance: 42,
+        reverse: 0,
+      }), { qos: 1, retain: false });
       this.mqtt.unsafePublish(`mrc/mode`, JSON.stringify({
         mode: this.control.navigationMode,
         uniqueId: this.control.uniqueId,

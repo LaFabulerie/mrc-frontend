@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  serverHost: 'http://<PC_IP_ADDRESS>:8000',
+  serverHost: 'http://10.3.141.<TO_COMPLETE>:8080',
   apiKey: null,
-  mqttBrokerHost: '<RASPBERRY_IP_ADRESS>',
-  houseless: true,
+  mqttBrokerHost: '10.3.141.<TO_COMPLETE>',
+  houseless: false,
 };

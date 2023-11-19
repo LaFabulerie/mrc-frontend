@@ -26,10 +26,11 @@ import { environment } from 'src/environments/environment';
 
 let clientExtraModules = [];
 
-if(environment.mqttBrokerHost) {
+if(environment.isStandalone) {
+  const mqttHost = new URL(environment.serverHost).hostname;
   clientExtraModules.push(
     MqttModule.forRoot({
-      hostname: environment.mqttBrokerHost,
+      hostname: mqttHost,
       port: 9001,
       path: '/mqtt',
     })

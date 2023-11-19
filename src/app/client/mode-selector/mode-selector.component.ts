@@ -15,7 +15,7 @@ export class ModeSelectorComponent implements OnInit {
   constructor(
     private control: RemoteControlService,
   ) {
-    if(environment.mqttBrokerHost && !environment.houseless){
+    if(environment.isStandalone && !environment.houseless){
       this.mqtt = inject(MqttService);
       this.controlSetup();
     } else {

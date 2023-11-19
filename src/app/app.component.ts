@@ -17,6 +17,7 @@ import {environment} from "../environments/environment";
 export class AppComponent implements OnInit {
   user?: User | null;
   navigationMode: string|null = null;
+  isProd = environment.production;
 
   constructor(
     private primengConfig: PrimeNGConfig,

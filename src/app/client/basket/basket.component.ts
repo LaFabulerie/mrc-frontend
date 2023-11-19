@@ -3,8 +3,6 @@ import { BasketService } from 'src/app/services/basket.service';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { environment } from 'src/environments/environment';
 import { DigitalService } from 'src/app/models/core';
-import { CheckboxChangeEvent } from 'primeng/checkbox';
-import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-basket',
@@ -13,7 +11,7 @@ import { timeout } from 'rxjs';
 })
 export class BasketComponent implements OnInit{
   basketEmpty: boolean = true;
-  mode: string = "web";
+  isStandalone = environment.isStandalone;
   showEmailDialog: boolean = false;
   email: string = "";
 

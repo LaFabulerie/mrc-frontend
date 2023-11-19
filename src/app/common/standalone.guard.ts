@@ -3,7 +3,7 @@ import {environment} from "../../environments/environment";
 import {inject} from "@angular/core";
 
 export const standaloneGuard: CanActivateFn = (_route, _state) => {
-  if(environment.mqttBrokerHost !== null && !environment.houseless){
+  if(environment.isStandalone){
     return true;
   }
   const router = inject(Router);

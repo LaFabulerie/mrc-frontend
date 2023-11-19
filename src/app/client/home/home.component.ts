@@ -22,7 +22,7 @@ import { FeedbackService } from 'src/app/services/feedback.service';
 export class HomeComponent implements OnInit{
 
   basketCount = 0;
-  isStandalone = environment.mqttBrokerHost !== null;
+  isStandalone = environment.isStandalone;
 
   private readonly mqtt : MqttService | undefined
   private currentOpenedDialogs: {[Key : string]: DynamicDialogRef} = {};
@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit{
     private coreService: CoreService,
     private feedbackService: FeedbackService,
   ) {
-    if(environment.mqttBrokerHost) {
+    if(environment.isStandalone) {
       this.mqtt = inject(MqttService);
     }
   }

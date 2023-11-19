@@ -12,7 +12,6 @@ import { OfficeComponent } from './rooms/office/office.component';
 import { GarageComponent } from './rooms/garage/garage.component';
 import { KitchenComponent } from './rooms/kitchen/kitchen.component';
 import { LivingRoomComponent } from './rooms/living-room/living-room.component';
-import { environment } from 'src/environments/environment';
 import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
 import {navigationModeGuard} from "../common/navigation-mode.guard";
 import {GardenComponent} from "./rooms/garden/garden.component";

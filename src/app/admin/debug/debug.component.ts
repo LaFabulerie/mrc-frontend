@@ -36,7 +36,7 @@ export class DebugComponent implements OnInit{
     private fb: FormBuilder,
     private router: Router,
   ) {
-    if(!environment.mqttBrokerHost || environment.houseless) {
+    if(!environment.isStandalone) {
       this.router.navigate(['/admin']);
     }
 

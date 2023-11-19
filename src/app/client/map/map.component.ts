@@ -48,7 +48,7 @@ export class MapComponent extends HighlightableComponent implements OnInit{
   }
 
   goToRoom(roomName: string, uuid: string){
-    if(!environment.houseless && environment.mqttBrokerHost !== null && roomName != 'jardin'){
+    if(!environment.houseless && roomName != 'jardin'){
       this.control.openDialog("TurningTableDialogComponent", {
         next: ['room', roomName, uuid]
       });

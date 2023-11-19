@@ -4,7 +4,7 @@ import {environment} from "../../environments/environment";
 import {inject} from "@angular/core";
 
 export const navigationModeGuard: CanActivateFn = (_route, _state) => {
-  if(environment.mqttBrokerHost !== null) {
+  if(environment.isStandalone && !environment.houseless) {
     const control = inject(RemoteControlService);
     const router = inject(Router);
     if(control.navigationMode == null) {

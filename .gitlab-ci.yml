@@ -11,7 +11,7 @@ build_test:
   script:
     - npm install
     - npm install -g @angular/cli
-    - ng build -c web
+    - ng build
   artifacts:
     paths:
       - ./dist

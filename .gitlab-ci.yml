@@ -1,0 +1,37 @@
+stages:
+  - build
+  - quality
+ 
+build_test:
+  stage: build
+  image: node:12.14-alpine
+ 
+  script:
+    - npm install && npm run update:build
+  artifacts:
+    paths:
+      - ./dist
+ 
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+  
+sonar_analysis:
+  stage: quality
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+ 
+  script:
+    - sonar-scanner -D"sonar.host.url=${SONAR_SERVER}" -D"sonar.projectKey=MRC-Front-End" -Dsonar.sources=src -Dsonar.login=$CI_SONAR_TOKEN
+ 
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+ 

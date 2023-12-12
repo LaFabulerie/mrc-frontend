@@ -13,6 +13,7 @@ build_test:
     - npm install -g @angular/cli
     - ng build
   artifacts:
+    expire_in: 3 days
     paths:
       - ./dist
  
@@ -35,9 +36,7 @@ sonar_analysis:
     - sonar-scanner -D"sonar.host.url=${SONAR_HOST_URL}" -D"sonar.projectKey=MRC-Front-End" -Dsonar.sources=src -Dsonar.login=$CI_SONAR_TOKEN
  
   cache:
-    key:
-      files:
-        - package-lock.json
+    key: MRC-Front-End
     paths:
-      - node_modules
+      - .sonar/cache
  

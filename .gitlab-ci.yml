@@ -1,0 +1,43 @@
+stages:
+  - build
+  - quality
+ 
+build_test:
+  stage: build
+  tags:
+    - kubernetes
+  image: node:18-alpine
+ 
+  script:
+    - npm install
+    - npm install -g @angular/cli
+    - ng build -c web
+  artifacts:
+    paths:
+      - ./dist
+ 
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+  
+sonar_analysis:
+  stage: quality
+  tags:
+    - kubernetes
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+ 
+  script:
+    - sonar-scanner -D"sonar.host.url=${SONAR_HOST_URL}" -D"sonar.projectKey=MRC-Front-End" -Dsonar.sources=src -Dsonar.login=$CI_SONAR_TOKEN
+ 
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+ 

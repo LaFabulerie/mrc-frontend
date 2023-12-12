@@ -6,10 +6,12 @@ build_test:
   stage: build
   tags:
     - kubernetes
-  image: node:12.14-alpine
+  image: node:18-alpine
  
   script:
-    - npm install && npm run update:build
+    - npm install
+    - npm install -g @angular/cli
+    - ng build -cweb
   artifacts:
     paths:
       - ./dist

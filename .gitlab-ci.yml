@@ -4,6 +4,8 @@ stages:
  
 build_test:
   stage: build
+  tags:
+    - kubernetes
   image: node:12.14-alpine
  
   script:
@@ -21,6 +23,8 @@ build_test:
   
 sonar_analysis:
   stage: quality
+  tags:
+    - kubernetes
   image:
     name: sonarsource/sonar-scanner-cli:latest
     entrypoint: [""]

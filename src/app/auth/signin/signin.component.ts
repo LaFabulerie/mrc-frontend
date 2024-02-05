@@ -44,6 +44,7 @@ export class SigninComponent implements OnInit{
     this.authService.signin(this.signinForm.value).subscribe({
       next: () => {
         const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/admin';
+        console.log("return URL ---->" + returnUrl);
         this.router.navigate([returnUrl]);
       },
       error: (errorResp) => {

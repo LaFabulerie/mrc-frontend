@@ -4,6 +4,7 @@ import { ContributeRoutingModule } from './contribute-routing.module';
 import { HomeComponent } from './home/home.component';
 
 import { MessageService } from 'primeng/api';
+import { SharedModule } from '../common/shared.module';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { MessageService } from 'primeng/api';
   ],
     imports: [
         ContributeRoutingModule,
+        SharedModule,
     ],
   providers: [
     MessageService

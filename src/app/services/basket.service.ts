@@ -89,7 +89,7 @@ export class BasketService {
 
   print(selectedServiceUUIDs: string[]) {
     const filteredPayload = this.payload(selectedServiceUUIDs);
-    this.printBasketSubject.next(filteredPayload);
+    return this.http.post(`${environment.serverHost}/api/w/cart/print/`, {basket: filteredPayload})
   }
 
   sendByEmail(email: string, selectedServiceUUIDs: string[]) {

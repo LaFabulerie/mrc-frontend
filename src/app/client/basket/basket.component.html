@@ -13,7 +13,12 @@
         <fa-icon [icon]="['fas', 'spinner']" class="mr-2" animation="spin" *ngIf="downloadLoading"></fa-icon>
         <span>Télécharger votre liste de services</span>
       </span>
-      <span *ngIf="isStandalone" (click)="print()">
+    </div>
+    <div *ngIf="!basketEmpty" [ngStyle]="{
+          'color': selectedServices.length > 0 && !(downloadLoading || printLoading) ? 'var(--blue-mrc)' : 'grey',
+          'cursor' : selectedServices.length > 0 && !(downloadLoading || printLoading) ? 'pointer' : 'default'
+          }" class="mb-2 md:mb-0 md:mr-4">
+      <span *ngIf="isPrintable or isStandalone" (click)="print()">
         <fa-icon [icon]="['fas', 'print']" class="mr-2" *ngIf="!printLoading"></fa-icon>
         <fa-icon [icon]="['fas', 'spinner']" class="mr-2" animation="spin" *ngIf="printLoading"></fa-icon>
         <span>Imprimer votre liste de services</span>

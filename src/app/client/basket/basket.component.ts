@@ -12,6 +12,7 @@ import { DigitalService } from 'src/app/models/core';
 export class BasketComponent implements OnInit{
   basketEmpty: boolean = true;
   isStandalone = environment.isStandalone;
+  isPrintable = environment.isPrintable;
   showEmailDialog: boolean = false;
   email: string = "";
 
@@ -63,8 +64,9 @@ export class BasketComponent implements OnInit{
   print() {
     if(this.printLoading) return;
     this.printLoading = true;
-    this.basket.print(this.selectedServiceUUIDs);
-    this.printLoading = false;
+    this.basket.print(this.selectedServiceUUIDs).subscribe(_ => {
+      this.printLoading = false;
+    });
   }
 
   download() {

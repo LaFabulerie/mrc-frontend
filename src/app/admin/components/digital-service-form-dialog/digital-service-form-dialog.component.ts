@@ -24,7 +24,7 @@ export class DigitalServiceFormDialogComponent implements OnInit {
       description: [service ? service.description : '', [Validators.required]],
       url: [service ? service.url : '', [Validators.required]],
       scope: [service ? service.scope : '', [Validators.required]],
-      useId: [service ? service.useId : this.config.data.useId, [Validators.required]],
+      useId: [service ? service.useId : this.config.data.useId],
       contact: [service ? service.contact : ''],
     });
   }

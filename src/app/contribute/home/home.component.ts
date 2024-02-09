@@ -28,18 +28,14 @@ export class HomeComponent implements OnInit{
     private fb: FormBuilder,
     private contributeService: ContributeService,
     private coreService: CoreService,
-    private router: Router,
-    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
-
-
     this.contributeForm = this.fb.group({
       roomSelected: [null, Validators.required],
       itemSelected: [null, Validators.required],
       useSelected: [null, Validators.required],
-      betterUse: [null, Validators.required],
+      betterUse: [null],
       serviceName: [null, Validators.required],
       serviceDesc: [null, Validators.required],
       webAddress: [null, Validators.required],

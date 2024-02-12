@@ -64,8 +64,13 @@ export class BasketComponent implements OnInit{
   print() {
     if(this.printLoading) return;
     this.printLoading = true;
-    this.basket.print(this.selectedServiceUUIDs).subscribe(_ => {
-      this.printLoading = false;
+    this.basket.print(this.selectedServiceUUIDs).subscribe({
+        next: _ => {
+            this.printLoading = false;
+        },
+        error: _ => {
+            this.printLoading = false;
+        }
     });
   }
 

@@ -44,5 +44,6 @@ Thumbs.db
 *copy*
 !src/environments/environment.example.ts
 !src/environments/environment.web.ts
+!src/environments/environment.standalone.ts
 /src/assets/media/
 

@@ -13,19 +13,28 @@ export class ContributeService {
   constructor(
     private http: HttpClient,
     private coreService: CoreService,) {
-      this.dataToSend = {itemId: '', useId: 0, usageTitle: '', title: '', description: '', url: '', scope: '', contact: ''};
+      this.dataToSend = {itemId: null, useId: null, usageTitle: '', title: '', description: '', url: '', scope: '', contact: '', tags: ''};
     }
 
   saveData(data: any): Observable<any> {
-    this.dataToSend.itemId = data.itemSelected;
-    this.dataToSend.useId = data.useSelected;
+    this.dataToSend.itemId = Number(data.itemSelected);
+    if(data.betterUse === null) {
+      this.dataToSend.useId = Number(data.useSelected);
+    } else {
+      this.dataToSend.usageTitle = data.betterUse;
+    }
     this.dataToSend.title = data.serviceName;
+
     this.dataToSend.description = data.serviceDesc;
     this.dataToSend.url = data.webAddress;
-    this.dataToSend.scope = data.localisation;
+    if(data.localisation === 'fr') {
+      this.dataToSend.scope = 'National';
+    }
     this.dataToSend.contact = data.mailAddress;
+    this.dataToSend.tags = data.tagIt;
 
-    return this.http.post(`${environment.serverHost}/api/w/contribute/`, this.dataToSend);
+
+    return this.http.post(`${environment.serverHost}/api/w/contributions/`, this.dataToSend);
   }
 
 

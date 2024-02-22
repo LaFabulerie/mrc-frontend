@@ -85,7 +85,7 @@ export class CoreService {
   loadItems() {
     const queryParams = new URLSearchParams({
       expand: ['uses', 'room'].join(','),
-      fields: ['name', 'uses', 'room.uuid', 'room.main_color', 'image', 'uuid', 'light_ctrl', 'light_pin'].join(',')
+      fields: ['id', 'name', 'uses', 'room.uuid', 'room.main_color', 'image', 'uuid', 'light_ctrl', 'light_pin'].join(',')
     });
     this.http.get<Item[]>(`${environment.serverHost}/api/r/items/?${queryParams.toString()}`).pipe(
       map(results => {

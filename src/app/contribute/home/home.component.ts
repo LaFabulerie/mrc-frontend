@@ -11,6 +11,7 @@ import { Room } from '../../models/core';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit{
   item?: Item;
@@ -31,6 +32,8 @@ export class HomeComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    this.errors = {};
+
     this.contributeForm = this.fb.group({
       roomSelected: [null, Validators.required],
       itemSelected: [null, Validators.required],
@@ -71,7 +74,7 @@ export class HomeComponent implements OnInit{
     this.servicesList = []
     this.coreService.digitalUses$.subscribe(uses => {
       if(!uses || uses.length == 0) return;
-      this.useList = uses.filter(use => use.items.find(u => u.uuid === event.target.value));
+      this.useList = uses.filter(use => use.items.find(u => u.id === Number(event.target.value)));
     });
   }
 

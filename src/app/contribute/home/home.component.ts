@@ -35,14 +35,14 @@ export class HomeComponent implements OnInit{
     this.errors = {};
 
     this.contributeForm = this.fb.group({
-      roomSelected: [null, Validators.required],
-      itemSelected: [null, Validators.required],
-      useSelected: [null, Validators.required],
+      roomSelected: ["", Validators.required],
+      itemSelected: ["", Validators.required],
+      useSelected: ["", Validators.required],
       betterUse: [null],
       serviceName: [null, Validators.required],
       serviceDesc: [null, Validators.required],
       webAddress: [null, Validators.required],
-      localisation: [null, Validators.required],
+      localisation: ["fr", Validators.required],
       tagIt: [null],
       mailAddress: [null],
     });
@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit{
   save(){
     this.contributeService.saveData(this.contributeForm.value).subscribe({
       next: () => {
-          this.contributeForm.reset();
+        window.location.reload();
       },
       error: (errorResp) => {
         for(let key in errorResp.error){

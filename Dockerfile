@@ -9,6 +9,7 @@ RUN npm install -g npm@10.4.0
 RUN npm install
 RUN npm install -g @angular/cli
 COPY . .
+COPY src/environments/environment.$STAGE.ts src/environments/environment.ts
 RUN ng build -c $STAGE
 
 ### STAGE 2: Run ###

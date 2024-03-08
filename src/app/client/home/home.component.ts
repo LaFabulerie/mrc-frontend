@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import {Component, inject, OnInit, Renderer2} from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BasketService } from 'src/app/services/basket.service';
@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit{
     private messageService: MessageService,
     private coreService: CoreService,
     private feedbackService: FeedbackService,
+    private route: ActivatedRoute,
   ) {
     if(environment.isStandalone) {
       this.mqtt = inject(MqttService);
@@ -280,6 +281,7 @@ export class HomeComponent implements OnInit{
   }
 
   goToMap() {
-    this.control.navigate(['map']);
+    const scope = this.route.snapshot.params['scope'];
+    this.control.navigate(scope ? ['map', scope ? scope : ''] : ['map']);
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { HighlightableComponent } from '../components/highlightable/highlightable.component';
 
@@ -15,6 +16,7 @@ export class DoorComponent extends HighlightableComponent implements OnInit{
 
   constructor(
     private control: RemoteControlService,
+    private route: ActivatedRoute,
   ) {
     super();
     this.controlSetup();
@@ -35,7 +37,8 @@ export class DoorComponent extends HighlightableComponent implements OnInit{
   }
 
   goToMap(){
-    this.control.navigate(['map']);
+    const scope = this.route.snapshot.params['scope'];
+    this.control.navigate(scope ? ['map', scope ? scope : ''] : ['map']);
   }
 
 }

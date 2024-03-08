@@ -23,6 +23,14 @@
     (click)="performAction()"
     [disabled]="waiting || (selectedUseCount ===0 && selectedServiceCount ===0)"></p-button>
 
+    <p-button
+    styleClass="mt-4"
+      icon="pi pi-file-export"
+      label="Exporter tous les services"
+      size="small" severity="primary"
+      (click)="exportAllAction()"
+      class="exportAll"></p-button>
+
   <ul>
     <ng-container *ngFor="let selectedNode of selectedNodes">
       <li *ngIf="selectedNode.type === 'use'">

@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DigitalUse } from 'src/app/models/core';
+import { DigitalService, DigitalUse } from 'src/app/models/core';
 import { BasketService } from 'src/app/services/basket.service';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { CoreService } from 'src/app/services/core.service';
@@ -13,6 +13,7 @@ import { CoreService } from 'src/app/services/core.service';
 })
 export class DigitalUseComponent {
   use!: DigitalUse;
+  services: any[] = []
 
   constructor(
     private control: RemoteControlService,
@@ -35,8 +36,10 @@ export class DigitalUseComponent {
 
     this.activatedRoute.params.subscribe(params => {
       const uuid = params['uuid'];
+      const scope = params['scope'];
       this.coreService.digitalUses$.subscribe(uses => {
         this.use = uses.find(use => use.uuid === uuid)!;
+        this.services = scope ? this.use.services.filter(service => service.scope === 'National' || service.scope === scope) : this.use.services;
       });
     });
   }

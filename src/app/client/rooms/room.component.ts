@@ -62,10 +62,11 @@ export class BaseRoomComponent extends HighlightableComponent implements OnInit,
 
 
   goToItem(uuid: string){
+    const scope = this.activatedRoute.snapshot.params['scope'];
     this.coreService.items$.subscribe(items => {
       if(!items || items.length == 0) return;
       const item = items.find(item => item.uuid === uuid);
-      this.control.navigate(['item', uuid], item);
+      this.control.navigate(scope ? ['item', scope, uuid] : ['item', uuid], item);
     });
   }
 

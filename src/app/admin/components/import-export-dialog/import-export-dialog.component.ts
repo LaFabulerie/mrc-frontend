@@ -114,4 +114,21 @@ export class ImportExportDialogComponent implements OnInit {
     } else {
     }
   }
+
+  exportAllAction() {
+    let uuids: string[] = [];
+    this.nodes.forEach((node) => {
+      if(node.type === 'use') {
+        uuids.push(...node.children!.map((child) => child.data));
+      }
+    });
+    this.coreService.exportServices(uuids).subscribe((data) => {
+      const blob = new Blob([data], { type: 'text/csv' });
+      const currentDate = moment();
+
+      importedSaveAs(blob, `export_mrc_${currentDate.format("DD_MM_YYYY_HH_mm")}.csv`);
+      this.waiting = false;
+      this.dialogRef.close();
+    });
+  }
 }

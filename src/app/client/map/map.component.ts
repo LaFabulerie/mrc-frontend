@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Room } from 'src/app/models/core';
+import { ActivatedRoute } from '@angular/router';
 import { RemoteControlService } from 'src/app/services/control.service';
 import { environment } from 'src/environments/environment';
 import { HighlightableComponent } from '../components/highlightable/highlightable.component';
@@ -15,6 +16,7 @@ export class MapComponent extends HighlightableComponent implements OnInit{
 
   constructor(
     private control: RemoteControlService,
+    private route: ActivatedRoute,
   ) {
     super();
     this.controlSetup();
@@ -48,12 +50,13 @@ export class MapComponent extends HighlightableComponent implements OnInit{
   }
 
   goToRoom(roomName: string, uuid: string){
+    const scope = this.route.snapshot.params['scope'];
     if(!environment.houseless && roomName != 'jardin'){
       this.control.openDialog("TurningTableDialogComponent", {
-        next: ['room', roomName, uuid]
+        next: scope ? ['room', roomName, scope, uuid] : ['room', roomName, uuid]
       });
     } else {
-      this.control.navigate(['room', roomName, uuid]);
+      this.control.navigate(scope? ['room', roomName, scope, uuid] : ['room', roomName, uuid]);
     }
 
   }

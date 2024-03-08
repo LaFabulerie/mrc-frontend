@@ -51,7 +51,8 @@ export class ItemComponent implements OnInit {
   }
 
   goToDigitalUse(uuid: string){
-    this.control.navigate(['use', uuid], { itemName: this.item?.name });
+    const scope = this.activatedRoute.snapshot.params['scope'];
+    this.control.navigate(scope? ['use', scope, uuid] : ['use', uuid], { itemName: this.item?.name });
   }
 
   mouseEnterUse(event: any, activated: boolean){

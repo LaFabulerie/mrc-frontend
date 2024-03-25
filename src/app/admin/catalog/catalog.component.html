@@ -10,7 +10,7 @@
           #fileUpload
           name="import[]"
           [url]="uploadUrl"
-          accept="text/csv" [maxFileSize]="1000000"
+          accept=".csv" [maxFileSize]="1000000"
           (onUpload)="onUpload($event)"
           (onError)="onUploadError($event)"
           [auto]="true"

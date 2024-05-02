@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  serverHost: 'https://app.lamaisonreconnectee.fr',
+  serverHost: 'https://back.lamaisonreconnectee.fr',
   isStandalone: false,
   houseless: true,
   isPrintable: false, //if true, the app will be able to print basket

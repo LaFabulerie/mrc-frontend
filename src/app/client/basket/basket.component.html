@@ -55,6 +55,7 @@
           <a href="{{service.url}}" target="_blank" class="font-italic" style="color:inherit;word-break: break-all;">{{
             service.url }}</a>
         </span>
+        <p class="mt-0 text-sm line-height-2"><span class="mt-1 font-bold" *ngIf="service.contact"><i class="pi pi-envelope mr-2"></i><p [innerHtml]="service.contact | safeHtml" class="inline-block"></p></span></p>
       </div>
 
       <!-- <span class="p-2 border-round border-2 bg-white absolute cursor-pointer hover:text-red-600"

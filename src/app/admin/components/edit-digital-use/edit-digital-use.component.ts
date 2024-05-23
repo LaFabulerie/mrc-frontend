@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CoreService } from 'src/app/services/core.service';
 import { DigitalServiceFormDialogComponent } from '../digital-service-form-dialog/digital-service-form-dialog.component';
 import { TagPickerDialogComponent } from '../tag-picker-dialog/tag-picker-dialog.component';
-import { environment } from 'src/environments/environment';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-edit-digital-use',
@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./edit-digital-use.component.scss'],
 })
 export class EditDigitalUseComponent implements OnInit {
+
   @Output() onSave: EventEmitter<any> = new EventEmitter();
 
   @Input()
@@ -197,5 +198,25 @@ export class EditDigitalUseComponent implements OnInit {
       },
       reject: () => {}
     });
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.use.services, event.previousIndex, event.currentIndex);
+    let index = 0;
+    var data = {};
+    this.use.services.forEach((service) => {
+      index++;
+      if(service.id === event.item.data.id) {
+        data = {
+          ordre: event.currentIndex + 1,
+        };
+      } else {
+        data = {
+          ordre: index,
+        };
+      }
+      this.coreService.updateDigitalService(service.id, data).subscribe();
+    })
+
   }
 }

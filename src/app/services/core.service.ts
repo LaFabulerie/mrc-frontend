@@ -57,6 +57,7 @@ export class CoreService {
       map(results => {
         return results.map(use => {
           use.items[0].image = `${environment.serverHost}${use.items[0].image}` ;
+          use.services.sort((s1,s2) => s1.ordre - s2.ordre);
           return use;
         })
       }))

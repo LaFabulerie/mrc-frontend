@@ -17,6 +17,7 @@ import { QuestionsComponent } from './feedback/questions/questions.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InplaceModule } from 'primeng/inplace';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -40,6 +41,7 @@ import { InplaceModule } from 'primeng/inplace';
     InputNumberModule,
     ConfirmDialogModule,
     InplaceModule,
+    DragDropModule
   ]
 })
 export class AdminModule { }

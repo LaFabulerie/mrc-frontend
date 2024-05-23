@@ -39,6 +39,7 @@ export type DigitalService = {
   uuid: string;
   title: string;
   description: string;
+  ordre: number;
   slug: string;
   url: string;
   scope: string;

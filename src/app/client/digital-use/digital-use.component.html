@@ -20,6 +20,7 @@
         <!-- <i class="pi pi-globe mr-2"></i> -->
         <a href="{{service.url}}" style="color:inherit;word-break: break-all;" target="_blank"
           class="text-sm font-italic font-bold">{{ service.url }}</a>
+        <p class="mt-0 text-sm line-height-2"><span class="mt-1 font-bold" *ngIf="service.contact"><p [innerHtml]="service.contact | safeHtml" class="inline-block"></p></span></p>
 
         <span class="bg-white absolute cursor-pointer" style="top: 50%; right: 0; transform: translate(50%, -50%);"
           (click)="basket.add(service)" *ngIf="!basket.contains(service)">

@@ -28,7 +28,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "map.html"
+              "src/assets/carte.html"
             ],
             "styles": [
               "./node_modules/@videogular/ngx-videogular/fonts/videogular.css",

@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {FormControl} from '@angular/forms';
+import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
+import {map, startWith} from 'rxjs/operators';
 import { DigitalUse, Item } from 'src/app/models/core';
-import { MessageService } from 'primeng/api';
 import { ContributeService } from 'src/app/services/contribute.service';
 import { CoreService } from 'src/app/services/core.service';
-import { environment } from 'src/environments/environment';
 import { Room } from '../../models/core';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -23,13 +25,23 @@ export class HomeComponent implements OnInit{
   servicesList: any[] = [];
   errors: any;
   contributeForm: any;
+  communes: string[] = [];
+  communesSelected: string[] = [];
+  filteredCommunes: string[] = [];
+  visible = true;
+  selectable = true;
+  removable = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  myControl = new FormControl('');
+  @ViewChild('communesInput', {static: false}) communesInput!: ElementRef<HTMLInputElement>;
 
 
   constructor(
     private fb: FormBuilder,
     private contributeService: ContributeService,
     private coreService: CoreService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.errors = {};
@@ -43,13 +55,15 @@ export class HomeComponent implements OnInit{
       serviceDesc: [null, Validators.required],
       webAddress: [null, Validators.required],
       localisation: ["fr", Validators.required],
+      communes: [null],
       tagIt: [null],
       mailAddress: [null],
     });
 
     this.coreService.loadRooms();
     this.coreService.loadItems();
-    this.coreService.loadDigitalUses()
+    this.coreService.loadDigitalUses();
+    this.contributeService.loadCommuneData();
 
     this.coreService.rooms$.subscribe(rooms => {
       if(!rooms || rooms.length == 0) return;
@@ -58,7 +72,24 @@ export class HomeComponent implements OnInit{
       }
     });
 
+    this.contributeService.communes$.subscribe(commune => {
+      commune.forEach(comm => {
+        this.communes.push(comm.codesPostaux[0].toString() + " " + comm.nom.toString());
+      })
+    });
 
+    this.contributeService.communes$.subscribe(commune => {
+      commune.forEach(comm => {
+        this.filteredCommunes.push(comm.codesPostaux[0].toString() + " " + comm.nom.toString());
+      })
+    });
+
+    this.myControl.valueChanges.pipe(
+      startWith(null),
+      map((commune: string | null) => (commune ? this._filter(commune) : this.communes.slice())),
+    ).subscribe((commune) => {
+      this.filteredCommunes = commune;
+   });
   }
 
   loadItems(event: any) {
@@ -87,6 +118,7 @@ export class HomeComponent implements OnInit{
   }
 
   save(){
+    this.contributeForm.value.communes = this.communesSelected.join(';');
     this.contributeService.saveData(this.contributeForm.value).subscribe({
       next: () => {
         window.location.reload();
@@ -97,6 +129,38 @@ export class HomeComponent implements OnInit{
         }
       }
     });
+  }
+  add(event: any): void {
+    const value = (event.value || '').trim();
+
+    if (value) {
+      this.communesSelected.push(value);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+
+    this.myControl.setValue(null);
+  }
+
+  remove(commune: string): void {
+    const index = this.communesSelected.indexOf(commune);
+
+    if (index >= 0) {
+      this.communesSelected.splice(index, 1);
+    }
+  }
+
+  private _filter(name: string): string[] {
+    const filterValue = name.toLowerCase();
+
+    return this.communes.filter(commune => commune.toLowerCase().includes(filterValue));
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.communesSelected.push(event.option.viewValue);
+    this.communesInput.nativeElement.value = '';
+    this.myControl.setValue(null);
   }
 
 

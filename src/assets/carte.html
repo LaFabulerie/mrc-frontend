@@ -1,63 +1,70 @@
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript">
-   window.onload = function () {
-     $.ajax({
-         type: "GET",
-         url: "https://back.lamaisonreconnectee.fr/api/r/digital-services",
-         contentType: "application/json; charset=utf-8",
-         dataType: "json",
-         success: function (services) {
-            services.forEach(service => {
-               if(service.scope != 'National') {
-                const dept = document.querySelectorAll('[id*="'+ service.scope + '"]');
-                dept.forEach(departement => {
-                  departement.style.fill = '#FF5738';
-                });
-               }
-            });
-         },
-         error: function (xhr, ajaxOptions, thrownError) {
-            console.log(xhr.status);
-            console.log(thrownError);
-         }
-     });
-   }
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>carte interactive – La Maison (Re)connectée</title>
+  <style type="text/css">
+    html{width: 100%;height: 100%;}
+    body{width: 100%;height: 100%;}
+    .st0{opacity:0.37;fill:#F7D5D0;enable-background:new;}
+    .st1{fill:transparent;}
+    .st2{opacity:0.59;fill:#EAC4C1;enable-background:new;}
+    .st3{fill:#DAE5E3;}
+    .st4{fill:#E4F7F2;}
+    .st5{fill:transparent;stroke:#FFFFFF;stroke-width:21;stroke-miterlimit:10;}
+    .st6{fill:#F5FBFC;}
+    .st7{fill:#1C096B;}
+    .st8{fill:#FF5738;}
+    .st9{font-family:'PatrickHand-Regular';}
+    .st10{font-size:16.61px;}
+    .st11{fill:transparent;stroke:#FF5738;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .st12{font-size:12.69px;}
+    .st13{fill:transparent;stroke:#FF5738;stroke-linecap:round;stroke-linejoin:round;}
+    .st14{font-family:'ArialMT';}
+    .st15{font-size:6.35px;}
+    .st16{fill:transparent;stroke:#FFFFFF;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+    .st17{fill:#FFFFFF;stroke:#FF5738;stroke-linecap:round;stroke-linejoin:round;}
+    .st18{fill:#FFFFFF;}
+    .clickable {cursor: pointer;}
+  </style>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    window.onload = function () {
+      $.ajax({
+          type: "GET",
+          url: "https://back.lamaisonreconnectee.fr/api/r/digital-services",
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (services) {
+              services.forEach(service => {
+                if(service.scope != 'National') {
+                  const dept = document.querySelectorAll('[id*="'+ service.scope + '"]');
+                  dept.forEach(departement => {
+                    departement.style.fill = '#FFFFFF';
+                  });
+                }
+              });
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+              console.log(xhr.status);
+              console.log(thrownError);
+          }
+      });
+    }
 
-  function _navigate(value) {
-      var dept = value.substring(/\d+/g.exec(value).index, /-/.exec(value) ? /-/.exec(value).index : value.length);
-      window.location.href = "/door/"+dept
-   }
+    function _navigate(value) {
+        var dept = value.substring(/\d+/g.exec(value).index, /-/.exec(value) ? /-/.exec(value).index : value.length);
+        window.location.href = "/door/"+dept
+    }
 
-  function national() {
-      window.location.href = "/door/"
-   }
-</script>
-<html>
-<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+    function national() {
+        window.location.href = "/door/"
+    }
+  </script>
+</head>
+<body>
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
 x="0px" y="0px" viewBox="0 0 625 439.7" style="enable-background:new 0 0 625 439.7;width: 100%;height: 100%;" xml:space="preserve">
-<style type="text/css">
-	.st0{opacity:0.37;fill:#F7D5D0;enable-background:new;}
-	.st1{fill:transparent;}
-	.st2{opacity:0.59;fill:#EAC4C1;enable-background:new;}
-	.st3{fill:#DAE5E3;}
-	.st4{fill:#E4F7F2;}
-	.st5{fill:transparent;stroke:#FFFFFF;stroke-width:21;stroke-miterlimit:10;}
-	.st6{fill:#F5FBFC;}
-	.st7{fill:#1C096B;}
-	.st8{fill:#FF5738;}
-	.st9{font-family:'PatrickHand-Regular';}
-	.st10{font-size:16.61px;}
-	.st11{fill:transparent;stroke:#FF5738;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-	.st12{font-size:12.69px;}
-	.st13{fill:transparent;stroke:#FF5738;stroke-linecap:round;stroke-linejoin:round;}
-	.st14{font-family:'ArialMT';}
-	.st15{font-size:6.35px;}
-	.st16{fill:transparent;stroke:#FFFFFF;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st17{fill:#FFFFFF;stroke:#FF5738;stroke-linecap:round;stroke-linejoin:round;}
-	.st18{fill:#FFFFFF;}
-    .clickable {cursor: pointer;}
-</style>
 <g id="Calque_1">
 	<g id="Calque_3">
 		<rect x="-31.8" y="-31" class="st0" width="671.8" height="493.2"/>
@@ -1001,4 +1008,5 @@ x="0px" y="0px" viewBox="0 0 625 439.7" style="enable-background:new 0 0 625 439
 	</g>
 </g>
 </svg>
+</body>
 </html>

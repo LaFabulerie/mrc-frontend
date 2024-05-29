@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, Observable, } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Commune } from '../models/core';
 
 @Injectable({
@@ -39,8 +39,18 @@ export class ContributeService {
       return this.http.post(`${environment.serverHost}/api/w/contributions/`, this.dataToSend);
     }
 
-    loadCommuneData() {
-      this.http.get<any[]>(`https://geo.api.gouv.fr/communes?fields=codesPostaux,nom`).subscribe((communes: Commune[]) => {
+    loadCommuneData(value: string) {
+      this.communes$ = of([]);
+      this.http.get<any[]>(`https://geo.api.gouv.fr/communes?nom=` + value + `&fields=codesPostaux,nom&limit=10`).subscribe((communes: Commune[]) => {
+        this.communesSubject.next(communes);
+      });
+    }
+
+    loadCommuneDataDefault() {
+      if(this.communesSubject.getValue().length !== 0) {
+        this.communes$ = of([]);
+      }
+      this.http.get<any[]>(`https://geo.api.gouv.fr/communes?fields=codesPostaux,nom&limit=10`).subscribe((communes: Commune[]) => {
         this.communesSubject.next(communes);
       });
     }

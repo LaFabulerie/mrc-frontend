@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit{
   servicesList: any[] = [];
   errors: any;
   contributeForm: any;
-  communes: string[] = [];
   communesSelected: string[] = [];
   filteredCommunes: string[] = [];
   visible = true;
@@ -63,7 +62,6 @@ export class HomeComponent implements OnInit{
     this.coreService.loadRooms();
     this.coreService.loadItems();
     this.coreService.loadDigitalUses();
-    this.contributeService.loadCommuneData();
 
     this.coreService.rooms$.subscribe(rooms => {
       if(!rooms || rooms.length == 0) return;
@@ -72,21 +70,9 @@ export class HomeComponent implements OnInit{
       }
     });
 
-    this.contributeService.communes$.subscribe(commune => {
-      commune.forEach(comm => {
-        this.communes.push(comm.codesPostaux[0].toString() + " " + comm.nom.toString());
-      })
-    });
-
-    this.contributeService.communes$.subscribe(commune => {
-      commune.forEach(comm => {
-        this.filteredCommunes.push(comm.codesPostaux[0].toString() + " " + comm.nom.toString());
-      })
-    });
-
     this.myControl.valueChanges.pipe(
       startWith(null),
-      map((commune: string | null) => (commune ? this._filter(commune) : this.communes.slice())),
+      map((commune: string | null) => (commune ? this._filter(commune) : this.loadCommuneDataDefault())),
     ).subscribe((commune) => {
       this.filteredCommunes = commune;
    });
@@ -153,8 +139,29 @@ export class HomeComponent implements OnInit{
 
   private _filter(name: string): string[] {
     const filterValue = name.toLowerCase();
+    this.filteredCommunes = [];
 
-    return this.communes.filter(commune => commune.toLowerCase().includes(filterValue));
+    this.contributeService.loadCommuneData(filterValue);
+    this.contributeService.communes$.subscribe(commune => {
+      commune.forEach(comm => {
+        this.filteredCommunes.push(comm.codesPostaux[0].toString() + " " + comm.nom.toString());
+      })
+    });
+
+    return this.filteredCommunes;
+  }
+
+  private loadCommuneDataDefault(): string[] {
+    this.filteredCommunes = [];
+
+    this.contributeService.loadCommuneDataDefault();
+    this.contributeService.communes$.subscribe(commune => {
+      commune.forEach(comm => {
+        this.filteredCommunes.push(comm.codesPostaux[0].toString() + " " + comm.nom.toString());
+      })
+    });
+
+    return this.filteredCommunes;
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {

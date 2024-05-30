@@ -45,3 +45,9 @@ export type DigitalService = {
   scope: string;
   contact: string;
 };
+
+export type Commune = {
+  nom: string;
+  code: string;
+  codesPostaux: string;
+};

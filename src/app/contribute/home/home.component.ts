@@ -65,9 +65,9 @@ export class HomeComponent implements OnInit{
 
     this.coreService.rooms$.subscribe(rooms => {
       if(!rooms || rooms.length == 0) return;
-      for(let i=1; i<=rooms.length; i++){
-        this.roomList.push(rooms.find(room => room.id === i));
-      }
+      rooms.forEach(room => {
+        this.roomList.push(room);
+      })
     });
 
     this.myControl.valueChanges.pipe(

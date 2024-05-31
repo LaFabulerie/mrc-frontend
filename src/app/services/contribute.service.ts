@@ -15,7 +15,7 @@ export class ContributeService {
 
   constructor(
     private http: HttpClient,) {
-      this.dataToSend = {itemId: null, useId: null, usageTitle: '', title: '', description: '', url: '', scope: '', contact: '', tags: ''};
+      this.dataToSend = {itemId: null, useId: null, usageTitle: '', title: '', description: '', url: '', scope: '', contact: '', tags: '', commune: ''};
     }
 
     saveData(data: any): Observable<any> {
@@ -36,7 +36,7 @@ export class ContributeService {
       }
       this.dataToSend.contact = data.mailAddress;
       this.dataToSend.tags = data.tagIt;
-
+      this.dataToSend.commune = data.communes;
 
       return this.http.post(`${environment.serverHost}/api/w/contributions/`, this.dataToSend);
     }
@@ -52,9 +52,9 @@ export class ContributeService {
       if(this.communesSubject.getValue().length !== 0) {
         this.communes$ = of([]);
       }
-      this.http.get<any[]>(`https://geo.api.gouv.fr/communes?fields=codesPostaux,nom&limit=10`).subscribe((communes: Commune[]) => {
-        this.communesSubject.next(communes);
-      });
+      //~ this.http.get<any[]>(`https://geo.api.gouv.fr/communes?fields=codesPostaux,nom&limit=10`).subscribe((communes: Commune[]) => {
+        //~ this.communesSubject.next(communes);
+      //~ });
     }
 
 

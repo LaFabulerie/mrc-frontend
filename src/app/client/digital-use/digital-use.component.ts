@@ -39,7 +39,9 @@ export class DigitalUseComponent {
       const scope = params['scope'];
       this.coreService.digitalUses$.subscribe(uses => {
         this.use = uses.find(use => use.uuid === uuid)!;
-        this.services = scope ? this.use.services.filter(service => service.scope === 'National' || service.scope === scope) : this.use.services;
+        this.services = scope ? this.use.services.filter(
+            service => service.scope === 'National' || service.scope.split(",").includes(scope)
+        ) : this.use.services;
       });
     });
   }

@@ -29,20 +29,25 @@
   </style>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script type="text/javascript">
+    var URL = "https://tback.lamaisonreconnectee.fr/";
+    //var URL = "http://localhost:8000/";
     window.onload = function () {
       $.ajax({
           type: "GET",
-          url: "https://tback.lamaisonreconnectee.fr/api/r/digital-services",
+          url: URL + "api/r/digital-services",
           contentType: "application/json; charset=utf-8",
           dataType: "json",
           success: function (services) {
               services.forEach(service => {
                 if(service.scope != 'National') {
-                  const dept = document.querySelectorAll('[id="'+ service.scope + '"]');
-                  dept.forEach(departement => {
-                    departement.style.fill = '#FFFFFF';
-                    departement.classList.add("clickable");
-                    departement.addEventListener("click", _navigate);
+                  let scopes = service.scope.split(",");
+                  scopes.forEach(scope => {
+                      let dept = document.querySelectorAll('[id="'+ scope + '"]');
+                      dept.forEach(departement => {
+                        departement.style.fill = '#FFFFFF';
+                        departement.classList.add("clickable");
+                        departement.addEventListener("click", _navigate);
+                      });
                   });
                 }
               });

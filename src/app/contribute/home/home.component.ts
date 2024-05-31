@@ -116,6 +116,95 @@ export class HomeComponent implements OnInit{
       }
     });
   }
+
+  setAllOpts(optGroup: any[]): string{
+    let allOpts = "";
+    
+    for(let i = 0; i < optGroup.length; i++) {
+      if(Number(optGroup[i].value)) {
+        if(allOpts === "") {
+          allOpts = optGroup[i].value;
+        } else {
+          allOpts += "," + optGroup[i].value;  
+        }
+      }
+    }
+    return allOpts;
+  }
+
+  selectChange(event: any): void {
+    let optGroupLabel = event.target.children;
+    for(let i = 0; i < optGroupLabel.length; i++) {
+      if(optGroupLabel[i].children.length !== 0) {
+        for(let j = 0; j < optGroupLabel[i].children.length; j++) {
+          if(optGroupLabel[i].children[j].selected) {
+            switch(optGroupLabel[i].children[j].value) {
+              case "auvergne-rhone-alpes": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                break; 
+              }
+              case "bourgogne-franche-compte": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                  break; 
+              }
+              case "bretagne": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                  break; 
+              }
+              case "centre-val-de-loire": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                  break; 
+              }
+              case "corse": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                  break; 
+              }
+              case "grand-est": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                  break; 
+              }
+              case "hauts-de-france": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                  break; 
+              }
+              case "ile-de-france": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                  break; 
+              }
+              case "normandie": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                  break; 
+              }
+              case "nouvelle-aquitaine": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                  break; 
+              }
+              case "occitanie": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                  break; 
+              }
+              case "pays-de-la-loire": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                  break; 
+              }
+              case "provence-alpes-code-dazur": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                  break; 
+              }
+              case "dom-tom": { 
+                this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
+                  break; 
+              }
+              default: { 
+                  break; 
+              } 
+            }
+          }
+        }
+      }
+    }
+  }
+
   add(event: any): void {
     const value = (event.value || '').trim();
 

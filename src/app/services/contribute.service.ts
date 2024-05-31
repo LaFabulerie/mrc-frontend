@@ -31,6 +31,8 @@ export class ContributeService {
       this.dataToSend.url = data.webAddress;
       if(data.localisation === 'fr') {
         this.dataToSend.scope = 'National';
+      } else {
+        this.dataToSend.scope = data.localisation;
       }
       this.dataToSend.contact = data.mailAddress;
       this.dataToSend.tags = data.tagIt;

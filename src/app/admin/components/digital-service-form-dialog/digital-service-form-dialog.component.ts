@@ -18,13 +18,14 @@ export class DigitalServiceFormDialogComponent implements OnInit {
     private fb: FormBuilder,
   ) {
     const service = this.config.data.service;
+    var useId = service.use ? service.use.id : service.useId;
 
     this.serviceForm = this.fb.group({
       title: [service ? service.title : '' , [Validators.required]],
       description: [service ? service.description : '', [Validators.required]],
       url: [service ? service.url : '', [Validators.required]],
       scope: [service ? service.scope : '', [Validators.required]],
-      useId: [service ? service.useId : this.config.data.useId],
+      useId: [service ? useId : this.config.data.useId],
       contact: [service ? service.contact : ''],
     });
   }
@@ -34,6 +35,7 @@ export class DigitalServiceFormDialogComponent implements OnInit {
   }
 
   save() {
+    console.log(this.serviceForm);
     this.ref.close(this.serviceForm.value);
   }
 

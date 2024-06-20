@@ -34,7 +34,7 @@ export class ContributeService {
       } else {
         this.dataToSend.scope = data.localisation;
       }
-      this.dataToSend.contact = data.mailAddress;
+      this.dataToSend.contact = data.contact;
       this.dataToSend.tags = data.tagIt;
       this.dataToSend.commune = data.communes;
 

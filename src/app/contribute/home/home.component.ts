@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit{
       localisation: ["fr", Validators.required],
       communes: [null],
       tagIt: [null],
-      mailAddress: [null],
+      contact: [null],
     });
 
     this.coreService.loadRooms();
@@ -119,13 +119,13 @@ export class HomeComponent implements OnInit{
 
   setAllOpts(optGroup: any[]): string{
     let allOpts = "";
-    
+
     for(let i = 0; i < optGroup.length; i++) {
       if(Number(optGroup[i].value)) {
         if(allOpts === "") {
           allOpts = optGroup[i].value;
         } else {
-          allOpts += "," + optGroup[i].value;  
+          allOpts += "," + optGroup[i].value;
         }
       }
     }
@@ -139,65 +139,65 @@ export class HomeComponent implements OnInit{
         for(let j = 0; j < optGroupLabel[i].children.length; j++) {
           if(optGroupLabel[i].children[j].selected) {
             switch(optGroupLabel[i].children[j].value) {
-              case "auvergne-rhone-alpes": { 
+              case "auvergne-rhone-alpes": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                break; 
+                break;
               }
-              case "bourgogne-franche-compte": { 
+              case "bourgogne-franche-compte": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                  break; 
+                  break;
               }
-              case "bretagne": { 
+              case "bretagne": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                  break; 
+                  break;
               }
-              case "centre-val-de-loire": { 
+              case "centre-val-de-loire": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                  break; 
+                  break;
               }
-              case "corse": { 
+              case "corse": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                  break; 
+                  break;
               }
-              case "grand-est": { 
+              case "grand-est": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                  break; 
+                  break;
               }
-              case "hauts-de-france": { 
+              case "hauts-de-france": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                  break; 
+                  break;
               }
-              case "ile-de-france": { 
+              case "ile-de-france": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                  break; 
+                  break;
               }
-              case "normandie": { 
+              case "normandie": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                  break; 
+                  break;
               }
-              case "nouvelle-aquitaine": { 
+              case "nouvelle-aquitaine": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                  break; 
+                  break;
               }
-              case "occitanie": { 
+              case "occitanie": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                  break; 
+                  break;
               }
-              case "pays-de-la-loire": { 
+              case "pays-de-la-loire": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                  break; 
+                  break;
               }
-              case "provence-alpes-code-dazur": { 
+              case "provence-alpes-code-dazur": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                  break; 
+                  break;
               }
-              case "dom-tom": { 
+              case "dom-tom": {
                 this.contributeForm.value.localisation = this.setAllOpts(optGroupLabel[i].children);
-                  break; 
+                  break;
               }
-              default: { 
-                  break; 
-              } 
+              default: {
+                  break;
+              }
             }
           }
         }
